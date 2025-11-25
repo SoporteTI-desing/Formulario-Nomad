@@ -59,7 +59,7 @@
     }
     th, td {
       border-bottom: 1px solid #e5e7eb;
-      padding: 8px 10px;
+      padding: 6px 8px;
       white-space: nowrap;
       text-align: left;
     }
@@ -142,7 +142,24 @@
     </div>
   </div>
 
-  <script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAzJZHEkbOkW8D_xeqHTO-y9bcCDW5ZQw",
+    authDomain: "formulario-nomad.firebaseapp.com",
+    projectId: "formulario-nomad",
+    storageBucket: "formulario-nomad.firebasestorage.app",
+    messagingSenderId: "36365021080",
+    appId: "1:36365021080:web:af4e9158d54b8bedf685ed"
+  };
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  const db = firebase.firestore();
+</script>
+
+<script>
     const STATUS_OPTIONS = [
       "ENVIO",
       "VALIDACION",
@@ -152,7 +169,44 @@
       "CANCELADA"
     ];
 
-    function cargarRegistros() {
+function sincronizarFirebaseDesdePanel(registro) {
+  try {
+    if (typeof firebase === "undefined") {
+      console.warn("Firebase no está disponible en este panel.");
+      return;
+    }
+    if (!registro || !registro.firebaseId) {
+      console.warn("Registro sin firebaseId, no se sincroniza con Firestore.");
+      return;
+    }
+    const resumen = Object.assign({}, registro);
+    delete resumen.firebaseId;
+    db.collection("ingresosNomad").doc(registro.firebaseId)
+      .set({ registroResumen: resumen }, { merge: true })
+      .then(function() {
+        console.log("Registro actualizado en Firebase desde panel:", registro.firebaseId);
+      })
+      .catch(function(err) {
+        console.error("Error al actualizar Firebase desde panel:", err);
+      });
+  } catch (e) {
+    console.error("Excepción al sincronizar con Firebase desde panel:", e);
+  }
+}
+
+
+
+    
+    function formatearPesos(valor) {
+      if (valor == null) return "";
+      if (typeof valor !== "string") valor = String(valor);
+      const limpio = valor.replace(/[^0-9,\.\-]/g, "").replace(",", ".");
+      const numero = parseFloat(limpio);
+      if (isNaN(numero)) return valor || "";
+      return "$ " + numero.toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+function cargarRegistros() {
       const registros = JSON.parse(localStorage.getItem("nomad_registros") || "[]");
       const tbody = document.querySelector("#tablaRegistros tbody");
       tbody.innerHTML = "";
@@ -171,10 +225,20 @@
           td.classList.add("editable");
           const input = document.createElement("input");
           input.type = "text";
-          input.value = reg[key] || "";
+          let value = reg[key] || "";
+          if (key === "PAGO AL KAM" || key === "Monto de prueba") {
+            if (value) value = formatearPesos(value);
+          }
+          input.value = value;
           input.addEventListener("blur", () => {
-            registros[index][key] = input.value;
+            let v = input.value;
+            if (key === "PAGO AL KAM" || key === "Monto de prueba") {
+              v = formatearPesos(v);
+              input.value = v;
+            }
+            registros[index][key] = v;
             localStorage.setItem("nomad_registros", JSON.stringify(registros));
+            sincronizarFirebaseDesdePanel(registros[index]);
           });
           td.appendChild(input);
           return td;
@@ -189,6 +253,7 @@
           input.addEventListener("change", () => {
             registros[index][key] = input.value;
             localStorage.setItem("nomad_registros", JSON.stringify(registros));
+            sincronizarFirebaseDesdePanel(registros[index]);
           });
           td.appendChild(input);
           return td;
@@ -202,6 +267,7 @@
           ta.addEventListener("change", () => {
             registros[index][key] = ta.value;
             localStorage.setItem("nomad_registros", JSON.stringify(registros));
+            sincronizarFirebaseDesdePanel(registros[index]);
           });
           td.appendChild(ta);
           return td;
@@ -225,6 +291,7 @@
           sel.addEventListener("change", () => {
             registros[index][key] = sel.value;
             localStorage.setItem("nomad_registros", JSON.stringify(registros));
+            sincronizarFirebaseDesdePanel(registros[index]);
           });
           td.appendChild(sel);
           return td;
@@ -252,13 +319,13 @@
       document.getElementById("registrosCount").textContent = registros.length + " registros";
     }
 
+    
     function exportarExcel() {
       const registros = JSON.parse(localStorage.getItem("nomad_registros") || "[]");
       if (!registros.length) {
         alert("No hay registros para exportar.");
         return;
       }
-
       const headers = [
         "FECHA DE CARGA",
         "KAM",
@@ -276,19 +343,29 @@
         "OBSERVACIONES",
         "Monto de prueba"
       ];
-
-      let csv = headers.join("\t") + "\n";
-
-      registros.forEach(reg => {
-        const row = headers.map(h => {
-          let v = reg[h] != null ? String(reg[h]) : "";
-          v = v.replace(/"/g, '""').replace(/\n/g, " ");
-          return `"${v}"`;
-        }).join("\t");
-        csv += row + "\n";
+      const rows = [headers.join("	")];
+      registros.forEach((reg) => {
+        const row = [
+          reg["FECHA DE CARGA"] || "",
+          reg["KAM"] || "",
+          reg["HOSPITAL"] || "",
+          reg["ESTADO"] || "",
+          reg["NOMBRE DEL PACIENTE"] || "",
+          reg["PRUEBA"] || "",
+          reg["Nombre Aseguradora"] || "",
+          reg["TIPO DE PAGO"] || "",
+          reg["NOMBRE DEL MEDICO"] || "",
+          reg["PAGO AL KAM"] || "",
+          reg["STATUS"] || "",
+          reg["FECHA DE ENVIO"] || "",
+          reg["FECHA DE COMPLETADO"] || "",
+          (reg["OBSERVACIONES"] || "").replace(/\r?\n/g, " "),
+          reg["Monto de prueba"] || ""
+        ];
+        rows.push(row.join("\t"));
       });
-
-      const blob = new Blob([csv], { type: "application/vnd.ms-excel;charset=utf-8;" });
+      const contenido = rows.join("\n");
+      const blob = new Blob([contenido], { type: "application/vnd.ms-excel" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -299,7 +376,7 @@
       URL.revokeObjectURL(url);
     }
 
-    document.addEventListener("DOMContentLoaded", cargarRegistros);
+document.addEventListener("DOMContentLoaded", cargarRegistros);
   </script>
 </body>
 </html>

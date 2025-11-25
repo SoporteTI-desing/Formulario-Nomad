@@ -997,6 +997,7 @@
         console.warn("Firebase no está disponible en esta página.");
         return;
       }
+
       const nombresPrincipales = Array.from(archivosPrincipales || []).map(f => f.name);
       const nombresAdicionales = Array.from(archivosAdicionales || []).map(f => f.name);
 
@@ -1010,18 +1011,26 @@
       db.collection("ingresosNomad").add(docData)
         .then(function(docRef) {
           const uploads = [];
+
           Array.from(archivosPrincipales || []).forEach(function(file) {
             const ref = storage.ref().child(`ingresosNomad/${docRef.id}/principales/${file.name}`);
             uploads.push(ref.put(file));
           });
+
           Array.from(archivosAdicionales || []).forEach(function(file) {
             const ref = storage.ref().child(`ingresosNomad/${docRef.id}/adicionales/${file.name}`);
             uploads.push(ref.put(file));
           });
-          return Promise.all(uploads);
+
+          return Promise.all(uploads).then(function() {
+            const registroConId = Object.assign({}, registro, { firebaseId: docRef.id });
+            const existentes = JSON.parse(localStorage.getItem("nomad_registros") || "[]");
+            existentes.push(registroConId);
+            localStorage.setItem("nomad_registros", JSON.stringify(existentes));
+          });
         })
         .then(function() {
-          console.log("Registro y archivos guardados correctamente en Firebase.");
+          console.log("Registro y archivos guardados correctamente en Firebase y resumen almacenado en localStorage.");
         })
         .catch(function(err) {
           console.error("Error al guardar en Firebase:", err);
@@ -1032,7 +1041,7 @@
     }
   }
 
-  function handleSubmit(ev) {
+function handleSubmit(ev) {
     ev.preventDefault();
     const sel = document.getElementById("medicoSelect");
     const nuevo = document.getElementById("nombreMedicoNuevo");
@@ -1085,12 +1094,7 @@
     };
 
     // Guardar en Firebase (Firestore + Storage)
-    guardarEnFirebase(obj, archivosPrincipales, archivosAdicionales, registro);
-
-    const existentes = JSON.parse(localStorage.getItem("nomad_registros") || "[]");
-    existentes.push(registro);
-    localStorage.setItem("nomad_registros", JSON.stringify(existentes));
-    form.reset();
+    guardarEnFirebase(obj, archivosPrincipales, archivosAdicionales, registro);form.reset();
     document.getElementById("result").classList.add("hidden");
   }
 </script>
