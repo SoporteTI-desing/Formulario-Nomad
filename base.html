@@ -59,7 +59,7 @@
     }
     th, td {
       border-bottom: 1px solid #e5e7eb;
-      padding: 6px 8px;
+      padding: 8px 10px;
       white-space: nowrap;
       text-align: left;
     }
@@ -70,7 +70,7 @@
     .editable select,
     .editable textarea {
       width: 100%;
-      font-size: 11px;
+      font-size: 13px;
       border-radius: 6px;
       border: 1px solid #9ca3af;
       padding: 3px 5px;
@@ -113,7 +113,7 @@
 
     <div class="toolbar">
       <div id="registrosCount">0 registros</div>
-      <button class="btn-small" type="button" onclick="exportarJSON()">Descargar JSON local</button>
+      <button class="btn-small" type="button" onclick="exportarExcel()">Descargar Excel</button>
     </div>
 
     <div class="table-wrapper">
@@ -252,13 +252,47 @@
       document.getElementById("registrosCount").textContent = registros.length + " registros";
     }
 
-    function exportarJSON() {
-      const registros = localStorage.getItem("nomad_registros") || "[]";
-      const blob = new Blob([registros], { type: "application/json" });
+    function exportarExcel() {
+      const registros = JSON.parse(localStorage.getItem("nomad_registros") || "[]");
+      if (!registros.length) {
+        alert("No hay registros para exportar.");
+        return;
+      }
+
+      const headers = [
+        "FECHA DE CARGA",
+        "KAM",
+        "HOSPITAL",
+        "ESTADO",
+        "NOMBRE DEL PACIENTE",
+        "PRUEBA",
+        "Nombre Aseguradora",
+        "TIPO DE PAGO",
+        "NOMBRE DEL MEDICO",
+        "PAGO AL KAM",
+        "STATUS",
+        "FECHA DE ENVIO",
+        "FECHA DE COMPLETADO",
+        "OBSERVACIONES",
+        "Monto de prueba"
+      ];
+
+      let csv = headers.join("\t") + "\n";
+
+      registros.forEach(reg => {
+        const row = headers.map(h => {
+          let v = reg[h] != null ? String(reg[h]) : "";
+          v = v.replace(/"/g, '""').replace(/\n/g, " ");
+          return `"${v}"`;
+        }).join("\t");
+        csv += row + "\n";
+      });
+
+      const blob = new Blob([csv], { type: "application/vnd.ms-excel;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "nomad_registros_local.json";
+      a.download = "nomad_registros.xls";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
