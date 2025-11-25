@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ingreso de Venta - Nomad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f3f6fb;
+      margin: 0;
+      padding: 24px 12px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+      border: 1px solid #d0d7e2;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .title { font-size: 22px; font-weight: 700; }
+    .subtitle { font-size: 13px; color: #6b7280; }
+    .logo { height: 56px; }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      background: linear-gradient(135deg,#00a8e8,#0052a5);
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .section-title {
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      border-left: 4px solid #0052a5;
+      padding-left: 8px;
+    }
+    .field-group { margin-bottom: 12px; }
+    label { display:block; font-size: 13px; margin-bottom: 4px; }
+    .required { color:#e11d48; }
+    input[type=text],input[type=email],input[type=tel],input[type=date],select,textarea {
+      width: 100%;
+      box-sizing:border-box;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #d0d7e2;
+      font-size: 13px;
+    }
+    input:focus,select:focus,textarea:focus {
+      outline:none;
+      border-color:#0052a5;
+      box-shadow:0 0 0 2px rgba(0,82,165,.18);
+    }
+    textarea { min-height:70px; resize:vertical; }
+    .row { display:flex; flex-wrap:wrap; gap:12px; }
+    .col-2 { flex:1 1 220px; }
+    .files-input {
+      border:1px dashed #d0d7e2;
+      padding:10px;
+      border-radius:10px;
+      background:#f9fafb;
+    }
+    .btn-primary {
+      margin-top:16px;
+      padding:10px 22px;
+      border-radius:999px;
+      border:none;
+      background:linear-gradient(135deg,#0052a5,#00a8e8);
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
+    }
+    .result-box {
+      margin-top:18px;
+      padding:10px;
+      border-radius:10px;
+      background:#e0edff;
+      font-size:11px;
+      max-height:220px;
+      overflow:auto;
+      white-space:pre-wrap;
+    }
+    .hidden { display:none; }
+    .floating-panel-btn {
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      padding:9px 16px;
+      border-radius:999px;
+      border:none;
+      background:linear-gradient(135deg,#0052a5,#00a8e8);
+      color:#fff;
+      font-size:12px;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      text-decoration:none;
+      box-shadow:0 10px 24px rgba(15,23,42,.35);
+    }
+    @media(max-width:640px){
+      .header{flex-direction:column;align-items:flex-start;}
+      .container{padding:18px 14px;}
+    }
+  </style>
+</head>
+<body>
+  <a href="base.html" class="floating-panel-btn" title="Ver panel de registros">📊 Base de registros</a>
+  <div class="container">
+    <header class="header">
+      <div>
+        <div class="badge">Nomad · Ingreso de venta</div>
+        <div class="title">Formulario de Ingreso de Venta</div>
+        <div class="subtitle">Captura de datos para estudios genómicos y oncológicos.</div>
+      </div>
+      <img src="logo-nomad.png" class="logo" alt="Nomad Genetics">
+    </header>
+
+    <form id="ingresoVentaForm" onsubmit="handleSubmit(event)">
+      <div class="section-title">Datos de contacto</div>
+      <div class="field-group">
+        <label for="correo">Correo electrónico <span class="required">*</span></label>
+        <input type="email" id="correo" name="correo" required>
+      </div>
+      <div class="field-group">
+        <label for="kam">KAM <span class="required">*</span></label>
+        <select id="kam" name="kam" required>
+          <option value="">Selecciona una opción</option>
+          <option>Andrea</option>
+          <option>Angel</option>
+          <option>Carolina</option>
+          <option>Fernanda</option>
+          <option>Francisco</option>
+          <option>Marymar</option>
+          <option>Inplant</option>
+          <option>Sohin</option>
+          <option>Tijuana</option>
+          <option>Nereida</option>
+          <option>Claudia</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label for="institucion">Nombre completo de la Institución / Hospital <span class="required">*</span></label>
+        <input type="text" id="institucion" name="institucion" required>
+      </div>
+
+      <div class="section-title">Datos del médico</div>
+      <div class="row">
+        <div class="field-group col-2">
+          <label for="ciudad">Ciudad <span class="required">*</span></label>
+          <input type="text" id="ciudad" name="ciudad" required>
+        </div>
+        <div class="field-group col-2">
+          <label for="medicoSelect">Nombre completo del Médico <span class="required">*</span></label>
+          <select id="medicoSelect" required onchange="handleMedicoSelectChange()">
+            <option value="">Selecciona una opción</option>
+          <option>ABEL BERNECHEA MIRANDA</option>
+          <option>ALBERTO VIELMA VALDEZ</option>
+          <option>ALEJANDRA JIMENA GARCÍA VELAZQUEZ</option>
+          <option>ALEJANDRO LOPEZ CUETO ESPINOZA</option>
+          <option>ALFONSO TORRES ROJO</option>
+          <option>ALMA LILIA ORTIZ MALDONADO</option>
+          <option>ANA CRISTINA ARTEAGA GOMEZ</option>
+          <option>ANAIT ABAD SOLARES</option>
+          <option>AURORA MEDINA SANSON</option>
+          <option>AZCARY VAZQUEZ TINAJERO</option>
+          <option>BENIGNO EMMANUEL RODRIGUEZ SOTO</option>
+          <option>BETSABE HERNANDEZ HERNANDEZ</option>
+          <option>BRENDA LETICIA GONZALEZ GARCÍA</option>
+          <option>CARLOS ALBERTO LARA GUTIÉRREZ</option>
+          <option>CARLOS ALBERTO SERVIN HERNANDEZ</option>
+          <option>CARLOS MANUEL ORTIZ MENDOZA</option>
+          <option>CRISTINA ALVARADO SILVA</option>
+          <option>DANTE CARBAJAL OCAMPO</option>
+          <option>DAVID JOSÉ HEREDIA VÁZQUEZ</option>
+          <option>DENYS ELIZABETH DELGADO AMADOR</option>
+          <option>DIANA PATRICIA JIMENEZ CARRANZA</option>
+          <option>DINO ALBERTO MURILLO CRUZ</option>
+          <option>EDGAR NERI PAEZ</option>
+          <option>EDGAR RODRIGUEZ ANTEZANA</option>
+          <option>EDNA ROJAS CURIEL</option>
+          <option>EDUARDO ANTONIO MAAFS MOLINA</option>
+          <option>EDUARDO EDMUNDO REYNOSO GOMEZ</option>
+          <option>EDUARDO TELLEZ BERNAL</option>
+          <option>ELISEO NEFTALI DE LA CRUZ ESCOBAR</option>
+          <option>ETZALLI PAMELA LINARES CHAVEZ</option>
+          <option>FELIPE VILLEGAS CARLOS</option>
+          <option>FERNANDO CERECEDO DIAZ</option>
+          <option>FERNANDO ULISES LARA GONZÁLEZ</option>
+          <option>FERNANDO ULISES LARA MEDINA</option>
+          <option>GABRIEL GALVAN SALAZAR</option>
+          <option>GABRIELA NUÑEZ GUARDADO</option>
+          <option>GERARDO CASTORENA ROJI</option>
+          <option>GERARDO GABRIEL MINAURO MUÑOZ</option>
+          <option>GERMAN CASTELAZO RAMIREZ</option>
+          <option>GERMAN CASTELAZO RICO</option>
+          <option>GLORIA MARTINEZ MARTINEZ</option>
+          <option>GUSTAVO JONY RAMOS BLAS</option>
+          <option>HECTOR ARIAS CEBALLOS</option>
+          <option>HERMINIA DEL SOCORRO ARVELO SAAVEDRA</option>
+          <option>IGNACIO JAIME PEREZ MARTINEZ</option>
+          <option>IRINEO DOMINGUEZ GABRIEL</option>
+          <option>IVÁN ORTIZ CALDERÓN</option>
+          <option>JANETT CABALLERO JASSO</option>
+          <option>JAQUELINE AGUIRRE GOMEZ</option>
+          <option>JAVIER GARCIA ESTRADA</option>
+          <option>JESUS ARMANDO SANCHEZ GONZALEZ</option>
+          <option>JOEL BAÑUELOS FLORES</option>
+          <option>JORGE ALBERTO SALAZAR ANDRADE</option>
+          <option>JOSE EUGENIO VAZQUEZ</option>
+          <option>JOSE GERARDO VELAZQUEZ OLGUIN</option>
+          <option>JOSE LUIS ALVAREZ VERA</option>
+          <option>JOSE LUIS LOPEZ LOPEZ</option>
+          <option>JOSE MANUEL ARTURO RUANO AGUILAR</option>
+          <option>JUAN CARLOS OLIVA POSADA</option>
+          <option>JUAN CARLOS ZAPOT MARTINEZ</option>
+          <option>JUAN FERNANDO ARAGON SANCHEZ</option>
+          <option>JUAN LUIS ABOITES LUCERO</option>
+          <option>JULIO CESAR VELASCO RODRIGUEZ</option>
+          <option>JULIO EDUARDO MARTÍNEZ SAMANO</option>
+          <option>KARINA MURILLO MEDINA</option>
+          <option>KELLY GARCIA JAVIER</option>
+          <option>LAURA TORRECILLAS TORRES</option>
+          <option>LUIIS ANTONIO NUÑEZ TRENADO</option>
+          <option>LUZ MARIA RIVAS CORCHADO</option>
+          <option>MA DE LOURDES GUTIERREZ RIVERA</option>
+          <option>MARCOS LOPEZ NAVEDA</option>
+          <option>MARIA DE LA LUZ GARCA TINOCO</option>
+          <option>MARÍA DEL CONSUELO DÍAZ ROMERO</option>
+          <option>MARIA ELISA OTEIRO CERDEIRA</option>
+          <option>MARIA EUGENIA SALINAS NIEVES</option>
+          <option>MARIA PAULA HERNANDEZ</option>
+          <option>MARIA TERESA CERVANTES DIAZ</option>
+          <option>MARIANA MONSERRAT GOMEZ JARA</option>
+          <option>MARISOL RIVERA HERNANDEZ</option>
+          <option>MIGUEL ANGEL MONROY RAMÍREZ</option>
+          <option>MIGUEL NORIEGA JUAREZ</option>
+          <option>MOISES ZEFERINO TOQUERO</option>
+          <option>NATIVIDAD NERI MUÑOZ</option>
+          <option>NOE FLORES</option>
+          <option>NORA MARIA PEREZ HRNANDEZ</option>
+          <option>OSCAR SALVADOR SANCHEZ VELAZQUEZ</option>
+          <option>PAMELA AYALA HERNANDEZ</option>
+          <option>PATRICIA PADILLA ARRIETA</option>
+          <option>PEDRO LUNA MERLOS</option>
+          <option>PEDRO LUNA PEREZ</option>
+          <option>RAFAEL MEDRANO GUZMAN</option>
+          <option>RAMON JESUS MARTELL GUERRERO</option>
+          <option>ROSA LUZ LUNA PLACENCIA</option>
+          <option>SALIM ABRAHAM BARQUET MUÑOZ</option>
+          <option>SEIR ALFONSO CORTES CARDENAS</option>
+          <option>SERGIO PEDRAZA BARAJAS</option>
+          <option>SIGMUND RODRIGUEZ ROJAS</option>
+          <option>SILVIA MARGARITA ALVARFEZ MALDONADO</option>
+          <option>TALINA RAMIREZ CARO</option>
+          <option>VICTOR ALFONSO MARTINEZ DIAZ</option>
+          <option>VICTOR HUGO CARMONA ORNELA S</option>
+          <option>VICTOR MANUEL MARROQUÍN TORRES</option>
+          <option>VICTOR RAMON ANDRADE SEPULVEDA</option>
+          <option>XINOTECATL JIMENEZ VILLANUEVA</option>
+          <option>YOLANDA LIZBETH BAUTISTA ARAGÓN</option>
+          <option>SARISH DEL REAL ORDOÑEZ</option>
+          <option>ALMA AZUCENA SEGURA CHAMA</option>
+          <option>ANA ELENA MARTIN AGUILAR</option>
+          <option>CRISTOBAL DIAZ GOMEZ</option>
+          <option>EDGAR VARELA SANTOYO</option>
+          <option>EDITH GARCÍA LUNA</option>
+          <option>GUSTAVO FLORENCIO CORTES MARTINEZ</option>
+          <option>HECTOR RODRIGUEZ NAVARRO</option>
+          <option>ITZIA VERDUZCO FLORES</option>
+          <option>JORGE ANTONIO MACÍAS MILLÁN</option>
+          <option>LUIS ARTURO CARDOSO APARICIO</option>
+          <option>LUIS ENRIQUE SOTO</option>
+          <option>MARGARITA CAMPUZANO BUENROSTRO</option>
+          <option>MAYRA CRISTINA GALEANA HERNANDEZ</option>
+          <option>OSVALDO HERNANDEZ FLORES</option>
+          <option>ROMMEL IVAN RODRIGUEZ SIMENTAL</option>
+          <option>MARIO EDUARDO ALONSO CALAMACO</option>
+          <option>DAVID DÁVILA DUPONT</option>
+          <option>DIONE AGUILAR Y MÉNDEZ</option>
+          <option>GERARDO AMARANTE DE LEÓN</option>
+          <option>GUADALUPE EVARISTO CEDILLO SALAZAR</option>
+          <option>MAURICIO ANTUAN CANAVATI MARCOS</option>
+          <option>AMANCIO GATICA PEREZ</option>
+          <option>CARMEN AGUILAR JIMENEZ</option>
+          <option>JOSE GUSTAVO NUÑEZ CARRILLO</option>
+          <option>SALVADOR MACIAS DÍAZ</option>
+          <option>DAVID ACOSTA GUTIÉRREZ</option>
+          <option>LEOPOLDO ABRAHAM LUGO ALFEREZ</option>
+          <option>MARINEE TORRES AGUILAR</option>
+          <option>MIJAEL TOIBER LEVY</option>
+          <option>EMILIO GÁMEZ UGALDE</option>
+          <option>JAIME ARTURO GUEL</option>
+          <option>ERICK SALADO RAMIREZ</option>
+          <option>JESUS RICO GUTIERREZ</option>
+          <option>MARIA DEL ROSARIO ESTRADA FALCON</option>
+          <option>GUILLERMO GOCHER DAMIÁN</option>
+          <option>JAIME NAVARRETE ALEMÁN</option>
+          <option>FROYLAN LÓPEZ LÓPEZ</option>
+          <option>CLAUDIA LORENA URZUA FLORES</option>
+          <option>ELIA NALLELY BARRIENTOS LUNA</option>
+          <option>MARÍA CRISTINA AGUILAR MARTÍNEZ</option>
+          <option>ADRIAN CRAVIOTO VILLANUEVA</option>
+          <option>ALBERTO OLAYA VARGAS</option>
+          <option>ALBERTO VILLALOBOS PRIETO</option>
+          <option>ALEJANDRO NOGUEZ RAMOS</option>
+          <option>ALLAN LEGASPI SAUTER</option>
+          <option>ALVARO AGUAYO GONZÁLEZ</option>
+          <option>ANTONIO GOMEZ PEDRAZA</option>
+          <option>ANTONIO MAFFUZ AZIZ</option>
+          <option>CARLOLS DANIEL ROBLES VIDAL</option>
+          <option>CARLOS ARTURO GONZÁLEZ NÚÑEZ</option>
+          <option>CHRISTIAN PATRICIO CAMACHO LIMAS</option>
+          <option>CLAUDIO RENE MONTESDEOCA ORELLANA</option>
+          <option>CONNIE ZURATZI DENEKEN HERNÁNDEZ</option>
+          <option>CONSUELO IRENE GUTIERREZ COLIN</option>
+          <option>DAGOBERTO MOLINA POLO LÓPEZ DE CÁRDENAS</option>
+          <option>DANIELA SHVEID GERSON</option>
+          <option>DANIELLA GOMEZ PUE</option>
+          <option>DAVID EDUARDO MUÑOZ GONZALEZ</option>
+          <option>DIANA ALEJANDRA VILLEGAS OSORNO</option>
+          <option>ELIAS RESCALA BACA</option>
+          <option>ELIZABETH SANCHEZ VALLE</option>
+          <option>ENRIQUE GOMEZ MORALES</option>
+          <option>ERIKA BETZABE RUIZ GARCIA</option>
+          <option>ERNESTO JOSE ZEPEDA CASTILLA</option>
+          <option>ERNESTO R. SANCHEZ FORGACH</option>
+          <option>ESMERALDA ROMERO BAÑUELOS</option>
+          <option>FERNANDO CORDERA GONZALEZ DE COSIO</option>
+          <option>FERNANDO PEREZ ZINCER</option>
+          <option>GABRIEL SANTIAGO CONCHA</option>
+          <option>GABRIELA OLIVIA REGALADO PORRAS</option>
+          <option>GEOVANI AMADOR GARCIA</option>
+          <option>GERARDO MIRANDA DEVORA</option>
+          <option>GUILLERMO MANUEL OLIVARES BELTRÁN</option>
+          <option>HORACIO SUÁREZ DEL PUERTO</option>
+          <option>IRMA SOLDEVILLA GALLARDO</option>
+          <option>IRVING JAVIER MEJIA HERNANDEZ</option>
+          <option>JAIME SHALKOW KLINCOVSTEIN.</option>
+          <option>JANISSE KERSHENOVICH GERSSON</option>
+          <option>JESUS MIGUEL LAZARO LEÓN</option>
+          <option>JORGE ARTURO ALATORRE ALEXANDER</option>
+          <option>JOSE ANTONIO POSADA TORRES</option>
+          <option>JOSE FABIAN MARTINEZ HERRERA</option>
+          <option>JOSE GABRIEL CHAVEZ SANCHEZ</option>
+          <option>JUAN ALBERTO SERRANO OLVERA</option>
+          <option>JUAN MANUEL STETA OROZCO</option>
+          <option>LEOPOLDO GUZMAN NAVARRO</option>
+          <option>LUIS ANTONIO LARA MEJIA</option>
+          <option>LUIS ANTONIO MEILLON GARCIA</option>
+          <option>MANUEL ACUÑA TOVAR</option>
+          <option>MANUEL MAGALLANES</option>
+          <option>MANUEL ROBERTO MORALES POLANCO</option>
+          <option>MARIA ANDREA BARBERO IBARROLA</option>
+          <option>MARÍA DOLORES DE LA MATA MOYA</option>
+          <option>MARYTERE HERRERA MARTINEZ</option>
+          <option>MIGUEL CORRES MOLINA</option>
+          <option>MILAGROS PÉREZ QUINTANILLA</option>
+          <option>MONICA ISABEL MENESES MEDINA</option>
+          <option>NICOLE MARIE ÍÑIGUEZ ARIZA</option>
+          <option>OTONIEL LOPEZ RIVEROL</option>
+          <option>PAULA ANEL CABRERA GALEANA</option>
+          <option>RAQUEL GERSON CWILICH</option>
+          <option>ROBERTO ALFARO LARA</option>
+          <option>ROBERTO ENRIQUE HERNANDEZ PEÑA</option>
+          <option>ROBERTO RIVERA LUNA</option>
+          <option>ROBIN JENNIFER SHAW DULIN</option>
+          <option>ROCIO DEL SOCORRO CARDENAS CARDOS</option>
+          <option>RODRIGO YAHEL ADAME MORENO</option>
+          <option>SAMUEL RIVERA RIVERA</option>
+          <option>SILVIA NATALIA LOPEZ HERNANDEZ</option>
+          <option>SILVIA PATRICIA VILLAREAL COLIN</option>
+          <option>TALIA WEGMAN OSTROSKY</option>
+          <option>VANESSA ROSAS CAMARGO</option>
+          <option>YAZMIN CAROLINA BLANCO VAZQUEZ</option>
+          <option>YVETTE NEME YUNES</option>
+          <option>ANA PAULINA MELENDEZ FERNANDEZ</option>
+          <option>CARLOS DANIEL LEVER ROSAS</option>
+          <option>GABRIEL TELLEZ TREVILLA</option>
+          <option>JORGE ENRIQUE MONGES JONES</option>
+          <option>JORGE LUIS CORTES RUBIO</option>
+          <option>JOSE FRANCISCO GALLEGOS HERNANDEZ</option>
+          <option>JOSE RODRIGO ESPINOSA FERNANDEZ</option>
+          <option>JUAN ALEJANDRO SILVA</option>
+          <option>KARLA SUSANA MARTIN TELLEZ</option>
+          <option>MARCO ANTONIO DE LA ROSA ABAROA</option>
+          <option>MARIO CUELLAR HUBBE</option>
+          <option>RAFAEL BRICEÑO HERNANDEZ</option>
+          <option>RAFAEL PADILLA LONGORIA</option>
+          <option>RODRIGO ARRANGOIZ MAJUL</option>
+          <option>SERGIO CARLOS RODRIGUEZ BAHENA</option>
+          <option>SERGIO TORRES VARGAS</option>
+          <option>DIEGO JORGE</option>
+          <option>ERNESTO MORENO SALAS</option>
+          <option>JOSE GADU CAMPOS SALCEDO</option>
+          <option>MAXWELL AVILES RODRIGUEZ</option>
+          <option>ELVIRA GÓMEZ GÓMEZ</option>
+          <option>MARICELA GARCIA GARCÉS</option>
+          <option>SAUL CAMPOS GOMEZ</option>
+          <option>GISELA NIEVES HERNÁNDEZ RUIZ</option>
+          <option>JUAN LORENZO ESPINO VILLALOBOS</option>
+          <option>ANTONIO ROLON PADILLA</option>
+          <option>ARMANDO RAMIREZ</option>
+          <option>FROYLAN LOPEZ LOPEZ</option>
+          <option>JESUS ELVIS CABRERA LUVIANO</option>
+          <option>JORGE ARMANDO CASTELAN PEDRAZA</option>
+          <option>JORGE MAYORGA ACUÑA</option>
+          <option>JOSE JUAN RAMIREZ JAIME</option>
+          <option>ALICIA GUTIERREZ MATA</option>
+          <option>BRIZIO MORENO JAIME</option>
+          <option>CARLOS ALBERTO RAMIREZ ALVARADO</option>
+          <option>CARLOS RAMÍREZ ALVARADO</option>
+          <option>DANIEL CAPDEVILLE GARCIA</option>
+          <option>DANIEL CAPDEVILLE GARCÍA</option>
+          <option>DANIEL PÉREZ CERVANTES</option>
+          <option>DAVID CAZARES SANCHEZ</option>
+          <option>DAVID CÁZAREZ SÁNCHEZ</option>
+          <option>DAVID CUEVAS QUEZADA</option>
+          <option>DAVID SUÁREZ GARCÍA</option>
+          <option>FERNANDO SALDÍVAR GALINDO</option>
+          <option>JHONATAN BUENO</option>
+          <option>JOSE AGUIRRE TRIGUERO</option>
+          <option>JOSE ANTONIO TREJO PANTOJA</option>
+          <option>JOSÉ LUIS GONZÁLEZ TRUJILLO</option>
+          <option>JOSÉ LUIS GONZÁLEZ TRUJILLO</option>
+          <option>LETICIA VÁZQUEZ CORTÉS</option>
+          <option>LUIS JONATHAN BUENO ROSARIO</option>
+          <option>MA ISABEL ENRÍQUEZ ACEVES</option>
+          <option>ROBERTO KURI EXSOME</option>
+          <option>ROBERTO KURI EXSOME</option>
+          <option>SALVADOR NAVARRO HERNANDEZ</option>
+          <option>ADRIAN GOMEZ GOMEZ</option>
+          <option>ALBERTO ALVARADO MIRANDA</option>
+          <option>ALEJANDRO CASTILLO GALEAZZI</option>
+          <option>ALEJANDRO CASTILLO GALEAZZI</option>
+          <option>ALFREDO AVILA</option>
+          <option>ALMA ROSA LÓPEZ MARISCAL</option>
+          <option>ANA GRACIELA PUEBLA MORA</option>
+          <option>ANA OLIVIA CORTES FLORES</option>
+          <option>ANA OLIVIA CORTÉS FLORES</option>
+          <option>ATZIRI AIDEE MADERO CASTRO</option>
+          <option>BENITO SANCHEZ LLAMAS</option>
+          <option>BENITO SÁNCHEZ LLAMAS</option>
+          <option>CARLOS ALBERTO RONQUILLO CARREÓN</option>
+          <option>CARLOS ALBERTO RONQUILLO CARREÓN</option>
+          <option>CARLOS ZULOAGA FERNÁNDEZ DEL VALLE</option>
+          <option>CITLALI LÓPEZ ARCIGA</option>
+          <option>DANIEL ALEJANDRO GARCÍA PADILLA</option>
+          <option>DANIEL ALEJANDRO GARCÍA PADILLA</option>
+          <option>DAVID PONCE HERRERA</option>
+          <option>DIEGO A. DÍAZ GARCÍA</option>
+          <option>DIEGO ARMANDO DÍAZ GARCÍA</option>
+          <option>EDER ARAIZA ALVARADO</option>
+          <option>EDUARDO BARRAGAN CURIEL</option>
+          <option>EDWARD MORGAN OCHOA</option>
+          <option>EFRAÍN SALAS GONZÁLEZ</option>
+          <option>EMILIO MURILLO RAMÍREZ</option>
+          <option>EMMANUEL DE LA MORA JIMÉNEZ</option>
+          <option>ERIKA SUSANA BARBOSA AVALOS</option>
+          <option>GILBERTO MORGAN VILLELA</option>
+          <option>IGNACIO MARISCAL RAMÍREZ</option>
+          <option>IGNACIO MIGUEL FUENTES MENDEZ</option>
+          <option>ISAAC LUNA BENITEZ</option>
+          <option>JAIME CORONA RIVERA</option>
+          <option>JAIME CORONA RIVERA</option>
+          <option>JORGE EMILIO ARCH FERRER</option>
+          <option>JORGE EMILIO ARCH FERRER</option>
+          <option>JOSE ANTONIO ACEVEDO DELGADO</option>
+          <option>JOSE DE JESUS CURIEL VALDES</option>
+          <option>JOSÉ FRANCISCO ALEXANDER MEZA</option>
+          <option>JOSE JOB LAGUNES MUNOZ</option>
+          <option>JOSÉ JOB LAGUNES MUÑOZ</option>
+          <option>JOSÉ ROGELIO GONZÁLEZ RAMÍREZ BENFIELD</option>
+          <option>JUAN CARLOS VÁZQUEZ LIMÓN</option>
+          <option>KATHIA SUSANA ZAMUDIO OSUNA</option>
+          <option>KATHIA SUSANA ZAMUDIO OSUNA</option>
+          <option>LEONORA VALDEZ ROJAS</option>
+          <option>LIDO JOSÉ MANUEL GÓMEZ GLEZ</option>
+          <option>LUIS ALBERTO GARCIA GONZALEZ</option>
+          <option>MARCOS FABIAN MONZALVO HERNANDEZ</option>
+          <option>MARIA DOLORES SALAS AGUIRRE</option>
+          <option>MARÍA GUADALUPE VILLA GRAJEDA</option>
+          <option>MARIA PAZ COVARRUBIAS RODRIGUEZ</option>
+          <option>MIGUEL ÁNGEL ARAUJO MELENDEZ</option>
+          <option>OMAR CHAVEZ</option>
+          <option>OSCAR ARMANDO MELHADO ORELLANA</option>
+          <option>OSCAR ARMANDO MELHADO ORELLANA</option>
+          <option>PEDRO ROBLES NOLAZCO</option>
+          <option>RENÉ GÓMEZ CERDA</option>
+          <option>RICARDO CAVAZOS GARCÍA</option>
+          <option>RICARDO CAVAZOS GARCÍA</option>
+          <option>ROSARIO MARISOL QUINTERO SOLIS</option>
+          <option>XIMENA FERNANDEZ SOTO</option>
+          <option>JOSE LUIS ZARAGOZA H.</option>
+          <option>AARON GONZALEZ ENCISO</option>
+          <option>ABIGAIL SAMOAYA MATEOS SORIA</option>
+          <option>ALBERTO GONZALEZ AGUILAR</option>
+          <option>ALBERTO MITSUO LEON TAKAHASHI</option>
+          <option>ALBERTO MONROY CHARGOY</option>
+          <option>ALEJANDRA ARMENGOL ALONSO</option>
+          <option>ALFONSO CERVERA UBIERNA</option>
+          <option>ALFONSO TORRES LOBATON</option>
+          <option>ANA MARIA ZEMPOALTECA LOPEZ</option>
+          <option>ANGELICA CONCEPCIÓN  CRUZ CADENA</option>
+          <option>ANTONIO ALFEIRAN RUIZ</option>
+          <option>ANTONIO VELAZQUEZ GONZÁLEZ</option>
+          <option>ARACELI RIVERA SANTIAGO</option>
+          <option>ARIADNA ESTELA  GONZALEZ DEL ANGEL</option>
+          <option>ARMANDO BERNANDO MARTINEZ AVALOS</option>
+          <option>ARMEN STANKOV DRAGAN</option>
+          <option>ARTURO PABEL MIRANDA AGUIRRE</option>
+          <option>CARLO EGYSTO CICERO ONETO</option>
+          <option>CARLOS ARANDA FLORES</option>
+          <option>CARLOS EDUARDO QUINTERO RODRIGUEZ</option>
+          <option>CHRISTIAN HAYDEE FLORES BALCAZAR</option>
+          <option>DAN GREEN REENER</option>
+          <option>DANIEL ABELARDO LOPEZ VALLEJO</option>
+          <option>DANIEL MOTOLA KUBA</option>
+          <option>DAVID FRANCISCO CANTU DE LEON</option>
+          <option>DAVID ORTA CORTES</option>
+          <option>DEBORAH MARIA MARTINEZ BAÑOS</option>
+          <option>DENISE ACUÑA GONZALEZ</option>
+          <option>DIANA FABIOLA FLORES</option>
+          <option>DIEGO OSORIO PEREZ</option>
+          <option>DOLORES GALLARDO</option>
+          <option>EDER A ARANGO BRAVO</option>
+          <option>EDUARDO EMIR CERVERA CEBALLOS</option>
+          <option>EDUARDO JORGE BAÑOS RODRIGUEZ</option>
+          <option>ELEAZAR OMAR MACEDO LOPEZ</option>
+          <option>ELIA IXEL APODACA CHAVEZ</option>
+          <option>ELIZABETH ESCOBAR ARRIAGA</option>
+          <option>EMILIO CONDE</option>
+          <option>ERIC ORTIZ</option>
+          <option>EUCARIO LEON RODRIGUEZ</option>
+          <option>EVA RUVALCABA LIMON</option>
+          <option>FEDERICO MALDONADO MAGOS</option>
+          <option>FERNANDO ALDACO SARVIDE</option>
+          <option>FERNANDO CANDANEDO GONZALEZ</option>
+          <option>FERNANDO ENRIQUE MAINEROL RATCHEOLUS</option>
+          <option>FIDEL DAVID HUITZIL MELENDEZ</option>
+          <option>FLAVIA MORALES VASQUEZ</option>
+          <option>FLOR MARIA ARMILLAS CANSECO</option>
+          <option>FRANCISCO JAVIER GOMEZ-PEDROSO REA</option>
+          <option>FRANCISCO JAVIER OCHOA CARRILLO</option>
+          <option>FRANCISCO LOPEZ SACHINAS</option>
+          <option>FRANCO KRAKAUR GARCÍA</option>
+          <option>GABRIEL ORLANDO GARCIA ACEVEDO</option>
+          <option>GABRIEL PACHECO JUAREZ</option>
+          <option>GABRIELA ALAMILLA</option>
+          <option>GABRIELA ALVARADO LUNA</option>
+          <option>GEORGINA GARNICA JALIFFE</option>
+          <option>GERMAN CALDERILLO CRUZ</option>
+          <option>GREDEL PORTELA RUBIO</option>
+          <option>GREGORIO QUINTERO BEULO</option>
+          <option>GUILLERMO FABIAN SILVA ESCOBAR</option>
+          <option>GUILLERMO MARTOS RAMIREZ</option>
+          <option>GUSTAVO SEBASTIAN ESCOBAR ALFARO</option>
+          <option>HAYDEÉ CRISTINA VERDUZCO AGUIRRE</option>
+          <option>HEBER TOMAS REYES GARCIA</option>
+          <option>HECTOR DE LA MORA MOLINA</option>
+          <option>HECTOR MARTINEZ SAID</option>
+          <option>HORACIO NOÉ LOPEZ BASAVE</option>
+          <option>IDELFONSO ROBERTO DE LA PEÑA LOPEZ</option>
+          <option>ILEANA MCKINNEY NOVELO</option>
+          <option>ITZEL VELA SARMIENTO</option>
+          <option>IVAN EUDALDO DIAZ MENESES</option>
+          <option>JAIME ALONSO RESENDIZ COLOSIA</option>
+          <option>JAVIER KELLY GARCIA</option>
+          <option>JAVIER LOPEZ GOMEZ</option>
+          <option>JAVIER MELCHOR RUAN</option>
+          <option>JAZMÍN FIGUEROA BADILLO</option>
+          <option>JERONIMO RAFAEL RODRIGUEZ CID</option>
+          <option>JONATHAN RUBEN CEDILLO RODRIGUEZ</option>
+          <option>JORGE ADAN ALEGRÍA BAÑOS</option>
+          <option>JORGE ALBERTO ROBLES AVIÑA</option>
+          <option>JORGE ALEJANDRO CASTAÑEDA ÁVILA</option>
+          <option>JORGE BERMUDEZ LUGO</option>
+          <option>JORGE LUIS MARTINEZ TLAHUEL</option>
+          <option>JORGE MARTINEZ CEDILLO</option>
+          <option>JOSE ADALBERTO TORIZ HERNANDEZ</option>
+          <option>JOSE ALBERTO ABREGO VASQUEZ</option>
+          <option>JOSE ANTONIO BAHENA GONZALEZ</option>
+          <option>JOSE FRANCISCO CORONA CRUZ</option>
+          <option>JOSE LUIS AGUILAR PONCE</option>
+          <option>JOSE MANUEL RUIZ MORALES</option>
+          <option>JOSE ROBERTO JUAREZ DIAZ</option>
+          <option>JOSEPH XAVIER LOPEZ KARKPOVITCH</option>
+          <option>JUAN ALBERTO TENORIO TORRES</option>
+          <option>JUAN ANTONIO MATUS SANTOS</option>
+          <option>JUAN CARLOS HERNANDEZ FONSECA</option>
+          <option>JUAN MANUEL VARELA GAYOL</option>
+          <option>JUAN WOLFGANG ZINZER SIERRA</option>
+          <option>JUSTO GONZALO MILAN REVOLLO</option>
+          <option>KARLA BELEN MOLINA TABAREZ</option>
+          <option>KUAUHYAMA LUNA ORTÍZ</option>
+          <option>LAURA GABRIELA FLORES PEÑA</option>
+          <option>LENNY NADIA GALLARDO ALVARADO</option>
+          <option>LETICIA ELIZABETH MOTA GARDUÑO</option>
+          <option>LIZ NAVA</option>
+          <option>LUCELY DEL CARMEN CETINA PEREZ</option>
+          <option>LUIS ANTONIO CABRERA MIRANDA</option>
+          <option>LUIS ARTURO HERNANDEZ LOPEZ</option>
+          <option>LUIS CRUZ BENITEZ</option>
+          <option>LUIS ENRIQUE JUAREZ VILLEGAS</option>
+          <option>LUIS FERNANDO PEREZ JACOBO</option>
+          <option>LUIS GERARDO MOTA CIENFUEGOS</option>
+          <option>LUZ MARIA HINOJOSA GARCIA</option>
+          <option>MA DELIA PEREZ MONTIEL</option>
+          <option>MANUEL ALONSO VILLEGAS MARTINEZ</option>
+          <option>MANUEL GONZALEZ REYES</option>
+          <option>MARA NUÑEZ TOSCANO</option>
+          <option>MARÍA DEL MAR GARCIA ORTEGA</option>
+          <option>MARIA FATIMA CHILACA ROSAS</option>
+          <option>MARIA GUADLUPE CERVANTES SANCHEZ</option>
+          <option>MARIA TERESA BOURLON DE LO RÍOS</option>
+          <option>MARIO SANCHEZ CORZO</option>
+          <option>MARLID CRUZ RAMOS</option>
+          <option>MARTHA GABRIELA TAVERA RODRIGUEZ</option>
+          <option>MICHEL HERNANDEZ VALADEZ</option>
+          <option>MIGUEL ANGEL ALVAREZ AVITIA</option>
+          <option>MIGUEL ANGEL LOPEZ VALLE</option>
+          <option>MIGUEL ANGEL TLETLEPANTZIN APARTADO</option>
+          <option>MIGUEL ARNOLDO FARIAS ALARCON</option>
+          <option>MYRNA GLORIA CANDELARIA HERNÁNDEZ</option>
+          <option>NEREIDA ESPARZA ARIAS</option>
+          <option>NICOLAS RICARDO DE JESUS SANCHEZ CASAS</option>
+          <option>NIDIA  PAULINA ZAPATA CANTO</option>
+          <option>NORA SOBREVILLA MORENO</option>
+          <option>NORMA CANDELARIA LOPEZ SANTIAGO</option>
+          <option>NOVELTHYS VELASCO CORTES</option>
+          <option>ODILON FELIX QUIJANO CASTRO</option>
+          <option>OMAR DE LEON PACHECO</option>
+          <option>OMAR FRANCISCO CORONEL AYALA</option>
+          <option>OMAR MACEDO PEREZ</option>
+          <option>OSCAR GERARDO ARRIETA RODRIGUEZ</option>
+          <option>OSVALDO QUIROZ SANDOVAL</option>
+          <option>PATRICIA CORTES ESTEBAN</option>
+          <option>PATRICIO AZAOLA ESPINOZA</option>
+          <option>PEDRO DE JESUS SOBREVILLA CALVO</option>
+          <option>RAFAEL HURTADO MONROY</option>
+          <option>RAFAEL VAZQUEZ ROMO</option>
+          <option>RAMIRO GARCIA ORTIZ</option>
+          <option>RAUL ARTGUZMAN TRIGUEROS</option>
+          <option>ROBERTO DE LA PENA LOPEZ</option>
+          <option>ROCIO CRYSTAL GRAJALES ALVAREZ</option>
+          <option>RODRIGO DIAZ MACHORRO</option>
+          <option>ROGELIO MARTINEZ MACIAS</option>
+          <option>ROSA HIMELDA ARELLANO BERNAL</option>
+          <option>RUBEN CORTES GONZALEZ</option>
+          <option>SAMANTHA LOPEZ RAMIREZ</option>
+          <option>SANTA MARICELA ORTIZ ZEPEDA</option>
+          <option>SANTIAGO ALEJANDRO CANO CANCELA</option>
+          <option>SANTOS GILBERTO SOTO GERMES</option>
+          <option>SARA OLIVIA RAMOS ROMERO</option>
+          <option>SEBASTIAN GARCÍA HERRERA</option>
+          <option>SERGIO AGUILAR VILLANUEVA</option>
+          <option>SERGIO CESAR LOPEZ GARCI A</option>
+          <option>SERGIO RODRIGUEZ-CUEVAS</option>
+          <option>SERGIO YASPIK FLORES</option>
+          <option>TANIA ÁLVAREZ DOMÍNGUEZ</option>
+          <option>WENDY ROSANGELA MARTINEZ TORRES</option>
+          <option>WENDY ROSSEMARY MUÑOZ MONTAÑO</option>
+          <option>YAMILE TORRES JASSO</option>
+          <option>YANIN CHAVARRI GUERRA</option>
+          <option>ZULEIMA GARCÍA NIETO</option>
+          <option>NORA HILDA CHÁVEZ HERNÁNDEZ</option>
+          <option>ALEJANDRO MARTINEZ RUEDA</option>
+          <option>CARLOS ROBERTO LUGO ESCALANTE</option>
+          <option>DIEGO ALFONSO BALLESTEROS PINO</option>
+          <option>FERNANDO JAVIER VILLALOBOS PEÑA</option>
+          <option>IVAN SALGADO</option>
+          <option>JENNIFER RAMIREZ</option>
+          <option>JESUS ALICIA ACOSTA ESPINOZA</option>
+          <option>JORGE ALBERTO GUADARRAMA OROZCO</option>
+          <option>MARCELINO MORALES RIVERA</option>
+          <option>DANIELA HERNANDEZ LARA</option>
+          <option>ENRIQUE JOSE ZAMUDIO LOZOYA</option>
+          <option>FELIPE DE JESÚS ANCHONDO ORTEGA</option>
+          <option>FLOR DE THE BUSTAMANTE VALLES</option>
+          <option>IVONNE SALAS</option>
+          <option>JESSICA SALAZAR</option>
+          <option>JORGE SAID GARCÍA BAUTISTA</option>
+          <option>JUAN ADNAN CRUZ VALENZUELA</option>
+          <option>LUIS JAVIER BARAJAS FIGUEROA</option>
+          <option>MARCELINO RAMÍREZ MARQUEZ</option>
+          <option>MARIA HELENA VILLALOBOS GOMEZ</option>
+          <option>RAMIRO MAGANA SERRANO</option>
+          <option>RAUL GERARDO RAMIREZ MEDINA</option>
+          <option>ALMA GEORGINA PALACIOS MARTINEZ</option>
+          <option>ALMA MAGDALENA ASTORGA RAMOS</option>
+          <option>ELISEO EMMANUEL JUÁREZ ZUÑIGA</option>
+          <option>HIRAM JOSUE GRIMALDO ROQUE</option>
+          <option>MICHEL BONIFANT</option>
+          <option>ALAN LEDIF REYES MONDRAGÓN</option>
+          <option>ALAN BURGUETE TORRES</option>
+          <option>ALEJANDRO DE LEON CRUZ</option>
+          <option>ALETHIA ALVAREZ CANO</option>
+          <option>ALVARO BARBOSA-QUINTANA</option>
+          <option>ANGEL AZAEL LÓPEZ GALINDO</option>
+          <option>CARLOS AUGUSTO GUTIERREZ FLORES</option>
+          <option>CARLOS EDUARDO SALAZAR MEJIA</option>
+          <option>CESAR GONZALEZ DE LEON</option>
+          <option>CESAR SALDIVAR MORENO</option>
+          <option>CINDY AIDEE NÁJERA MUÑOZ</option>
+          <option>CYNTHIA VILLARREAL</option>
+          <option>DANIEL VALENCIA MERCADO</option>
+          <option>DANIELA VAZQUEZ JUAREZ</option>
+          <option>EDIO LLERENA HERNANDEZ</option>
+          <option>EDUARDO ALBERTO GUZMAN HUERTA</option>
+          <option>GABRIELA SOFIA GOMEZ MACIAS</option>
+          <option>GERARDO CARDENAS</option>
+          <option>GERARDO DAVID AMARANTE DE LEON</option>
+          <option>HORACIO DECANINI ARCAUTE</option>
+          <option>JACKELINE GRACE LARA CAMPOS</option>
+          <option>JAIME J. TAMEZ SALAZAR</option>
+          <option>JESÚS ALBERTO LIMÓN RODRÍGUEZ</option>
+          <option>JORGE ALBERTO HERNÁNDEZ SALAZAR</option>
+          <option>JORGE LUIS MARTINEZ RODRIGUEZ</option>
+          <option>JOSE LUIS GUZMAN MURGIA</option>
+          <option>JOSÉ LUIS VELA GONZALEZ</option>
+          <option>LIGIA LARRALDE</option>
+          <option>LUIS ANTONIO CANCEL TREVIÑO</option>
+          <option>MANUEL ISMAEL GONZÁLEZ GERONIZ</option>
+          <option>MARÍA LUISA ROMERO LAGUNES</option>
+          <option>OMAR ALEJANDRO ZAYAS VILLANUEVA</option>
+          <option>OMAR PEÑA CURIEL</option>
+          <option>OSCAR VIDAL GUTIERREZ</option>
+          <option>RAUL GARZA GARZA</option>
+          <option>ROGELIO LOZANO GALVAN</option>
+          <option>ROLANDO MARTINEZ</option>
+          <option>RUBI JANDAY NAJERA</option>
+          <option>SERVANDO CARDONA HUERTA</option>
+          <option>VICTOR MANUEL OYERVIDES JUAREZ</option>
+          <option>YURIDIA ALVARADO BERNAL</option>
+          <option>ENRIQUE AVILA MONTEVERDE</option>
+          <option>JUAN DE DIOS PÉREZ VILLEGAS</option>
+          <option>LAURA PEREZ MICHEL</option>
+          <option>MINOR CORDERO B.</option>
+          <option>GENOVEVA OCHOA</option>
+          <option>OSCAR ALEJANDRO GOMEZ</option>
+          <option>IVÁN ROMARICO GONZÁLEZ ESPINOZA</option>
+            <option value="_nuevo">+ Registrar nuevo médico...</option>
+          </select>
+          <div id="nuevoMedicoWrapper" class="field-group hidden" style="margin-top:6px;">
+            <label for="nombreMedicoNuevo">Nuevo médico</label>
+            <input type="text" id="nombreMedicoNuevo" placeholder="Escribe el nombre completo">
+          </div>
+          <input type="hidden" id="nombreMedico" name="nombreMedico">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field-group col-2">
+          <label for="especialidadMedico">Especialidad del Médico <span class="required">*</span></label>
+          <input type="text" id="especialidadMedico" name="especialidadMedico" required>
+        </div>
+        <div class="field-group col-2">
+          <label for="emailMedico">Email del médico <span class="required">*</span></label>
+          <input type="email" id="emailMedico" name="emailMedico" required>
+        </div>
+      </div>
+      <div class="field-group">
+        <label for="honorarioMedico">Aplica Honorario Médico (Monto) <span class="required">*</span></label>
+        <input type="text" id="honorarioMedico" name="honorarioMedico">
+      </div>
+
+      <div class="section-title">Datos del paciente</div>
+      <div class="row">
+        <div class="field-group col-2">
+          <label for="pacienteNombre">Nombre del paciente completo <span class="required">*</span></label>
+          <input type="text" id="pacienteNombre" name="pacienteNombre" required>
+        </div>
+      </div>
+      <div class="field-group">
+        <label for="telefonoContacto">Teléfono del contacto para seguimiento <span class="required">*</span></label>
+        <input type="tel" id="telefonoContacto" name="telefonoContacto" required>
+      </div>
+
+      <div class="section-title">Información clínica</div>
+      <div class="row">
+        <div class="field-group col-2">
+          <label for="fechaCirugia">Fecha de Cirugía <span class="required">*</span></label>
+          <input type="date" id="fechaCirugia" name="fechaCirugia" required>
+        </div>
+        <div class="field-group col-2">
+          <label for="fechaBiopsia">Fecha de la última biopsia <span class="required">*</span></label>
+          <input type="date" id="fechaBiopsia" name="fechaBiopsia" required>
+        </div>
+      </div>
+      <div class="field-group">
+        <label for="fechaNacimiento">Fecha de nacimiento</label>
+        <input type="date" id="fechaNacimiento" name="fechaNacimiento">
+      </div>
+      <div class="field-group">
+        <label for="tipoEstudio">Tipo de estudio <span class="required">*</span></label>
+        <select id="tipoEstudio" name="tipoEstudio" required>
+          <option value="">Selecciona una opción</option>
+          <option>Somatico</option>
+          <option>Germinal</option>
+          <option>Diagnostico</option>
+          <option>Estadio</option>
+        </select>
+      </div>
+
+      <div class="section-title">Tipo de prueba</div>
+      <div class="field-group">
+        <label for="nombreEstudio">Nombre del estudio <span class="required">*</span></label>
+        <select id="nombreEstudio" name="nombreEstudio" required onchange="handleEstudioChange()">
+          <option value="">Selecciona una opción</option>
+          <option>FoundationOne CDx</option>
+          <option>FoundationOne Liquid CDx</option>
+          <option>FoundationOne Heme</option>
+          <option>Avenio Roche Tisssue</option>
+          <option>Examen OncolDX Complete ctDNA</option>
+          <option>MammaPrint</option>
+          <option>Guardant360 CDx</option>
+          <option>Guardant360 CDx Expanded</option>
+          <option>Guardant Health Reveal</option>
+          <option>Tempus xF</option>
+          <option>Tempus xF+</option>
+          <option>Tempus xT</option>
+          <option>Tempus xT + xR</option>
+          <option>Biomarcador PDL 1</option>
+          <option>Biomarcador HRD</option>
+          <option>Biomarcador MMR</option>
+          <option>Biomarcador PDY</option>
+          <option>Biomarcador HER 2</option>
+          <option>Biomarcador HER2 + FISH</option>
+          <option>Biomarcador FOLR1</option>
+          <option>MGMT Methylation</option>
+          <option>Algorithmic Tumor Origin</option>
+          <option>INVITAE Panel multicancer</option>
+          <option>INVITAE Common hereditary Cancer</option>
+          <option>INVITAE Hereditary Breast Cancer STAT Panel</option>
+        </select>
+      </div>
+      <div id="biomarcadorTempus" class="field-group hidden">
+        <label for="biomarcadorOpcional">Biomarcador (opcional, solo si aplica para Tempus)</label>
+        <select id="biomarcadorOpcional" name="biomarcadorOpcional">
+          <option value="">Sin biomarcador</option>
+          <option>Biomarcador PDL 1</option>
+          <option>Biomarcador HRD</option>
+          <option>Biomarcador MMR</option>
+          <option>Biomarcador PDY</option>
+          <option>Biomarcador HER 2</option>
+          <option>Biomarcador HER2 + FISH</option>
+          <option>Biomarcador FOLR1</option>
+        </select>
+      </div>
+
+      <div class="section-title">Forma de pago</div>
+      <div class="field-group">
+        <label for="formaPago">Forma de Pago <span class="required">*</span></label>
+        <select id="formaPago" name="formaPago" required onchange="handleFormaPagoChange()">
+          <option value="">Selecciona una opción</option>
+          <option value="Bolsillo">Bolsillo</option>
+          <option value="Aseguradora">Aseguradora</option>
+        </select>
+      </div>
+      <div id="pagoBolsillo" class="field-group hidden">
+        <label for="detalleBolsillo">Bolsillo <span class="required">*</span></label>
+        <select id="detalleBolsillo" name="detalleBolsillo">
+          <option value="">Selecciona una opción</option>
+          <option>Efectivo</option>
+          <option>Transferencia</option>
+          <option>Liga de Pago</option>
+          <option>Terminal</option>
+        </select>
+      </div>
+      <div id="pagoAseguradora" class="field-group hidden">
+        <label for="nombreAseguradora">Nombre Aseguradora <span class="required">*</span></label>
+        <select id="nombreAseguradora" name="nombreAseguradora">
+          <option value="">Selecciona una opción</option>
+          <option>Inbursa</option>
+          <option>Plan Seguros</option>
+          <option>Internacional</option>
+          <option>Prevem</option>
+          <option>Best Doctors</option>
+          <option>Global Excel</option>
+          <option>Atlas</option>
+          <option>GNP</option>
+          <option>Axa (Sohin)</option>
+          <option>Seguros MTY</option>
+          <option>Zurich</option>
+          <option>Metlife</option>
+          <option>Otra</option>
+        </select>
+      </div>
+
+      <div class="section-title">Solicitud y archivos</div>
+      <div class="field-group">
+        <label for="solicitud">Solicitud <span class="required">*</span></label>
+        <select id="solicitud" name="solicitud" required>
+          <option value="">Selecciona una opción</option>
+          <option>Toma de Muestra</option>
+          <option>Recoleccion de Muestras</option>
+          <option>Tramite con Aseguradora</option>
+          <option>Otro (describir en comentarios)</option>
+        </select>
+      </div>
+      <div class="field-group files-input">
+        <label for="archivosPrincipales">Adjunta tus archivos</label>
+        <input type="file" id="archivosPrincipales" name="archivosPrincipales" multiple>
+      </div>
+      <div class="field-group files-input">
+        <label for="archivosAdicionales">Adjunta + documentos</label>
+        <input type="file" id="archivosAdicionales" name="archivosAdicionales" multiple>
+      </div>
+      <div class="field-group">
+        <label for="comentarios">Comentarios</label>
+        <textarea id="comentarios" name="comentarios"></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary">Enviar / Generar JSON</button>
+    </form>
+
+    <div id="result" class="result-box hidden"></div>
+  </div>
+
+  
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAzJZHEkbOkW8D_xeqHTO-y9bcCDW5ZQw",
+    authDomain: "formulario-nomad.firebaseapp.com",
+    projectId: "formulario-nomad",
+    storageBucket: "formulario-nomad.firebasestorage.app",
+    messagingSenderId: "36365021080",
+    appId: "1:36365021080:web:af4e9158d54b8bedf685ed"
+  };
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+</script>
+
+<script>
+    function handleEstudioChange() {
+      const estudio = document.getElementById("nombreEstudio").value;
+      const biomDiv = document.getElementById("biomarcadorTempus");
+      const biomSel = document.getElementById("biomarcadorOpcional");
+      if (estudio.startsWith("Tempus")) {
+        biomDiv.classList.remove("hidden");
+      } else {
+        biomDiv.classList.add("hidden");
+        biomSel.value = "";
+      }
+    }
+    function handleFormaPagoChange() {
+      const forma = document.getElementById("formaPago").value;
+      const bolsillo = document.getElementById("pagoBolsillo");
+      const aseg = document.getElementById("pagoAseguradora");
+      bolsillo.classList.add("hidden");
+      aseg.classList.add("hidden");
+      if (forma === "Bolsillo") bolsillo.classList.remove("hidden");
+      if (forma === "Aseguradora") aseg.classList.remove("hidden");
+    }
+    function handleMedicoSelectChange() {
+      const sel = document.getElementById("medicoSelect");
+      const nuevoWrap = document.getElementById("nuevoMedicoWrapper");
+      const nuevoInput = document.getElementById("nombreMedicoNuevo");
+      const hidden = document.getElementById("nombreMedico");
+      if (sel.value === "_nuevo") {
+        nuevoWrap.classList.remove("hidden");
+        hidden.value = nuevoInput.value || "";
+      } else {
+        nuevoWrap.classList.add("hidden");
+        nuevoInput.value = "";
+        hidden.value = sel.value;
+      }
+    }
+    document.getElementById("nombreMedicoNuevo").addEventListener("input", function() {
+      const hidden = document.getElementById("nombreMedico");
+      hidden.value = this.value;
+    });
+    
+  function guardarEnFirebase(obj, archivosPrincipales, archivosAdicionales, registro) {
+    try {
+      if (typeof firebase === "undefined") {
+        console.warn("Firebase no está disponible en esta página.");
+        return;
+      }
+      const nombresPrincipales = Array.from(archivosPrincipales || []).map(f => f.name);
+      const nombresAdicionales = Array.from(archivosAdicionales || []).map(f => f.name);
+
+      const docData = Object.assign({}, obj, {
+        archivosPrincipales: nombresPrincipales,
+        archivosAdicionales: nombresAdicionales,
+        registroResumen: registro,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      db.collection("ingresosNomad").add(docData)
+        .then(function(docRef) {
+          const uploads = [];
+          Array.from(archivosPrincipales || []).forEach(function(file) {
+            const ref = storage.ref().child(`ingresosNomad/${docRef.id}/principales/${file.name}`);
+            uploads.push(ref.put(file));
+          });
+          Array.from(archivosAdicionales || []).forEach(function(file) {
+            const ref = storage.ref().child(`ingresosNomad/${docRef.id}/adicionales/${file.name}`);
+            uploads.push(ref.put(file));
+          });
+          return Promise.all(uploads);
+        })
+        .then(function() {
+          console.log("Registro y archivos guardados correctamente en Firebase.");
+        })
+        .catch(function(err) {
+          console.error("Error al guardar en Firebase:", err);
+          alert("Ocurrió un error al guardar los datos en Firebase. Revisa la consola para más detalles.");
+        });
+    } catch (e) {
+      console.error("Excepción al guardar en Firebase:", e);
+    }
+  }
+
+  function handleSubmit(ev) {
+    ev.preventDefault();
+    const sel = document.getElementById("medicoSelect");
+    const nuevo = document.getElementById("nombreMedicoNuevo");
+    const hidden = document.getElementById("nombreMedico");
+    if (!hidden.value) {
+      if (sel.value === "_nuevo" && !nuevo.value.trim()) {
+        alert("Escribe el nombre del nuevo médico.");
+        return;
+      }
+    }
+    const form = ev.target;
+    const data = new FormData(form);
+    const obj = {};
+    for (const [k,v] of data.entries()) {
+      if (obj[k]) {
+        if (!Array.isArray(obj[k])) obj[k] = [obj[k]];
+        obj[k].push(v);
+      } else {
+        obj[k] = v;
+      }
+    }
+    const archivosPrincipales = document.getElementById("archivosPrincipales").files;
+    const archivosAdicionales = document.getElementById("archivosAdicionales").files;
+    obj.archivosPrincipales = Array.from(archivosPrincipales).map(f => f.name);
+    obj.archivosAdicionales = Array.from(archivosAdicionales).map(f => f.name);
+    const result = document.getElementById("result");
+    result.classList.remove("hidden");
+    result.textContent = JSON.stringify(obj, null, 2);
+
+    const tipoPago = obj.formaPago === "Bolsillo"
+      ? "BOLSILLO" + (obj.detalleBolsillo ? " - " + obj.detalleBolsillo : "")
+      : (obj.formaPago === "Aseguradora" ? "ASEGURADORA" : "");
+
+    const registro = {
+      "FECHA DE CARGA": new Date().toISOString(),
+      "KAM": obj.kam || "",
+      "HOSPITAL": obj.institucion || "",
+      "ESTADO": obj.ciudad || "",
+      "NOMBRE DEL PACIENTE": obj.pacienteNombre || "",
+      "PRUEBA": obj.nombreEstudio || "",
+      "Nombre Aseguradora": obj.formaPago === "Aseguradora" ? (obj.nombreAseguradora || "") : "",
+      "TIPO DE PAGO": tipoPago,
+      "NOMBRE DEL MEDICO": obj.nombreMedico || "",
+      "PAGO AL KAM": "",
+      "STATUS": "",
+      "FECHA DE ENVIO": "",
+      "FECHA DE COMPLETADO": "",
+      "OBSERVACIONES": obj.comentarios || "",
+      "Monto de prueba": ""
+    };
+
+    // Guardar en Firebase (Firestore + Storage)
+    guardarEnFirebase(obj, archivosPrincipales, archivosAdicionales, registro);
+
+    const existentes = JSON.parse(localStorage.getItem("nomad_registros") || "[]");
+    existentes.push(registro);
+    localStorage.setItem("nomad_registros", JSON.stringify(existentes));
+    form.reset();
+    document.getElementById("result").classList.add("hidden");
+  }
+</script>
+
+</body>
+</html>

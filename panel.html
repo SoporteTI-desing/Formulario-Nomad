@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Panel de Ingresos - Nomad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f3f6fb;
+      margin: 0;
+      padding: 24px 12px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+      border: 1px solid #d0d7e2;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 24px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .subtitle {
+      margin: 4px 0 16px;
+      color: #64748b;
+      font-size: 14px;
+    }
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .search-input {
+      flex: 1;
+      min-width: 180px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid #cbd5e1;
+      outline: none;
+      font-size: 14px;
+    }
+    .search-input:focus {
+      border-color: #0ea5e9;
+      box-shadow: 0 0 0 1px rgba(14,165,233,0.4);
+    }
+    .pill {
+      padding: 6px 10px;
+      font-size: 11px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pill span.key {
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: #1d4ed8;
+      color: #eff6ff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+    thead {
+      background: #f8fafc;
+    }
+    th, td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      font-weight: 600;
+      color: #475569;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    tbody tr:hover {
+      background: #f9fafb;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .badge-aseguradora {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .badge-bolsillo {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .chip {
+      display: inline-flex;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: #e0f2fe;
+      color: #0369a1;
+      margin: 0 4px 4px 0;
+      cursor: pointer;
+      border: none;
+    }
+    .chip:hover {
+      background: #bae6fd;
+    }
+    .empty {
+      text-align: center;
+      padding: 40px 16px;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #64748b;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 6px rgba(34,197,94,0.2);
+    }
+    .logo {
+      height: 32px;
+    }
+    @media (max-width: 768px) {
+      .container {
+        padding: 16px;
+      }
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      thead {
+        display: none;
+      }
+      tr {
+        margin-bottom: 12px;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        padding: 8px 10px;
+      }
+      td {
+        border-bottom: none;
+        padding: 4px 0;
+      }
+      td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        display: block;
+        font-size: 11px;
+        text-transform: uppercase;
+        color: #64748b;
+        margin-bottom: 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>
+      <img src="logo-nomad.png" alt="Nomad" class="logo" />
+      Panel de ingresos Nomad
+    </h1>
+    <p class="subtitle">
+      Visualiza en tiempo real los ingresos registrados desde el formulario y accede a sus archivos adjuntos.
+    </p>
+
+    <div class="toolbar">
+      <input id="searchInput" class="search-input" type="search" placeholder="Buscar por paciente, médico, hospital o prueba..." />
+      <div class="pill">
+        <span class="key">LIVE</span>
+        Actualización en tiempo real
+      </div>
+    </div>
+
+    <div class="status-indicator" id="status">
+      <span class="dot"></span>
+      Escuchando cambios en Firebase...
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Paciente</th>
+            <th>Médico / Hospital</th>
+            <th>Prueba</th>
+            <th>Pago</th>
+            <th>Archivos</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyRegistros">
+          <tr><td colspan="6" class="empty">Cargando registros...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzJZHEkbOkW8D_xeqHTO-y9bcCDW5ZQw",
+      authDomain: "formulario-nomad.firebaseapp.com",
+      projectId: "formulario-nomad",
+      storageBucket: "formulario-nomad.firebasestorage.app",
+      messagingSenderId: "36365021080",
+      appId: "1:36365021080:web:af4e9158d54b8bedf685ed"
+    };
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    const tbody = document.getElementById("tbodyRegistros");
+    const searchInput = document.getElementById("searchInput");
+    const statusEl = document.getElementById("status");
+    let registros = [];
+
+    function formatDate(ts) {
+      if (!ts) return "-";
+      try {
+        const d = ts.toDate ? ts.toDate() : new Date(ts);
+        return d.toLocaleString("es-MX", { dateStyle: "short", timeStyle: "short" });
+      } catch (e) {
+        return "-";
+      }
+    }
+
+    function openFile(docId, tipo, nombre) {
+      const path = `ingresosNomad/${docId}/${tipo}/${nombre}`;
+      storage.ref(path).getDownloadURL()
+        .then(url => {
+          window.open(url, "_blank");
+        })
+        .catch(err => {
+          console.error("Error al obtener URL de descarga:", err);
+          alert("No se pudo abrir el archivo. Revisa la consola para más detalles.");
+        });
+    }
+
+    function render() {
+      const term = (searchInput.value || "").toLowerCase();
+      tbody.innerHTML = "";
+
+      const filtrados = registros.filter(r => {
+        if (!term) return true;
+        const d = r.data;
+        const reg = d.registroResumen || {};
+        const campos = [
+          reg["NOMBRE DEL PACIENTE"],
+          reg["NOMBRE DEL MEDICO"],
+          reg["HOSPITAL"],
+          reg["PRUEBA"],
+          d.pacienteNombre,
+          d.nombreMedico,
+          d.institucion,
+          d.nombreEstudio
+        ];
+        return campos.some(c => (c || "").toLowerCase().includes(term));
+      });
+
+      if (!filtrados.length) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 6;
+        td.className = "empty";
+        td.textContent = term ? "No se encontraron registros con ese filtro." : "Aún no hay registros.";
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+        return;
+      }
+
+      filtrados.forEach(r => {
+        const d = r.data;
+        const reg = d.registroResumen || {};
+        const tr = document.createElement("tr");
+
+        const tdFecha = document.createElement("td");
+        tdFecha.setAttribute("data-label", "Fecha");
+        tdFecha.textContent = formatDate(d.createdAt);
+        tr.appendChild(tdFecha);
+
+        const tdPaciente = document.createElement("td");
+        tdPaciente.setAttribute("data-label", "Paciente");
+        tdPaciente.textContent = reg["NOMBRE DEL PACIENTE"] || d.pacienteNombre || "-";
+        tr.appendChild(tdPaciente);
+
+        const tdMedicoHosp = document.createElement("td");
+        tdMedicoHosp.setAttribute("data-label", "Médico / Hospital");
+        const medico = reg["NOMBRE DEL MEDICO"] || d.nombreMedico || "-";
+        const hosp = reg["HOSPITAL"] || d.institucion || "";
+        tdMedicoHosp.innerHTML = `<div><strong>${medico}</strong></div><div style="font-size:12px;color:#64748b;">${hosp}</div>`;
+        tr.appendChild(tdMedicoHosp);
+
+        const tdPrueba = document.createElement("td");
+        tdPrueba.setAttribute("data-label", "Prueba");
+        tdPrueba.textContent = reg["PRUEBA"] || d.nombreEstudio || "-";
+        tr.appendChild(tdPrueba);
+
+        const tdPago = document.createElement("td");
+        tdPago.setAttribute("data-label", "Pago");
+        const tipo = reg["TIPO DE PAGO"] || "";
+        const span = document.createElement("span");
+        span.classList.add("badge");
+        if (tipo.startsWith("ASEGURADORA")) {
+          span.classList.add("badge-aseguradora");
+          span.textContent = "Aseguradora";
+        } else if (tipo.startsWith("BOLSILLO")) {
+          span.classList.add("badge-bolsillo");
+          span.textContent = "Bolsillo";
+        } else {
+          span.textContent = tipo || "N/D";
+        }
+        tdPago.appendChild(span);
+        tr.appendChild(tdPago);
+
+        const tdArchivos = document.createElement("td");
+        tdArchivos.setAttribute("data-label", "Archivos");
+
+        const principales = d.archivosPrincipales || [];
+        const adicionales = d.archivosAdicionales || [];
+
+        if (!principales.length && !adicionales.length) {
+          tdArchivos.textContent = "Sin archivos";
+        } else {
+          if (principales.length) {
+            const labelP = document.createElement("div");
+            labelP.style.fontSize = "11px";
+            labelP.style.color = "#64748b";
+            labelP.textContent = "Principales:";
+            tdArchivos.appendChild(labelP);
+            principales.forEach(nombre => {
+              const btn = document.createElement("button");
+              btn.type = "button";
+              btn.className = "chip";
+              btn.textContent = nombre;
+              btn.addEventListener("click", () => openFile(r.id, "principales", nombre));
+              tdArchivos.appendChild(btn);
+            });
+          }
+          if (adicionales.length) {
+            const br = document.createElement("div");
+            br.style.height = "4px";
+            tdArchivos.appendChild(br);
+            const labelA = document.createElement("div");
+            labelA.style.fontSize = "11px";
+            labelA.style.color = "#64748b";
+            labelA.textContent = "Adicionales:";
+            tdArchivos.appendChild(labelA);
+            adicionales.forEach(nombre => {
+              const btn = document.createElement("button");
+              btn.type = "button";
+              btn.className = "chip";
+              btn.textContent = nombre;
+              btn.addEventListener("click", () => openFile(r.id, "adicionales", nombre));
+              tdArchivos.appendChild(btn);
+            });
+          }
+        }
+        tr.appendChild(tdArchivos);
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    searchInput.addEventListener("input", () => render());
+
+    db.collection("ingresosNomad")
+      .orderBy("createdAt", "desc")
+      .limit(200)
+      .onSnapshot(snapshot => {
+        registros = snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() }));
+        statusEl.innerHTML = '<span class="dot"></span> Conectado a Firebase · ' + registros.length + ' registros';
+        render();
+      }, err => {
+        console.error("Error en snapshot de Firestore:", err);
+        statusEl.textContent = "Error al conectar con Firebase. Revisa la consola.";
+      });
+  </script>
+</body>
+</html>
