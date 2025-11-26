@@ -114,6 +114,7 @@
     <div class="toolbar">
       <div id="registrosCount">0 registros</div>
       <button class="btn-small" type="button" onclick="exportarExcel()">Descargar Excel</button>
+      <button class="btn-small" type="button" onclick="exportarFormularioCompleto()">Descargar formulario completo</button>
     </div>
 
     <div class="table-wrapper">
@@ -427,6 +428,88 @@ function cargarRegistros() {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
+    }
+
+
+    function exportarFormularioCompleto() {
+      if (typeof firebase === "undefined" || typeof db === "undefined") {
+        alert("Firebase no está disponible para exportar.");
+        return;
+      }
+      db.collection("ingresosNomad")
+        .orderBy("createdAt", "desc")
+        .limit(1000)
+        .get()
+        .then(function(snapshot) {
+          const docs = snapshot.docs.map(function(doc) {
+            const data = doc.data() || {};
+            const flat = {};
+            Object.keys(data).forEach(function(key) {
+              const value = data[key];
+              if (key === "registroResumen" && value && typeof value === "object" && !Array.isArray(value)) {
+                Object.keys(value).forEach(function(subKey) {
+                  flat[subKey] = value[subKey];
+                });
+              } else if (value && typeof value.toDate === "function") {
+                // Timestamps de Firestore
+                flat[key] = value.toDate().toISOString();
+              } else if (Array.isArray(value)) {
+                flat[key] = value.join(", ");
+              } else {
+                flat[key] = value;
+              }
+            });
+            // Siempre agregamos el id de Firebase
+            flat.firebaseId = doc.id;
+            return flat;
+          });
+
+          if (!docs.length) {
+            alert("No hay registros para exportar.");
+            return;
+          }
+
+          // Construir lista de columnas a partir de todas las llaves
+          const columnas = [];
+          docs.forEach(function(row) {
+            Object.keys(row).forEach(function(key) {
+              if (columnas.indexOf(key) === -1) {
+                columnas.push(key);
+              }
+            });
+          });
+
+          const filas = [];
+          filas.push(columnas.join("\t"));
+
+          docs.forEach(function(row) {
+            const valores = columnas.map(function(col) {
+              let v = row[col];
+              if (v === null || v === undefined) v = "";
+              if (typeof v === "number") {
+                v = String(v);
+              }
+              v = String(v).replace(/"/g, '""').replace(/\r?\n/g, " ");
+              return '"' + v + '"';
+            });
+            filas.push(valores.join("\t"));
+          });
+
+          const contenido = filas.join("\n");
+          const blob = new Blob([contenido], { type: "application/vnd.ms-excel" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "nomad_formulario_completo.xls";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        })
+        .catch(function(err) {
+          console.error("Error al exportar formulario completo:", err);
+          alert("Ocurrió un error al exportar el formulario completo. Revisa la consola para más detalles.");
+        });
     }
 
 document.addEventListener("DOMContentLoaded", inicializarRegistrosDesdeFirebase);
