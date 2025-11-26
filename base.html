@@ -169,6 +169,58 @@
       "CANCELADA"
     ];
 
+let registros = [];
+
+function inicializarRegistrosDesdeFirebase() {
+  try {
+    if (typeof firebase === "undefined" || typeof db === "undefined") {
+      console.warn("Firebase no está disponible en base.html, usando solo localStorage.");
+      try {
+        registros = JSON.parse(localStorage.getItem("nomad_registros") || "[]");
+      } catch (e) {
+        registros = [];
+      }
+      cargarRegistros();
+      return;
+    }
+
+    db.collection("ingresosNomad")
+      .orderBy("createdAt", "desc")
+      .limit(500)
+      .onSnapshot(function(snapshot) {
+        try {
+          registros = snapshot.docs.map(function(doc) {
+            const data = doc.data() || {};
+            const resumen = Object.assign({}, data.registroResumen || {});
+            resumen.firebaseId = doc.id;
+            return resumen;
+          });
+          localStorage.setItem("nomad_registros", JSON.stringify(registros));
+          cargarRegistros();
+        } catch (e) {
+          console.error("Error procesando snapshot de Firebase en base.html:", e);
+        }
+      }, function(err) {
+        console.error("Error al suscribirse a Firebase en base.html:", err);
+        try {
+          registros = JSON.parse(localStorage.getItem("nomad_registros") || "[]");
+        } catch (e) {
+          registros = [];
+        }
+        cargarRegistros();
+      });
+  } catch (e) {
+    console.error("Excepción al inicializar registros desde Firebase en base.html:", e);
+    try {
+      registros = JSON.parse(localStorage.getItem("nomad_registros") || "[]");
+    } catch (e2) {
+      registros = [];
+    }
+    cargarRegistros();
+  }
+}
+
+
 function sincronizarFirebaseDesdePanel(registro) {
   try {
     if (typeof firebase === "undefined") {
@@ -207,7 +259,6 @@ function sincronizarFirebaseDesdePanel(registro) {
     }
 
 function cargarRegistros() {
-      const registros = JSON.parse(localStorage.getItem("nomad_registros") || "[]");
       const tbody = document.querySelector("#tablaRegistros tbody");
       tbody.innerHTML = "";
 
@@ -321,8 +372,10 @@ function cargarRegistros() {
 
     
     function exportarExcel() {
-      const registros = JSON.parse(localStorage.getItem("nomad_registros") || "[]");
-      if (!registros.length) {
+      const datos = (Array.isArray(registros) && registros.length)
+        ? registros
+        : JSON.parse(localStorage.getItem("nomad_registros") || "[]");
+      if (!datos.length) {
         alert("No hay registros para exportar.");
         return;
       }
@@ -344,7 +397,7 @@ function cargarRegistros() {
         "Monto de prueba"
       ];
       const rows = [headers.join("	")];
-      registros.forEach((reg) => {
+      datos.forEach((reg) => {
         const row = [
           reg["FECHA DE CARGA"] || "",
           reg["KAM"] || "",
@@ -376,7 +429,7 @@ function cargarRegistros() {
       URL.revokeObjectURL(url);
     }
 
-document.addEventListener("DOMContentLoaded", cargarRegistros);
+document.addEventListener("DOMContentLoaded", inicializarRegistrosDesdeFirebase);
   </script>
 </body>
 </html>
