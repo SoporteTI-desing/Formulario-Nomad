@@ -63,6 +63,13 @@
       white-space: nowrap;
       text-align: left;
     }
+    .monto-formulario {
+      background: #e0f2fe;
+      color: #1d4ed8;
+      font-weight: 600;
+      border-radius: 6px;
+    }
+
     thead { background: #e5f0ff; }
     tr:nth-child(even) td { background: #f9fafb; }
     .editable { background: #ecfdf3; }
@@ -129,13 +136,14 @@
             <th>Prueba</th>
             <th>Nombre aseguradora</th>
             <th>Tipo de pago</th>
+            <th>Monto de prueba</th>
             <th>Nombre del médico</th>
-            <th class="editable">Pago al KAM</th>
+            <th class="editable">Monto de prueba</th>
             <th class="editable">Status</th>
             <th class="editable">Fecha de envío</th>
             <th class="editable">Fecha de completado</th>
             <th class="editable">Observaciones</th>
-            <th class="editable">Monto de prueba</th>
+            <th class="editable">Opción logística</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -168,6 +176,15 @@
       "PAGADA / PENDIENTE",
       "COMPLETADO",
       "CANCELADA"
+    ];
+
+
+    const LOGISTICA_OPTIONS = [
+      "Verde",
+      "Amarillo",
+      "Naranja",
+      "Rojo",
+      "Azul"
     ];
 
 let registros = [];
@@ -272,19 +289,27 @@ function cargarRegistros() {
           return td;
         };
 
+        const tdMontoFormulario = (key) => {
+          const td = document.createElement("td");
+          td.classList.add("monto-formulario");
+          td.textContent = reg[key] || "";
+          return td;
+        };
+
+
         const tdEditInput = (key) => {
           const td = document.createElement("td");
           td.classList.add("editable");
           const input = document.createElement("input");
           input.type = "text";
           let value = reg[key] || "";
-          if (key === "PAGO AL KAM" || key === "Monto de prueba") {
+          if (key === "PAGO AL KAM" || key === "Monto de prueba" || key === "Monto de prueba editable") {
             if (value) value = formatearPesos(value);
           }
           input.value = value;
           input.addEventListener("blur", () => {
             let v = input.value;
-            if (key === "PAGO AL KAM" || key === "Monto de prueba") {
+            if (key === "PAGO AL KAM" || key === "Monto de prueba" || key === "Monto de prueba editable") {
               v = formatearPesos(v);
               input.value = v;
             }
@@ -349,6 +374,31 @@ function cargarRegistros() {
           return td;
         };
 
+        const tdEditLogistica = (key) => {
+          const td = document.createElement("td");
+          td.classList.add("editable");
+          const sel = document.createElement("select");
+          const empty = document.createElement("option");
+          empty.value = "";
+          empty.textContent = "Sin selección";
+          sel.appendChild(empty);
+          LOGISTICA_OPTIONS.forEach((c) => {
+            const o = document.createElement("option");
+            o.value = c;
+            o.textContent = c;
+            sel.appendChild(o);
+          });
+          sel.value = reg[key] || "";
+          sel.addEventListener("change", () => {
+            registros[index][key] = sel.value;
+            localStorage.setItem("nomad_registros", JSON.stringify(registros));
+            sincronizarFirebaseDesdePanel(registros[index]);
+          });
+          td.appendChild(sel);
+          return td;
+        };
+
+
         tr.appendChild(tdTexto(reg["FECHA DE CARGA"] ? reg["FECHA DE CARGA"].substring(0, 10) : ""));
         tr.appendChild(tdTexto(reg["KAM"]));
         tr.appendChild(tdTexto(reg["HOSPITAL"]));
@@ -357,13 +407,14 @@ function cargarRegistros() {
         tr.appendChild(tdTexto(reg["PRUEBA"]));
         tr.appendChild(tdTexto(reg["Nombre Aseguradora"] || ""));
         tr.appendChild(tdTexto(reg["TIPO DE PAGO"] || ""));
+        tr.appendChild(tdMontoFormulario("Monto de prueba"));
         tr.appendChild(tdTexto(reg["NOMBRE DEL MEDICO"]));
-        tr.appendChild(tdEditInput("PAGO AL KAM"));
+        tr.appendChild(tdEditInput("Monto de prueba editable"));
         tr.appendChild(tdEditStatus("STATUS"));
         tr.appendChild(tdEditDate("FECHA DE ENVIO"));
         tr.appendChild(tdEditDate("FECHA DE COMPLETADO"));
         tr.appendChild(tdEditArea("OBSERVACIONES"));
-        tr.appendChild(tdEditInput("Monto de prueba"));
+        tr.appendChild(tdEditLogistica("OPCION LOGISTICA"));
 
         tbody.appendChild(tr);
       });
@@ -389,13 +440,14 @@ function cargarRegistros() {
         "PRUEBA",
         "Nombre Aseguradora",
         "TIPO DE PAGO",
+        "Monto de prueba",
         "NOMBRE DEL MEDICO",
-        "PAGO AL KAM",
+        "Monto de prueba editable",
         "STATUS",
         "FECHA DE ENVIO",
         "FECHA DE COMPLETADO",
         "OBSERVACIONES",
-        "Monto de prueba"
+        "OPCION LOGISTICA"
       ];
       const rows = [headers.join("	")];
       datos.forEach((reg) => {
@@ -408,15 +460,16 @@ function cargarRegistros() {
           reg["PRUEBA"] || "",
           reg["Nombre Aseguradora"] || "",
           reg["TIPO DE PAGO"] || "",
+          reg["Monto de prueba"] || "",
           reg["NOMBRE DEL MEDICO"] || "",
-          reg["PAGO AL KAM"] || "",
+          reg["Monto de prueba editable"] || "",
           reg["STATUS"] || "",
           reg["FECHA DE ENVIO"] || "",
           reg["FECHA DE COMPLETADO"] || "",
           (reg["OBSERVACIONES"] || "").replace(/\r?\n/g, " "),
-          reg["Monto de prueba"] || ""
+          reg["OPCION LOGISTICA"] || ""
         ];
-        rows.push(row.join("\t"));
+        rows.push(row.join("	"));
       });
       const contenido = rows.join("\n");
       const blob = new Blob([contenido], { type: "application/vnd.ms-excel" });

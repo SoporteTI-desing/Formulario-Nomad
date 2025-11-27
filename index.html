@@ -143,8 +143,6 @@
           <option value="">Selecciona una opción</option>
           <option>Andrea</option>
           <option>Angel</option>
-          <option>Carolina</option>
-          <option>Fernanda</option>
           <option>Francisco</option>
           <option>Marymar</option>
           <option>Inplant</option>
@@ -792,12 +790,12 @@
 
       <div class="row">
         <div class="field-group col-2">
-          <label for="diagnostico">Diagnóstico</label>
-          <input type="text" id="diagnostico" name="diagnostico">
+          <label for="diagnostico">Diagnóstico <span class="required">*</span></label>
+          <input type="text" id="diagnostico" name="diagnostico" required>
         </div>
         <div class="field-group col-2">
-          <label for="estadio">Estadio</label>
-          <input type="text" id="estadio" name="estadio">
+          <label for="estadio">Estadio <span class="required">*</span></label>
+          <input type="text" id="estadio" name="estadio" required>
         </div>
       </div>
 
@@ -822,8 +820,6 @@
           <option value="">Selecciona una opción</option>
           <option>Somatico</option>
           <option>Germinal</option>
-          <option>Diagnostico</option>
-          <option>Estadio</option>
         </select>
       </div>
 
@@ -845,13 +841,6 @@
           <option>Tempus xF+</option>
           <option>Tempus xT</option>
           <option>Tempus xT + xR</option>
-          <option>Biomarcador PDL 1</option>
-          <option>Biomarcador HRD</option>
-          <option>Biomarcador MMR</option>
-          <option>Biomarcador PDY</option>
-          <option>Biomarcador HER 2</option>
-          <option>Biomarcador HER2 + FISH</option>
-          <option>Biomarcador FOLR1</option>
           <option>MGMT Methylation</option>
           <option>Algorithmic Tumor Origin</option>
           <option>INVITAE Panel multicancer</option>
@@ -859,7 +848,12 @@
           <option>INVITAE Hereditary Breast Cancer STAT Panel</option>
         </select>
       </div>
-      <div id="biomarcadorTempus" class="field-group hidden">
+      
+      <div class="field-group">
+        <label for="montoPrueba">Monto de prueba <span class="required">*</span></label>
+        <input type="text" id="montoPrueba" name="montoPrueba" required>
+      </div>
+<div id="biomarcadorTempus" class="field-group hidden">
         <label for="biomarcadorOpcional">Biomarcador (opcional, solo si aplica para Tempus)</label>
         <select id="biomarcadorOpcional" name="biomarcadorOpcional">
           <option value="">Sin biomarcador</option>
@@ -872,6 +866,14 @@
           <option>Biomarcador FOLR1</option>
         </select>
       </div>
+      <div id="biomarcadorFoundation" class="field-group hidden">
+        <label for="biomarcadorFoundationOpcional">Biomarcador (opcional, solo si aplica para FoundationOne)</label>
+        <select id="biomarcadorFoundationOpcional" name="biomarcadorFoundationOpcional">
+          <option value="">Sin biomarcador</option>
+          <option>Biomarcador PDL 1</option>
+        </select>
+      </div>
+
 
       <div class="section-title">Forma de pago</div>
       <div class="field-group">
@@ -981,15 +983,55 @@
 </script>
 
 <script>
-    function handleEstudioChange() {
+    
+    function formatearPesos(valor) {
+      if (valor == null) return "";
+      if (typeof valor !== "string") valor = String(valor);
+      const limpio = valor.replace(/[^0-9,\.\-]/g, "").replace(",", ".");
+      const numero = parseFloat(limpio);
+      if (isNaN(numero)) return valor || "";
+      return "$ " + numero.toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    (function() {
+      var campoHonorario = document.getElementById("honorarioMedico");
+      if (campoHonorario) {
+        campoHonorario.addEventListener("blur", function() {
+          this.value = formatearPesos(this.value);
+        });
+      }
+      var campoMontoPrueba = document.getElementById("montoPrueba");
+      if (campoMontoPrueba) {
+        campoMontoPrueba.addEventListener("blur", function() {
+          this.value = formatearPesos(this.value);
+        });
+      }
+    })();
+
+function handleEstudioChange() {
       const estudio = document.getElementById("nombreEstudio").value;
-      const biomDiv = document.getElementById("biomarcadorTempus");
-      const biomSel = document.getElementById("biomarcadorOpcional");
-      if (estudio.startsWith("Tempus")) {
-        biomDiv.classList.remove("hidden");
+      const biomTempusDiv = document.getElementById("biomarcadorTempus");
+      const biomTempusSel = document.getElementById("biomarcadorOpcional");
+      const biomFoundDiv = document.getElementById("biomarcadorFoundation");
+      const biomFoundSel = document.getElementById("biomarcadorFoundationOpcional");
+      const esTempus = estudio.startsWith("Tempus");
+      const esFoundation = estudio.startsWith("FoundationOne");
+
+      if (esTempus) {
+        if (biomTempusDiv) biomTempusDiv.classList.remove("hidden");
+        if (biomFoundDiv) biomFoundDiv.classList.add("hidden");
+        if (biomFoundSel) biomFoundSel.value = "";
+      } else if (esFoundation) {
+        if (biomTempusDiv) {
+          biomTempusDiv.classList.add("hidden");
+          if (biomTempusSel) biomTempusSel.value = "";
+        }
+        if (biomFoundDiv) biomFoundDiv.classList.remove("hidden");
       } else {
-        biomDiv.classList.add("hidden");
-        biomSel.value = "";
+        if (biomTempusDiv) biomTempusDiv.classList.add("hidden");
+        if (biomTempusSel) biomTempusSel.value = "";
+        if (biomFoundDiv) biomFoundDiv.classList.add("hidden");
+        if (biomFoundSel) biomFoundSel.value = "";
       }
     }
     function handleFormaPagoChange() {
@@ -1119,7 +1161,8 @@ function handleSubmit(ev) {
       "FECHA DE ENVIO": "",
       "FECHA DE COMPLETADO": "",
       "OBSERVACIONES": obj.comentarios || "",
-      "Monto de prueba": ""
+      "Monto de prueba": obj.montoPrueba || "",
+      "Monto de prueba editable": ""
     };
 
     // Guardar en Firebase (Firestore + Storage)
