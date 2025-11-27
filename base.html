@@ -136,9 +136,10 @@
             <th>Prueba</th>
             <th>Nombre aseguradora</th>
             <th>Tipo de pago</th>
+            <th>Aplica Honorario Médico (Monto)</th>
             <th>Monto de prueba</th>
             <th>Nombre del médico</th>
-            <th class="editable">Monto de prueba</th>
+            <th class="editable">Monto de prueba editable</th>
             <th class="editable">Status</th>
             <th class="editable">Fecha de envío</th>
             <th class="editable">Fecha de completado</th>
@@ -296,7 +297,6 @@ function cargarRegistros() {
           return td;
         };
 
-
         const tdEditInput = (key) => {
           const td = document.createElement("td");
           td.classList.add("editable");
@@ -350,30 +350,6 @@ function cargarRegistros() {
           return td;
         };
 
-        const tdEditStatus = (key) => {
-          const td = document.createElement("td");
-          td.classList.add("editable");
-          const sel = document.createElement("select");
-          const empty = document.createElement("option");
-          empty.value = "";
-          empty.textContent = "Sin status";
-          sel.appendChild(empty);
-          STATUS_OPTIONS.forEach((s) => {
-            const o = document.createElement("option");
-            o.value = s;
-            o.textContent = s;
-            sel.appendChild(o);
-          });
-          sel.value = reg[key] || "";
-          sel.addEventListener("change", () => {
-            registros[index][key] = sel.value;
-            localStorage.setItem("nomad_registros", JSON.stringify(registros));
-            sincronizarFirebaseDesdePanel(registros[index]);
-          });
-          td.appendChild(sel);
-          return td;
-        };
-
         const tdEditLogistica = (key) => {
           const td = document.createElement("td");
           td.classList.add("editable");
@@ -399,6 +375,30 @@ function cargarRegistros() {
         };
 
 
+        const tdEditStatus = (key) => {
+          const td = document.createElement("td");
+          td.classList.add("editable");
+          const sel = document.createElement("select");
+          const empty = document.createElement("option");
+          empty.value = "";
+          empty.textContent = "Sin status";
+          sel.appendChild(empty);
+          STATUS_OPTIONS.forEach((s) => {
+            const o = document.createElement("option");
+            o.value = s;
+            o.textContent = s;
+            sel.appendChild(o);
+          });
+          sel.value = reg[key] || "";
+          sel.addEventListener("change", () => {
+            registros[index][key] = sel.value;
+            localStorage.setItem("nomad_registros", JSON.stringify(registros));
+            sincronizarFirebaseDesdePanel(registros[index]);
+          });
+          td.appendChild(sel);
+          return td;
+        };
+
         tr.appendChild(tdTexto(reg["FECHA DE CARGA"] ? reg["FECHA DE CARGA"].substring(0, 10) : ""));
         tr.appendChild(tdTexto(reg["KAM"]));
         tr.appendChild(tdTexto(reg["HOSPITAL"]));
@@ -407,6 +407,7 @@ function cargarRegistros() {
         tr.appendChild(tdTexto(reg["PRUEBA"]));
         tr.appendChild(tdTexto(reg["Nombre Aseguradora"] || ""));
         tr.appendChild(tdTexto(reg["TIPO DE PAGO"] || ""));
+        tr.appendChild(tdMontoFormulario("Aplica Honorario Médico (Monto)"));
         tr.appendChild(tdMontoFormulario("Monto de prueba"));
         tr.appendChild(tdTexto(reg["NOMBRE DEL MEDICO"]));
         tr.appendChild(tdEditInput("Monto de prueba editable"));
@@ -440,6 +441,7 @@ function cargarRegistros() {
         "PRUEBA",
         "Nombre Aseguradora",
         "TIPO DE PAGO",
+        "Aplica Honorario Médico (Monto)",
         "Monto de prueba",
         "NOMBRE DEL MEDICO",
         "Monto de prueba editable",
@@ -460,6 +462,7 @@ function cargarRegistros() {
           reg["PRUEBA"] || "",
           reg["Nombre Aseguradora"] || "",
           reg["TIPO DE PAGO"] || "",
+          reg["Aplica Honorario Médico (Monto)"] || "",
           reg["Monto de prueba"] || "",
           reg["NOMBRE DEL MEDICO"] || "",
           reg["Monto de prueba editable"] || "",
@@ -472,7 +475,7 @@ function cargarRegistros() {
         rows.push(row.join("	"));
       });
       const contenido = rows.join("\n");
-      const blob = new Blob([contenido], { type: "application/vnd.ms-excel" });
+const blob = new Blob([contenido], { type: "application/vnd.ms-excel" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -482,6 +485,7 @@ function cargarRegistros() {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     }
+
 
 
     function exportarFormularioCompleto() {

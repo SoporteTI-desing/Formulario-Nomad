@@ -1157,12 +1157,14 @@ function handleSubmit(ev) {
       "TIPO DE PAGO": tipoPago,
       "NOMBRE DEL MEDICO": obj.nombreMedico || "",
       "PAGO AL KAM": "",
+      "Aplica Honorario Médico (Monto)": obj.honorarioMedico || "",
       "STATUS": "",
       "FECHA DE ENVIO": "",
       "FECHA DE COMPLETADO": "",
       "OBSERVACIONES": obj.comentarios || "",
       "Monto de prueba": obj.montoPrueba || "",
-      "Monto de prueba editable": ""
+      "Monto de prueba editable": "",
+      "OPCION LOGISTICA": ""
     };
 
     // Guardar en Firebase (Firestore + Storage)
