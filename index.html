@@ -53,6 +53,28 @@
     }
     .field-group { margin-bottom: 12px; }
     label { display:block; font-size: 13px; margin-bottom: 4px; }
+    .biomarcador-list {
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      margin-top:4px;
+    }
+    .biomarcador-list label {
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid #d0d7e2;
+      background:#f9fafb;
+      font-size:12px;
+      margin-bottom:4px;
+    }
+    .biomarcador-list input[type=checkbox] {
+      margin:0;
+    }
+n:0;
+    }
     .required { color:#e11d48; }
     input[type=text],input[type=email],input[type=tel],input[type=date],select,textarea {
       width: 100%;
@@ -95,6 +117,33 @@
       max-height:220px;
       overflow:auto;
       white-space:pre-wrap;
+    }
+    .success-message {
+      margin-top:14px;
+      padding:10px 12px;
+      border-radius:10px;
+      background:#ecfdf3;
+      border:1px solid #16a34a;
+      font-size:13px;
+    }
+    .success-actions {
+      margin-top:8px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .success-link {
+      font-size:12px;
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid #0052a5;
+      text-decoration:none;
+      color:#0052a5;
+      background:#f0f5ff;
+    }
+    .success-link:hover {
+      background:#0052a5;
+      color:#ffffff;
     }
     .hidden { display:none; }
     .floating-panel-btn {
@@ -841,8 +890,6 @@
           <option>Tempus xF+</option>
           <option>Tempus xT</option>
           <option>Tempus xT + xR</option>
-          <option>MGMT Methylation</option>
-          <option>Algorithmic Tumor Origin</option>
           <option>INVITAE Panel multicancer</option>
           <option>INVITAE Common hereditary Cancer</option>
           <option>INVITAE Hereditary Breast Cancer STAT Panel</option>
@@ -854,19 +901,21 @@
         <input type="text" id="montoPrueba" name="montoPrueba" required>
       </div>
 <div id="biomarcadorTempus" class="field-group hidden">
-        <label for="biomarcadorOpcional">Biomarcador (opcional, solo si aplica para Tempus)</label>
-        <select id="biomarcadorOpcional" name="biomarcadorOpcional">
-          <option value="">Sin biomarcador</option>
-          <option>Biomarcador PDL 1</option>
-          <option>Biomarcador HRD</option>
-          <option>Biomarcador MMR</option>
-          <option>Biomarcador PDY</option>
-          <option>Biomarcador HER 2</option>
-          <option>Biomarcador HER2 + FISH</option>
-          <option>Biomarcador FOLR1</option>
-        </select>
+        <label>Biomarcador (opcional, solo si aplica para Tempus)</label>
+        <div class="biomarcador-list">
+          <label><input type="checkbox" name="biomarcadorOpcional" value="Biomarcador PDL 1"> Biomarcador PDL 1</label>
+          <label><input type="checkbox" name="biomarcadorOpcional" value="Biomarcador HRD"> Biomarcador HRD</label>
+          <label><input type="checkbox" name="biomarcadorOpcional" value="Biomarcador MMR"> Biomarcador MMR</label>
+          <label><input type="checkbox" name="biomarcadorOpcional" value="Biomarcador PDY"> Biomarcador PDY</label>
+          <label><input type="checkbox" name="biomarcadorOpcional" value="Biomarcador HER 2"> Biomarcador HER 2</label>
+          <label><input type="checkbox" name="biomarcadorOpcional" value="Biomarcador HER2 + FISH"> Biomarcador HER2 + FISH</label>
+          <label><input type="checkbox" name="biomarcadorOpcional" value="Biomarcador FOLR1"> Biomarcador FOLR1</label>
+          <label><input type="checkbox" name="biomarcadorOpcional" value="MGMT Methylation"> MGMT Methylation</label>
+          <label><input type="checkbox" name="biomarcadorOpcional" value="Algorithmic Tumor Origin"> Algorithmic Tumor Origin</label>
+        </div>
       </div>
-      <div id="biomarcadorFoundation" class="field-group hidden">
+
+<div id="biomarcadorFoundation" class="field-group hidden">
         <label for="biomarcadorFoundationOpcional">Biomarcador (opcional, solo si aplica para FoundationOne)</label>
         <select id="biomarcadorFoundationOpcional" name="biomarcadorFoundationOpcional">
           <option value="">Sin biomarcador</option>
@@ -960,6 +1009,13 @@
     </form>
 
     <div id="result" class="result-box hidden"></div>
+    <div id="mensajeExito" class="success-message hidden">
+      Registro enviado correctamente.
+      <div class="success-actions">
+        <a id="linkCorreo" href="#" target="_blank" class="success-link">Enviar por correo</a>
+        <a id="linkWhatsApp" href="#" target="_blank" class="success-link">Enviar por WhatsApp</a>
+      </div>
+    </div>
   </div>
 
   
@@ -983,6 +1039,26 @@
 </script>
 
 <script>
+    
+    // Directorio telefónico de KAMs para WhatsApp
+    const KAM_TELEFONOS = {
+      "Francisco": "5554360130",
+      "Inplant": "5551903380",
+      "Marymar": "5543401015",
+      "Angel": "5579681460",
+      "Andrea": "5579681304",
+      "Nereida": "5580559686"
+    };
+    const KAM_CORREOS = {
+      "Francisco": "josefrancisco.munoz@nomadgenetics.com",
+      "Marymar": "ger.genomica@nomadgenetics.com",
+      "Angel": "kam2.mx@nomadgenetics.com",
+      "Andrea": "kam3.mx@nomadgenetics.com",
+      "Nereida": "kam.mty1@nomadgenetics.com",
+      "Claudia": "kam.gdl1@nomadgenetics.com",
+      "Melina": "backoffice@nomadgenetics.com",
+      "Karla": "log.mx@nomadgenetics.com"
+    };
     
     function formatearPesos(valor) {
       if (valor == null) return "";
@@ -1011,7 +1087,7 @@
 function handleEstudioChange() {
       const estudio = document.getElementById("nombreEstudio").value;
       const biomTempusDiv = document.getElementById("biomarcadorTempus");
-      const biomTempusSel = document.getElementById("biomarcadorOpcional");
+      const biomTempusCheckboxes = document.querySelectorAll("#biomarcadorTempus input[name=\"biomarcadorOpcional\"]");
       const biomFoundDiv = document.getElementById("biomarcadorFoundation");
       const biomFoundSel = document.getElementById("biomarcadorFoundationOpcional");
       const esTempus = estudio.startsWith("Tempus");
@@ -1024,12 +1100,14 @@ function handleEstudioChange() {
       } else if (esFoundation) {
         if (biomTempusDiv) {
           biomTempusDiv.classList.add("hidden");
-          if (biomTempusSel) biomTempusSel.value = "";
+          biomTempusCheckboxes.forEach(cb => cb.checked = false);
         }
         if (biomFoundDiv) biomFoundDiv.classList.remove("hidden");
       } else {
-        if (biomTempusDiv) biomTempusDiv.classList.add("hidden");
-        if (biomTempusSel) biomTempusSel.value = "";
+        if (biomTempusDiv) {
+          biomTempusDiv.classList.add("hidden");
+          biomTempusCheckboxes.forEach(cb => cb.checked = false);
+        }
         if (biomFoundDiv) biomFoundDiv.classList.add("hidden");
         if (biomFoundSel) biomFoundSel.value = "";
       }
@@ -1134,6 +1212,12 @@ function handleSubmit(ev) {
         obj[k] = v;
       }
     }
+
+    // Unificar selección múltiple de biomarcadores Tempus en una sola cadena
+    if (Array.isArray(obj.biomarcadorOpcional)) {
+      obj.biomarcadorOpcional = obj.biomarcadorOpcional.join(", ");
+    }
+
     const archivosPrincipales = document.getElementById("archivosPrincipales").files;
     const archivosAdicionales = document.getElementById("archivosAdicionales").files;
     obj.archivosPrincipales = Array.from(archivosPrincipales).map(f => f.name);
@@ -1153,6 +1237,7 @@ function handleSubmit(ev) {
       "ESTADO": obj.ciudad || "",
       "NOMBRE DEL PACIENTE": obj.pacienteNombre || "",
       "PRUEBA": obj.nombreEstudio || "",
+      "Biomarcadores Tempus": obj.biomarcadorOpcional || "",
       "Nombre Aseguradora": obj.formaPago === "Aseguradora" ? (obj.nombreAseguradora || "") : "",
       "TIPO DE PAGO": tipoPago,
       "NOMBRE DEL MEDICO": obj.nombreMedico || "",
@@ -1168,7 +1253,64 @@ function handleSubmit(ev) {
     };
 
     // Guardar en Firebase (Firestore + Storage)
-    guardarEnFirebase(obj, archivosPrincipales, archivosAdicionales, registro);form.reset();
+    guardarEnFirebase(obj, archivosPrincipales, archivosAdicionales, registro);
+
+    // Preparar mensaje de resumen para compartir
+    const telefonoKAM = obj.kam && KAM_TELEFONOS[obj.kam] ? KAM_TELEFONOS[obj.kam] : "";
+    const resumenTexto =
+      "Nuevo registro Nomad" + "\n\n" +
+      "KAM: " + (obj.kam || "") + "\n" +
+      (telefonoKAM ? ("Teléfono KAM: " + telefonoKAM + "\n") : "") +
+      "Hospital: " + (obj.institucion || "") + "\n" +
+      "Estado: " + (obj.ciudad || "") + "\n" +
+      "Paciente: " + (obj.pacienteNombre || "") + "\n" +
+      "Prueba: " + (obj.nombreEstudio || "") + "\n" +
+      "Biomarcadores Tempus: " + (obj.biomarcadorOpcional || "Sin biomarcador") + "\n" +
+      "Monto de prueba: " + (obj.montoPrueba || "") + "\n" +
+      "Forma de pago: " + (obj.formaPago || "") + "\n";
+
+    const asunto = "Nuevo registro Nomad - " + (obj.nombreEstudio || "");
+    const linkCorreo = document.getElementById("linkCorreo");
+    const linkWhatsApp = document.getElementById("linkWhatsApp");
+
+    if (linkCorreo) {
+      // Si el KAM tiene correo configurado, usarlo como destinatario.
+      let correoDestino = "";
+      if (obj.kam && KAM_CORREOS[obj.kam]) {
+        correoDestino = KAM_CORREOS[obj.kam];
+      }
+      // Abrir directamente el compositor de Gmail en una nueva pestaña
+      const gmailHref = "https://mail.google.com/mail/?view=cm&fs=1"
+        + (correoDestino ? "&to=" + encodeURIComponent(correoDestino) : "")
+        + "&su=" + encodeURIComponent(asunto)
+        + "&body=" + encodeURIComponent(resumenTexto);
+      linkCorreo.href = gmailHref;
+    }
+
+    if (linkWhatsApp) {
+      // Usar el WhatsApp del KAM seleccionado (si existe en el directorio)
+      let telefonoWhats = "";
+      if (obj.kam && KAM_TELEFONOS[obj.kam]) {
+        // Asumimos números de México; se antepone 52
+        telefonoWhats = "52" + KAM_TELEFONOS[obj.kam];
+      }
+      let waHref;
+      if (telefonoWhats) {
+        waHref = "https://wa.me/" + telefonoWhats + "?text=" + encodeURIComponent(resumenTexto);
+      } else {
+        // Si no hay número configurado para ese KAM, abrir WhatsApp sin número fijo
+        waHref = "https://wa.me/?text=" + encodeURIComponent(resumenTexto);
+      }
+      linkWhatsApp.href = waHref;
+    }
+
+    const mensajeExito = document.getElementById("mensajeExito");
+    if (mensajeExito) {
+      mensajeExito.classList.remove("hidden");
+      mensajeExito.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    form.reset();
     document.getElementById("result").classList.add("hidden");
   }
 </script>

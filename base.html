@@ -222,6 +222,7 @@
             <th>Estado</th>
             <th>Nombre del paciente</th>
             <th>Prueba</th>
+            <th>Biomarcadores Tempus</th>
             <th>Nombre aseguradora</th>
             <th>Tipo de pago</th>
             <th>Aplica Honorario Médico (Monto)</th>
@@ -493,6 +494,7 @@ function cargarRegistros() {
         tr.appendChild(tdTexto(reg["ESTADO"]));
         tr.appendChild(tdTexto(reg["NOMBRE DEL PACIENTE"]));
         tr.appendChild(tdTexto(reg["PRUEBA"]));
+        tr.appendChild(tdTexto(reg["Biomarcadores Tempus"] || ""));
         tr.appendChild(tdTexto(reg["Nombre Aseguradora"] || ""));
         tr.appendChild(tdTexto(reg["TIPO DE PAGO"] || ""));
         tr.appendChild(tdMontoFormulario("Aplica Honorario Médico (Monto)"));
@@ -527,6 +529,7 @@ function cargarRegistros() {
         "ESTADO",
         "NOMBRE DEL PACIENTE",
         "PRUEBA",
+        "Biomarcadores Tempus",
         "Nombre Aseguradora",
         "TIPO DE PAGO",
         "Aplica Honorario Médico (Monto)",
@@ -548,6 +551,7 @@ function cargarRegistros() {
           reg["ESTADO"] || "",
           reg["NOMBRE DEL PACIENTE"] || "",
           reg["PRUEBA"] || "",
+          reg["Biomarcadores Tempus"] || "",
           reg["Nombre Aseguradora"] || "",
           reg["TIPO DE PAGO"] || "",
           reg["Aplica Honorario Médico (Monto)"] || "",
