@@ -934,8 +934,23 @@
             rel="noopener noreferrer"
           >
             👉 Abrir carpeta de Google Drive para adjuntar tus archivos
-            </a>
+          </a>
         </div>
+        <input type="file" id="archivosPrincipales" name="archivosPrincipales" multiple style="display:none;">
+      </div>
+      <div class="field-group files-input" style="display:none;">
+        <label for="archivosAdicionales">Adjunta + documentos</label>
+        <div style="margin:4px 0; font-size:12px;">
+          <a
+            href="https://drive.google.com/drive/folders/1SvJEEKCjNHf8YDmrwJCFOhRqrWwUjDQ4?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            👉 Abrir carpeta de Google Drive para adjuntar documentos adicionales
+          </a>
+        </div>
+        <input type="file" id="archivosAdicionales" name="archivosAdicionales" multiple>
+      </div>
       <div class="field-group">
         <label for="comentarios">Comentarios</label>
         <textarea id="comentarios" name="comentarios"></textarea>
