@@ -214,594 +214,595 @@ n:0;
         </div>
         <div class="field-group col-2">
           <label for="medicoSelect">Nombre completo del Médico <span class="required">*</span></label>
+          <input type="text" id="medicoSearch" placeholder="Buscar médico..." oninput="filterMedicos()" />
           <select id="medicoSelect" required onchange="handleMedicoSelectChange()">
             <option value="">Selecciona una opción</option>
-          <option>ABEL BERNECHEA MIRANDA</option>
-          <option>ALBERTO VIELMA VALDEZ</option>
-          <option>ALEJANDRA JIMENA GARCÍA VELAZQUEZ</option>
-          <option>ALEJANDRO LOPEZ CUETO ESPINOZA</option>
-          <option>ALFONSO TORRES ROJO</option>
-          <option>ALMA LILIA ORTIZ MALDONADO</option>
-          <option>ANA CRISTINA ARTEAGA GOMEZ</option>
-          <option>ANAIT ABAD SOLARES</option>
-          <option>AURORA MEDINA SANSON</option>
-          <option>AZCARY VAZQUEZ TINAJERO</option>
-          <option>BENIGNO EMMANUEL RODRIGUEZ SOTO</option>
-          <option>BETSABE HERNANDEZ HERNANDEZ</option>
-          <option>BRENDA LETICIA GONZALEZ GARCÍA</option>
-          <option>CARLOS ALBERTO LARA GUTIÉRREZ</option>
-          <option>CARLOS ALBERTO SERVIN HERNANDEZ</option>
-          <option>CARLOS MANUEL ORTIZ MENDOZA</option>
-          <option>CRISTINA ALVARADO SILVA</option>
-          <option>DANTE CARBAJAL OCAMPO</option>
-          <option>DAVID JOSÉ HEREDIA VÁZQUEZ</option>
-          <option>DENYS ELIZABETH DELGADO AMADOR</option>
-          <option>DIANA PATRICIA JIMENEZ CARRANZA</option>
-          <option>DINO ALBERTO MURILLO CRUZ</option>
-          <option>EDGAR NERI PAEZ</option>
-          <option>EDGAR RODRIGUEZ ANTEZANA</option>
-          <option>EDNA ROJAS CURIEL</option>
-          <option>EDUARDO ANTONIO MAAFS MOLINA</option>
-          <option>EDUARDO EDMUNDO REYNOSO GOMEZ</option>
-          <option>EDUARDO TELLEZ BERNAL</option>
-          <option>ELISEO NEFTALI DE LA CRUZ ESCOBAR</option>
-          <option>ETZALLI PAMELA LINARES CHAVEZ</option>
-          <option>FELIPE VILLEGAS CARLOS</option>
-          <option>FERNANDO CERECEDO DIAZ</option>
-          <option>FERNANDO ULISES LARA GONZÁLEZ</option>
-          <option>FERNANDO ULISES LARA MEDINA</option>
-          <option>GABRIEL GALVAN SALAZAR</option>
-          <option>GABRIELA NUÑEZ GUARDADO</option>
-          <option>GERARDO CASTORENA ROJI</option>
-          <option>GERARDO GABRIEL MINAURO MUÑOZ</option>
-          <option>GERMAN CASTELAZO RAMIREZ</option>
-          <option>GERMAN CASTELAZO RICO</option>
-          <option>GLORIA MARTINEZ MARTINEZ</option>
-          <option>GUSTAVO JONY RAMOS BLAS</option>
-          <option>HECTOR ARIAS CEBALLOS</option>
-          <option>HERMINIA DEL SOCORRO ARVELO SAAVEDRA</option>
-          <option>IGNACIO JAIME PEREZ MARTINEZ</option>
-          <option>IRINEO DOMINGUEZ GABRIEL</option>
-          <option>IVÁN ORTIZ CALDERÓN</option>
-          <option>JANETT CABALLERO JASSO</option>
-          <option>JAQUELINE AGUIRRE GOMEZ</option>
-          <option>JAVIER GARCIA ESTRADA</option>
-          <option>JESUS ARMANDO SANCHEZ GONZALEZ</option>
-          <option>JOEL BAÑUELOS FLORES</option>
-          <option>JORGE ALBERTO SALAZAR ANDRADE</option>
-          <option>JOSE EUGENIO VAZQUEZ</option>
-          <option>JOSE GERARDO VELAZQUEZ OLGUIN</option>
-          <option>JOSE LUIS ALVAREZ VERA</option>
-          <option>JOSE LUIS LOPEZ LOPEZ</option>
-          <option>JOSE MANUEL ARTURO RUANO AGUILAR</option>
-          <option>JUAN CARLOS OLIVA POSADA</option>
-          <option>JUAN CARLOS ZAPOT MARTINEZ</option>
-          <option>JUAN FERNANDO ARAGON SANCHEZ</option>
-          <option>JUAN LUIS ABOITES LUCERO</option>
-          <option>JULIO CESAR VELASCO RODRIGUEZ</option>
-          <option>JULIO EDUARDO MARTÍNEZ SAMANO</option>
-          <option>KARINA MURILLO MEDINA</option>
-          <option>KELLY GARCIA JAVIER</option>
-          <option>LAURA TORRECILLAS TORRES</option>
-          <option>LUIIS ANTONIO NUÑEZ TRENADO</option>
-          <option>LUZ MARIA RIVAS CORCHADO</option>
-          <option>MA DE LOURDES GUTIERREZ RIVERA</option>
-          <option>MARCOS LOPEZ NAVEDA</option>
-          <option>MARIA DE LA LUZ GARCA TINOCO</option>
-          <option>MARÍA DEL CONSUELO DÍAZ ROMERO</option>
-          <option>MARIA ELISA OTEIRO CERDEIRA</option>
-          <option>MARIA EUGENIA SALINAS NIEVES</option>
-          <option>MARIA PAULA HERNANDEZ</option>
-          <option>MARIA TERESA CERVANTES DIAZ</option>
-          <option>MARIANA MONSERRAT GOMEZ JARA</option>
-          <option>MARISOL RIVERA HERNANDEZ</option>
-          <option>MIGUEL ANGEL MONROY RAMÍREZ</option>
-          <option>MIGUEL NORIEGA JUAREZ</option>
-          <option>MOISES ZEFERINO TOQUERO</option>
-          <option>NATIVIDAD NERI MUÑOZ</option>
-          <option>NOE FLORES</option>
-          <option>NORA MARIA PEREZ HRNANDEZ</option>
-          <option>OSCAR SALVADOR SANCHEZ VELAZQUEZ</option>
-          <option>PAMELA AYALA HERNANDEZ</option>
-          <option>PATRICIA PADILLA ARRIETA</option>
-          <option>PEDRO LUNA MERLOS</option>
-          <option>PEDRO LUNA PEREZ</option>
-          <option>RAFAEL MEDRANO GUZMAN</option>
-          <option>RAMON JESUS MARTELL GUERRERO</option>
-          <option>ROSA LUZ LUNA PLACENCIA</option>
-          <option>SALIM ABRAHAM BARQUET MUÑOZ</option>
-          <option>SEIR ALFONSO CORTES CARDENAS</option>
-          <option>SERGIO PEDRAZA BARAJAS</option>
-          <option>SIGMUND RODRIGUEZ ROJAS</option>
-          <option>SILVIA MARGARITA ALVARFEZ MALDONADO</option>
-          <option>TALINA RAMIREZ CARO</option>
-          <option>VICTOR ALFONSO MARTINEZ DIAZ</option>
-          <option>VICTOR HUGO CARMONA ORNELA S</option>
-          <option>VICTOR MANUEL MARROQUÍN TORRES</option>
-          <option>VICTOR RAMON ANDRADE SEPULVEDA</option>
-          <option>XINOTECATL JIMENEZ VILLANUEVA</option>
-          <option>YOLANDA LIZBETH BAUTISTA ARAGÓN</option>
-          <option>SARISH DEL REAL ORDOÑEZ</option>
-          <option>ALMA AZUCENA SEGURA CHAMA</option>
-          <option>ANA ELENA MARTIN AGUILAR</option>
-          <option>CRISTOBAL DIAZ GOMEZ</option>
-          <option>EDGAR VARELA SANTOYO</option>
-          <option>EDITH GARCÍA LUNA</option>
-          <option>GUSTAVO FLORENCIO CORTES MARTINEZ</option>
-          <option>HECTOR RODRIGUEZ NAVARRO</option>
-          <option>ITZIA VERDUZCO FLORES</option>
-          <option>JORGE ANTONIO MACÍAS MILLÁN</option>
-          <option>LUIS ARTURO CARDOSO APARICIO</option>
-          <option>LUIS ENRIQUE SOTO</option>
-          <option>MARGARITA CAMPUZANO BUENROSTRO</option>
-          <option>MAYRA CRISTINA GALEANA HERNANDEZ</option>
-          <option>OSVALDO HERNANDEZ FLORES</option>
-          <option>ROMMEL IVAN RODRIGUEZ SIMENTAL</option>
-          <option>MARIO EDUARDO ALONSO CALAMACO</option>
-          <option>DAVID DÁVILA DUPONT</option>
-          <option>DIONE AGUILAR Y MÉNDEZ</option>
-          <option>GERARDO AMARANTE DE LEÓN</option>
-          <option>GUADALUPE EVARISTO CEDILLO SALAZAR</option>
-          <option>MAURICIO ANTUAN CANAVATI MARCOS</option>
-          <option>AMANCIO GATICA PEREZ</option>
-          <option>CARMEN AGUILAR JIMENEZ</option>
-          <option>JOSE GUSTAVO NUÑEZ CARRILLO</option>
-          <option>SALVADOR MACIAS DÍAZ</option>
-          <option>DAVID ACOSTA GUTIÉRREZ</option>
-          <option>LEOPOLDO ABRAHAM LUGO ALFEREZ</option>
-          <option>MARINEE TORRES AGUILAR</option>
-          <option>MIJAEL TOIBER LEVY</option>
-          <option>EMILIO GÁMEZ UGALDE</option>
-          <option>JAIME ARTURO GUEL</option>
-          <option>ERICK SALADO RAMIREZ</option>
-          <option>JESUS RICO GUTIERREZ</option>
-          <option>MARIA DEL ROSARIO ESTRADA FALCON</option>
-          <option>GUILLERMO GOCHER DAMIÁN</option>
-          <option>JAIME NAVARRETE ALEMÁN</option>
-          <option>FROYLAN LÓPEZ LÓPEZ</option>
-          <option>CLAUDIA LORENA URZUA FLORES</option>
-          <option>ELIA NALLELY BARRIENTOS LUNA</option>
-          <option>MARÍA CRISTINA AGUILAR MARTÍNEZ</option>
-          <option>ADRIAN CRAVIOTO VILLANUEVA</option>
-          <option>ALBERTO OLAYA VARGAS</option>
-          <option>ALBERTO VILLALOBOS PRIETO</option>
-          <option>ALEJANDRO NOGUEZ RAMOS</option>
-          <option>ALLAN LEGASPI SAUTER</option>
-          <option>ALVARO AGUAYO GONZÁLEZ</option>
-          <option>ANTONIO GOMEZ PEDRAZA</option>
-          <option>ANTONIO MAFFUZ AZIZ</option>
-          <option>CARLOLS DANIEL ROBLES VIDAL</option>
-          <option>CARLOS ARTURO GONZÁLEZ NÚÑEZ</option>
-          <option>CHRISTIAN PATRICIO CAMACHO LIMAS</option>
-          <option>CLAUDIO RENE MONTESDEOCA ORELLANA</option>
-          <option>CONNIE ZURATZI DENEKEN HERNÁNDEZ</option>
-          <option>CONSUELO IRENE GUTIERREZ COLIN</option>
-          <option>DAGOBERTO MOLINA POLO LÓPEZ DE CÁRDENAS</option>
-          <option>DANIELA SHVEID GERSON</option>
-          <option>DANIELLA GOMEZ PUE</option>
-          <option>DAVID EDUARDO MUÑOZ GONZALEZ</option>
-          <option>DIANA ALEJANDRA VILLEGAS OSORNO</option>
-          <option>ELIAS RESCALA BACA</option>
-          <option>ELIZABETH SANCHEZ VALLE</option>
-          <option>ENRIQUE GOMEZ MORALES</option>
-          <option>ERIKA BETZABE RUIZ GARCIA</option>
-          <option>ERNESTO JOSE ZEPEDA CASTILLA</option>
-          <option>ERNESTO R. SANCHEZ FORGACH</option>
-          <option>ESMERALDA ROMERO BAÑUELOS</option>
-          <option>FERNANDO CORDERA GONZALEZ DE COSIO</option>
-          <option>FERNANDO PEREZ ZINCER</option>
-          <option>GABRIEL SANTIAGO CONCHA</option>
-          <option>GABRIELA OLIVIA REGALADO PORRAS</option>
-          <option>GEOVANI AMADOR GARCIA</option>
-          <option>GERARDO MIRANDA DEVORA</option>
-          <option>GUILLERMO MANUEL OLIVARES BELTRÁN</option>
-          <option>HORACIO SUÁREZ DEL PUERTO</option>
-          <option>IRMA SOLDEVILLA GALLARDO</option>
-          <option>IRVING JAVIER MEJIA HERNANDEZ</option>
-          <option>JAIME SHALKOW KLINCOVSTEIN.</option>
-          <option>JANISSE KERSHENOVICH GERSSON</option>
-          <option>JESUS MIGUEL LAZARO LEÓN</option>
-          <option>JORGE ARTURO ALATORRE ALEXANDER</option>
-          <option>JOSE ANTONIO POSADA TORRES</option>
-          <option>JOSE FABIAN MARTINEZ HERRERA</option>
-          <option>JOSE GABRIEL CHAVEZ SANCHEZ</option>
-          <option>JUAN ALBERTO SERRANO OLVERA</option>
-          <option>JUAN MANUEL STETA OROZCO</option>
-          <option>LEOPOLDO GUZMAN NAVARRO</option>
-          <option>LUIS ANTONIO LARA MEJIA</option>
-          <option>LUIS ANTONIO MEILLON GARCIA</option>
-          <option>MANUEL ACUÑA TOVAR</option>
-          <option>MANUEL MAGALLANES</option>
-          <option>MANUEL ROBERTO MORALES POLANCO</option>
-          <option>MARIA ANDREA BARBERO IBARROLA</option>
-          <option>MARÍA DOLORES DE LA MATA MOYA</option>
-          <option>MARYTERE HERRERA MARTINEZ</option>
-          <option>MIGUEL CORRES MOLINA</option>
-          <option>MILAGROS PÉREZ QUINTANILLA</option>
-          <option>MONICA ISABEL MENESES MEDINA</option>
-          <option>NICOLE MARIE ÍÑIGUEZ ARIZA</option>
-          <option>OTONIEL LOPEZ RIVEROL</option>
-          <option>PAULA ANEL CABRERA GALEANA</option>
-          <option>RAQUEL GERSON CWILICH</option>
-          <option>ROBERTO ALFARO LARA</option>
-          <option>ROBERTO ENRIQUE HERNANDEZ PEÑA</option>
-          <option>ROBERTO RIVERA LUNA</option>
-          <option>ROBIN JENNIFER SHAW DULIN</option>
-          <option>ROCIO DEL SOCORRO CARDENAS CARDOS</option>
-          <option>RODRIGO YAHEL ADAME MORENO</option>
-          <option>SAMUEL RIVERA RIVERA</option>
-          <option>SILVIA NATALIA LOPEZ HERNANDEZ</option>
-          <option>SILVIA PATRICIA VILLAREAL COLIN</option>
-          <option>TALIA WEGMAN OSTROSKY</option>
-          <option>VANESSA ROSAS CAMARGO</option>
-          <option>YAZMIN CAROLINA BLANCO VAZQUEZ</option>
-          <option>YVETTE NEME YUNES</option>
-          <option>ANA PAULINA MELENDEZ FERNANDEZ</option>
-          <option>CARLOS DANIEL LEVER ROSAS</option>
-          <option>GABRIEL TELLEZ TREVILLA</option>
-          <option>JORGE ENRIQUE MONGES JONES</option>
-          <option>JORGE LUIS CORTES RUBIO</option>
-          <option>JOSE FRANCISCO GALLEGOS HERNANDEZ</option>
-          <option>JOSE RODRIGO ESPINOSA FERNANDEZ</option>
-          <option>JUAN ALEJANDRO SILVA</option>
-          <option>KARLA SUSANA MARTIN TELLEZ</option>
-          <option>MARCO ANTONIO DE LA ROSA ABAROA</option>
-          <option>MARIO CUELLAR HUBBE</option>
-          <option>RAFAEL BRICEÑO HERNANDEZ</option>
-          <option>RAFAEL PADILLA LONGORIA</option>
-          <option>RODRIGO ARRANGOIZ MAJUL</option>
-          <option>SERGIO CARLOS RODRIGUEZ BAHENA</option>
-          <option>SERGIO TORRES VARGAS</option>
-          <option>DIEGO JORGE</option>
-          <option>ERNESTO MORENO SALAS</option>
-          <option>JOSE GADU CAMPOS SALCEDO</option>
-          <option>MAXWELL AVILES RODRIGUEZ</option>
-          <option>ELVIRA GÓMEZ GÓMEZ</option>
-          <option>MARICELA GARCIA GARCÉS</option>
-          <option>SAUL CAMPOS GOMEZ</option>
-          <option>GISELA NIEVES HERNÁNDEZ RUIZ</option>
-          <option>JUAN LORENZO ESPINO VILLALOBOS</option>
-          <option>ANTONIO ROLON PADILLA</option>
-          <option>ARMANDO RAMIREZ</option>
-          <option>FROYLAN LOPEZ LOPEZ</option>
-          <option>JESUS ELVIS CABRERA LUVIANO</option>
-          <option>JORGE ARMANDO CASTELAN PEDRAZA</option>
-          <option>JORGE MAYORGA ACUÑA</option>
-          <option>JOSE JUAN RAMIREZ JAIME</option>
-          <option>ALICIA GUTIERREZ MATA</option>
-          <option>BRIZIO MORENO JAIME</option>
-          <option>CARLOS ALBERTO RAMIREZ ALVARADO</option>
-          <option>CARLOS RAMÍREZ ALVARADO</option>
-          <option>DANIEL CAPDEVILLE GARCIA</option>
-          <option>DANIEL CAPDEVILLE GARCÍA</option>
-          <option>DANIEL PÉREZ CERVANTES</option>
-          <option>DAVID CAZARES SANCHEZ</option>
-          <option>DAVID CÁZAREZ SÁNCHEZ</option>
-          <option>DAVID CUEVAS QUEZADA</option>
-          <option>DAVID SUÁREZ GARCÍA</option>
-          <option>FERNANDO SALDÍVAR GALINDO</option>
-          <option>JHONATAN BUENO</option>
-          <option>JOSE AGUIRRE TRIGUERO</option>
-          <option>JOSE ANTONIO TREJO PANTOJA</option>
-          <option>JOSÉ LUIS GONZÁLEZ TRUJILLO</option>
-          <option>JOSÉ LUIS GONZÁLEZ TRUJILLO</option>
-          <option>LETICIA VÁZQUEZ CORTÉS</option>
-          <option>LUIS JONATHAN BUENO ROSARIO</option>
-          <option>MA ISABEL ENRÍQUEZ ACEVES</option>
-          <option>ROBERTO KURI EXSOME</option>
-          <option>ROBERTO KURI EXSOME</option>
-          <option>SALVADOR NAVARRO HERNANDEZ</option>
-          <option>ADRIAN GOMEZ GOMEZ</option>
-          <option>ALBERTO ALVARADO MIRANDA</option>
-          <option>ALEJANDRO CASTILLO GALEAZZI</option>
-          <option>ALEJANDRO CASTILLO GALEAZZI</option>
-          <option>ALFREDO AVILA</option>
-          <option>ALMA ROSA LÓPEZ MARISCAL</option>
-          <option>ANA GRACIELA PUEBLA MORA</option>
-          <option>ANA OLIVIA CORTES FLORES</option>
-          <option>ANA OLIVIA CORTÉS FLORES</option>
-          <option>ATZIRI AIDEE MADERO CASTRO</option>
-          <option>BENITO SANCHEZ LLAMAS</option>
-          <option>BENITO SÁNCHEZ LLAMAS</option>
-          <option>CARLOS ALBERTO RONQUILLO CARREÓN</option>
-          <option>CARLOS ALBERTO RONQUILLO CARREÓN</option>
-          <option>CARLOS ZULOAGA FERNÁNDEZ DEL VALLE</option>
-          <option>CITLALI LÓPEZ ARCIGA</option>
-          <option>DANIEL ALEJANDRO GARCÍA PADILLA</option>
-          <option>DANIEL ALEJANDRO GARCÍA PADILLA</option>
-          <option>DAVID PONCE HERRERA</option>
-          <option>DIEGO A. DÍAZ GARCÍA</option>
-          <option>DIEGO ARMANDO DÍAZ GARCÍA</option>
-          <option>EDER ARAIZA ALVARADO</option>
-          <option>EDUARDO BARRAGAN CURIEL</option>
-          <option>EDWARD MORGAN OCHOA</option>
-          <option>EFRAÍN SALAS GONZÁLEZ</option>
-          <option>EMILIO MURILLO RAMÍREZ</option>
-          <option>EMMANUEL DE LA MORA JIMÉNEZ</option>
-          <option>ERIKA SUSANA BARBOSA AVALOS</option>
-          <option>GILBERTO MORGAN VILLELA</option>
-          <option>IGNACIO MARISCAL RAMÍREZ</option>
-          <option>IGNACIO MIGUEL FUENTES MENDEZ</option>
-          <option>ISAAC LUNA BENITEZ</option>
-          <option>JAIME CORONA RIVERA</option>
-          <option>JAIME CORONA RIVERA</option>
-          <option>JORGE EMILIO ARCH FERRER</option>
-          <option>JORGE EMILIO ARCH FERRER</option>
-          <option>JOSE ANTONIO ACEVEDO DELGADO</option>
-          <option>JOSE DE JESUS CURIEL VALDES</option>
-          <option>JOSÉ FRANCISCO ALEXANDER MEZA</option>
-          <option>JOSE JOB LAGUNES MUNOZ</option>
-          <option>JOSÉ JOB LAGUNES MUÑOZ</option>
-          <option>JOSÉ ROGELIO GONZÁLEZ RAMÍREZ BENFIELD</option>
-          <option>JUAN CARLOS VÁZQUEZ LIMÓN</option>
-          <option>KATHIA SUSANA ZAMUDIO OSUNA</option>
-          <option>KATHIA SUSANA ZAMUDIO OSUNA</option>
-          <option>LEONORA VALDEZ ROJAS</option>
-          <option>LIDO JOSÉ MANUEL GÓMEZ GLEZ</option>
-          <option>LUIS ALBERTO GARCIA GONZALEZ</option>
-          <option>MARCOS FABIAN MONZALVO HERNANDEZ</option>
-          <option>MARIA DOLORES SALAS AGUIRRE</option>
-          <option>MARÍA GUADALUPE VILLA GRAJEDA</option>
-          <option>MARIA PAZ COVARRUBIAS RODRIGUEZ</option>
-          <option>MIGUEL ÁNGEL ARAUJO MELENDEZ</option>
-          <option>OMAR CHAVEZ</option>
-          <option>OSCAR ARMANDO MELHADO ORELLANA</option>
-          <option>OSCAR ARMANDO MELHADO ORELLANA</option>
-          <option>PEDRO ROBLES NOLAZCO</option>
-          <option>RENÉ GÓMEZ CERDA</option>
-          <option>RICARDO CAVAZOS GARCÍA</option>
-          <option>RICARDO CAVAZOS GARCÍA</option>
-          <option>ROSARIO MARISOL QUINTERO SOLIS</option>
-          <option>XIMENA FERNANDEZ SOTO</option>
-          <option>JOSE LUIS ZARAGOZA H.</option>
           <option>AARON GONZALEZ ENCISO</option>
+          <option>ABEL BERNECHEA MIRANDA</option>
           <option>ABIGAIL SAMOAYA MATEOS SORIA</option>
+          <option>ADRIAN CRAVIOTO VILLANUEVA</option>
+          <option>ADRIAN GOMEZ GOMEZ</option>
+          <option>ALAN BURGUETE TORRES</option>
+          <option>ALAN LEDIF REYES MONDRAGON</option>
+          <option>ALBERTO ALVARADO MIRANDA</option>
           <option>ALBERTO GONZALEZ AGUILAR</option>
           <option>ALBERTO MITSUO LEON TAKAHASHI</option>
           <option>ALBERTO MONROY CHARGOY</option>
+          <option>ALBERTO OLAYA VARGAS</option>
+          <option>ALBERTO VIELMA VALDEZ</option>
+          <option>ALBERTO VILLALOBOS PRIETO</option>
           <option>ALEJANDRA ARMENGOL ALONSO</option>
+          <option>ALEJANDRA JIMENA GARCIA VELAZQUEZ</option>
+          <option>ALEJANDRO CASTILLO GALEAZZI</option>
+          <option>ALEJANDRO CASTILLO GALEAZZI</option>
+          <option>ALEJANDRO DE LEON CRUZ</option>
+          <option>ALEJANDRO LOPEZ CUETO ESPINOZA</option>
+          <option>ALEJANDRO MARTINEZ RUEDA</option>
+          <option>ALEJANDRO NOGUEZ RAMOS</option>
+          <option>ALETHIA ALVAREZ CANO</option>
           <option>ALFONSO CERVERA UBIERNA</option>
           <option>ALFONSO TORRES LOBATON</option>
+          <option>ALFONSO TORRES ROJO</option>
+          <option>ALFREDO AVILA</option>
+          <option>ALICIA GUTIERREZ MATA</option>
+          <option>ALLAN LEGASPI SAUTER</option>
+          <option>ALMA AZUCENA SEGURA CHAMA</option>
+          <option>ALMA GEORGINA PALACIOS MARTINEZ</option>
+          <option>ALMA LILIA ORTIZ MALDONADO</option>
+          <option>ALMA MAGDALENA ASTORGA RAMOS</option>
+          <option>ALMA ROSA LOPEZ MARISCAL</option>
+          <option>ALVARO AGUAYO GONZALEZ</option>
+          <option>ALVARO BARBOSA-QUINTANA</option>
+          <option>AMANCIO GATICA PEREZ</option>
+          <option>ANA CRISTINA ARTEAGA GOMEZ</option>
+          <option>ANA ELENA MARTIN AGUILAR</option>
+          <option>ANA GRACIELA PUEBLA MORA</option>
           <option>ANA MARIA ZEMPOALTECA LOPEZ</option>
-          <option>ANGELICA CONCEPCIÓN  CRUZ CADENA</option>
+          <option>ANA OLIVIA CORTES FLORES</option>
+          <option>ANA OLIVIA CORTES FLORES</option>
+          <option>ANA PAULINA MELENDEZ FERNANDEZ</option>
+          <option>ANAIT ABAD SOLARES</option>
+          <option>ANGEL AZAEL LOPEZ GALINDO</option>
+          <option>ANGELICA CONCEPCION  CRUZ CADENA</option>
           <option>ANTONIO ALFEIRAN RUIZ</option>
-          <option>ANTONIO VELAZQUEZ GONZÁLEZ</option>
+          <option>ANTONIO GOMEZ PEDRAZA</option>
+          <option>ANTONIO MAFFUZ AZIZ</option>
+          <option>ANTONIO ROLON PADILLA</option>
+          <option>ANTONIO VELAZQUEZ GONZALEZ</option>
           <option>ARACELI RIVERA SANTIAGO</option>
           <option>ARIADNA ESTELA  GONZALEZ DEL ANGEL</option>
           <option>ARMANDO BERNANDO MARTINEZ AVALOS</option>
+          <option>ARMANDO RAMIREZ</option>
           <option>ARMEN STANKOV DRAGAN</option>
           <option>ARTURO PABEL MIRANDA AGUIRRE</option>
+          <option>ATZIRI AIDEE MADERO CASTRO</option>
+          <option>AURORA MEDINA SANSON</option>
+          <option>AZCARY VAZQUEZ TINAJERO</option>
+          <option>BENIGNO EMMANUEL RODRIGUEZ SOTO</option>
+          <option>BENITO SANCHEZ LLAMAS</option>
+          <option>BENITO SANCHEZ LLAMAS</option>
+          <option>BETSABE HERNANDEZ HERNANDEZ</option>
+          <option>BRENDA LETICIA GONZALEZ GARCIA</option>
+          <option>BRIZIO MORENO JAIME</option>
           <option>CARLO EGYSTO CICERO ONETO</option>
+          <option>CARLOLS DANIEL ROBLES VIDAL</option>
+          <option>CARLOS ALBERTO LARA GUTIERREZ</option>
+          <option>CARLOS ALBERTO RAMIREZ ALVARADO</option>
+          <option>CARLOS ALBERTO RONQUILLO CARREON</option>
+          <option>CARLOS ALBERTO RONQUILLO CARREON</option>
+          <option>CARLOS ALBERTO SERVIN HERNANDEZ</option>
           <option>CARLOS ARANDA FLORES</option>
+          <option>CARLOS ARTURO GONZALEZ NUÑEZ</option>
+          <option>CARLOS AUGUSTO GUTIERREZ FLORES</option>
+          <option>CARLOS DANIEL LEVER ROSAS</option>
           <option>CARLOS EDUARDO QUINTERO RODRIGUEZ</option>
+          <option>CARLOS EDUARDO SALAZAR MEJIA</option>
+          <option>CARLOS MANUEL ORTIZ MENDOZA</option>
+          <option>CARLOS RAMIREZ ALVARADO</option>
+          <option>CARLOS ROBERTO LUGO ESCALANTE</option>
+          <option>CARLOS ZULOAGA FERNANDEZ DEL VALLE</option>
+          <option>CARMEN AGUILAR JIMENEZ</option>
+          <option>CESAR GONZALEZ DE LEON</option>
+          <option>CESAR SALDIVAR MORENO</option>
           <option>CHRISTIAN HAYDEE FLORES BALCAZAR</option>
+          <option>CHRISTIAN PATRICIO CAMACHO LIMAS</option>
+          <option>CINDY AIDEE NAJERA MUÑOZ</option>
+          <option>CITLALI LOPEZ ARCIGA</option>
+          <option>CLAUDIA LORENA URZUA FLORES</option>
+          <option>CLAUDIO RENE MONTESDEOCA ORELLANA</option>
+          <option>CONNIE ZURATZI DENEKEN HERNANDEZ</option>
+          <option>CONSUELO IRENE GUTIERREZ COLIN</option>
+          <option>CRISTINA ALVARADO SILVA</option>
+          <option>CRISTOBAL DIAZ GOMEZ</option>
+          <option>CYNTHIA VILLARREAL</option>
+          <option>DAGOBERTO MOLINA POLO LOPEZ DE CARDENAS</option>
           <option>DAN GREEN REENER</option>
           <option>DANIEL ABELARDO LOPEZ VALLEJO</option>
+          <option>DANIEL ALEJANDRO GARCIA PADILLA</option>
+          <option>DANIEL ALEJANDRO GARCIA PADILLA</option>
+          <option>DANIEL CAPDEVILLE GARCIA</option>
+          <option>DANIEL CAPDEVILLE GARCIA</option>
           <option>DANIEL MOTOLA KUBA</option>
+          <option>DANIEL PEREZ CERVANTES</option>
+          <option>DANIEL VALENCIA MERCADO</option>
+          <option>DANIELA HERNANDEZ LARA</option>
+          <option>DANIELA SHVEID GERSON</option>
+          <option>DANIELA VAZQUEZ JUAREZ</option>
+          <option>DANIELLA GOMEZ PUE</option>
+          <option>DANTE CARBAJAL OCAMPO</option>
+          <option>DAVID ACOSTA GUTIERREZ</option>
+          <option>DAVID CAZARES SANCHEZ</option>
+          <option>DAVID CAZAREZ SANCHEZ</option>
+          <option>DAVID CUEVAS QUEZADA</option>
+          <option>DAVID DAVILA DUPONT</option>
+          <option>DAVID EDUARDO MUÑOZ GONZALEZ</option>
           <option>DAVID FRANCISCO CANTU DE LEON</option>
+          <option>DAVID JOSE HEREDIA VAZQUEZ</option>
           <option>DAVID ORTA CORTES</option>
+          <option>DAVID PONCE HERRERA</option>
+          <option>DAVID SUAREZ GARCIA</option>
           <option>DEBORAH MARIA MARTINEZ BAÑOS</option>
           <option>DENISE ACUÑA GONZALEZ</option>
+          <option>DENYS ELIZABETH DELGADO AMADOR</option>
+          <option>DIANA ALEJANDRA VILLEGAS OSORNO</option>
           <option>DIANA FABIOLA FLORES</option>
+          <option>DIANA PATRICIA JIMENEZ CARRANZA</option>
+          <option>DIEGO A. DIAZ GARCIA</option>
+          <option>DIEGO ALFONSO BALLESTEROS PINO</option>
+          <option>DIEGO ARMANDO DIAZ GARCIA</option>
+          <option>DIEGO JORGE</option>
           <option>DIEGO OSORIO PEREZ</option>
+          <option>DINO ALBERTO MURILLO CRUZ</option>
+          <option>DIONE AGUILAR Y MENDEZ</option>
           <option>DOLORES GALLARDO</option>
           <option>EDER A ARANGO BRAVO</option>
+          <option>EDER ARAIZA ALVARADO</option>
+          <option>EDGAR NERI PAEZ</option>
+          <option>EDGAR RODRIGUEZ ANTEZANA</option>
+          <option>EDGAR VARELA SANTOYO</option>
+          <option>EDIO LLERENA HERNANDEZ</option>
+          <option>EDITH GARCIA LUNA</option>
+          <option>EDNA ROJAS CURIEL</option>
+          <option>EDUARDO ALBERTO GUZMAN HUERTA</option>
+          <option>EDUARDO ANTONIO MAAFS MOLINA</option>
+          <option>EDUARDO BARRAGAN CURIEL</option>
+          <option>EDUARDO EDMUNDO REYNOSO GOMEZ</option>
           <option>EDUARDO EMIR CERVERA CEBALLOS</option>
           <option>EDUARDO JORGE BAÑOS RODRIGUEZ</option>
+          <option>EDUARDO TELLEZ BERNAL</option>
+          <option>EDWARD MORGAN OCHOA</option>
+          <option>EFRAIN SALAS GONZALEZ</option>
           <option>ELEAZAR OMAR MACEDO LOPEZ</option>
           <option>ELIA IXEL APODACA CHAVEZ</option>
+          <option>ELIA NALLELY BARRIENTOS LUNA</option>
+          <option>ELIAS RESCALA BACA</option>
+          <option>ELISEO EMMANUEL JUAREZ ZUÑIGA</option>
+          <option>ELISEO NEFTALI DE LA CRUZ ESCOBAR</option>
           <option>ELIZABETH ESCOBAR ARRIAGA</option>
+          <option>ELIZABETH SANCHEZ VALLE</option>
+          <option>ELVIRA GOMEZ GOMEZ</option>
           <option>EMILIO CONDE</option>
+          <option>EMILIO GAMEZ UGALDE</option>
+          <option>EMILIO MURILLO RAMIREZ</option>
+          <option>EMMANUEL DE LA MORA JIMENEZ</option>
+          <option>ENRIQUE AVILA MONTEVERDE</option>
+          <option>ENRIQUE GOMEZ MORALES</option>
+          <option>ENRIQUE JOSE ZAMUDIO LOZOYA</option>
           <option>ERIC ORTIZ</option>
+          <option>ERICK SALADO RAMIREZ</option>
+          <option>ERIKA BETZABE RUIZ GARCIA</option>
+          <option>ERIKA SUSANA BARBOSA AVALOS</option>
+          <option>ERNESTO JOSE ZEPEDA CASTILLA</option>
+          <option>ERNESTO MORENO SALAS</option>
+          <option>ERNESTO R. SANCHEZ FORGACH</option>
+          <option>ESMERALDA ROMERO BAÑUELOS</option>
+          <option>ETZALLI PAMELA LINARES CHAVEZ</option>
           <option>EUCARIO LEON RODRIGUEZ</option>
           <option>EVA RUVALCABA LIMON</option>
           <option>FEDERICO MALDONADO MAGOS</option>
+          <option>FELIPE DE JESUS ANCHONDO ORTEGA</option>
+          <option>FELIPE VILLEGAS CARLOS</option>
           <option>FERNANDO ALDACO SARVIDE</option>
           <option>FERNANDO CANDANEDO GONZALEZ</option>
+          <option>FERNANDO CERECEDO DIAZ</option>
+          <option>FERNANDO CORDERA GONZALEZ DE COSIO</option>
           <option>FERNANDO ENRIQUE MAINEROL RATCHEOLUS</option>
+          <option>FERNANDO JAVIER VILLALOBOS PEÑA</option>
+          <option>FERNANDO PEREZ ZINCER</option>
+          <option>FERNANDO SALDIVAR GALINDO</option>
+          <option>FERNANDO ULISES LARA GONZALEZ</option>
+          <option>FERNANDO ULISES LARA MEDINA</option>
           <option>FIDEL DAVID HUITZIL MELENDEZ</option>
           <option>FLAVIA MORALES VASQUEZ</option>
+          <option>FLOR DE THE BUSTAMANTE VALLES</option>
           <option>FLOR MARIA ARMILLAS CANSECO</option>
           <option>FRANCISCO JAVIER GOMEZ-PEDROSO REA</option>
           <option>FRANCISCO JAVIER OCHOA CARRILLO</option>
           <option>FRANCISCO LOPEZ SACHINAS</option>
-          <option>FRANCO KRAKAUR GARCÍA</option>
+          <option>FRANCO KRAKAUR GARCIA</option>
+          <option>FROYLAN LOPEZ LOPEZ</option>
+          <option>FROYLAN LOPEZ LOPEZ</option>
+          <option>GABRIEL GALVAN SALAZAR</option>
           <option>GABRIEL ORLANDO GARCIA ACEVEDO</option>
           <option>GABRIEL PACHECO JUAREZ</option>
+          <option>GABRIEL SANTIAGO CONCHA</option>
+          <option>GABRIEL TELLEZ TREVILLA</option>
           <option>GABRIELA ALAMILLA</option>
           <option>GABRIELA ALVARADO LUNA</option>
+          <option>GABRIELA NUÑEZ GUARDADO</option>
+          <option>GABRIELA OLIVIA REGALADO PORRAS</option>
+          <option>GABRIELA SOFIA GOMEZ MACIAS</option>
+          <option>GENOVEVA OCHOA</option>
           <option>GEORGINA GARNICA JALIFFE</option>
+          <option>GEOVANI AMADOR GARCIA</option>
+          <option>GERARDO AMARANTE DE LEON</option>
+          <option>GERARDO CARDENAS</option>
+          <option>GERARDO CASTORENA ROJI</option>
+          <option>GERARDO DAVID AMARANTE DE LEON</option>
+          <option>GERARDO GABRIEL MINAURO MUÑOZ</option>
+          <option>GERARDO MIRANDA DEVORA</option>
           <option>GERMAN CALDERILLO CRUZ</option>
+          <option>GERMAN CASTELAZO RAMIREZ</option>
+          <option>GERMAN CASTELAZO RICO</option>
+          <option>GILBERTO MORGAN VILLELA</option>
+          <option>GISELA NIEVES HERNANDEZ RUIZ</option>
+          <option>GLORIA MARTINEZ MARTINEZ</option>
           <option>GREDEL PORTELA RUBIO</option>
           <option>GREGORIO QUINTERO BEULO</option>
+          <option>GUADALUPE EVARISTO CEDILLO SALAZAR</option>
           <option>GUILLERMO FABIAN SILVA ESCOBAR</option>
+          <option>GUILLERMO GOCHER DAMIAN</option>
+          <option>GUILLERMO MANUEL OLIVARES BELTRAN</option>
           <option>GUILLERMO MARTOS RAMIREZ</option>
+          <option>GUSTAVO FLORENCIO CORTES MARTINEZ</option>
+          <option>GUSTAVO JONY RAMOS BLAS</option>
           <option>GUSTAVO SEBASTIAN ESCOBAR ALFARO</option>
-          <option>HAYDEÉ CRISTINA VERDUZCO AGUIRRE</option>
+          <option>HAYDEE CRISTINA VERDUZCO AGUIRRE</option>
           <option>HEBER TOMAS REYES GARCIA</option>
+          <option>HECTOR ARIAS CEBALLOS</option>
           <option>HECTOR DE LA MORA MOLINA</option>
           <option>HECTOR MARTINEZ SAID</option>
-          <option>HORACIO NOÉ LOPEZ BASAVE</option>
+          <option>HECTOR RODRIGUEZ NAVARRO</option>
+          <option>HERMINIA DEL SOCORRO ARVELO SAAVEDRA</option>
+          <option>HIRAM JOSUE GRIMALDO ROQUE</option>
+          <option>HORACIO DECANINI ARCAUTE</option>
+          <option>HORACIO NOE LOPEZ BASAVE</option>
+          <option>HORACIO SUAREZ DEL PUERTO</option>
           <option>IDELFONSO ROBERTO DE LA PEÑA LOPEZ</option>
+          <option>IGNACIO JAIME PEREZ MARTINEZ</option>
+          <option>IGNACIO MARISCAL RAMIREZ</option>
+          <option>IGNACIO MIGUEL FUENTES MENDEZ</option>
           <option>ILEANA MCKINNEY NOVELO</option>
+          <option>IRINEO DOMINGUEZ GABRIEL</option>
+          <option>IRMA SOLDEVILLA GALLARDO</option>
+          <option>IRVING JAVIER MEJIA HERNANDEZ</option>
+          <option>ISAAC LUNA BENITEZ</option>
           <option>ITZEL VELA SARMIENTO</option>
+          <option>ITZIA VERDUZCO FLORES</option>
           <option>IVAN EUDALDO DIAZ MENESES</option>
+          <option>IVAN ORTIZ CALDERON</option>
+          <option>IVAN ROMARICO GONZALEZ ESPINOZA</option>
+          <option>IVAN SALGADO</option>
+          <option>IVONNE SALAS</option>
+          <option>JACKELINE GRACE LARA CAMPOS</option>
           <option>JAIME ALONSO RESENDIZ COLOSIA</option>
+          <option>JAIME ARTURO GUEL</option>
+          <option>JAIME CORONA RIVERA</option>
+          <option>JAIME CORONA RIVERA</option>
+          <option>JAIME J. TAMEZ SALAZAR</option>
+          <option>JAIME NAVARRETE ALEMAN</option>
+          <option>JAIME SHALKOW KLINCOVSTEIN.</option>
+          <option>JANETT CABALLERO JASSO</option>
+          <option>JANISSE KERSHENOVICH GERSSON</option>
+          <option>JAQUELINE AGUIRRE GOMEZ</option>
+          <option>JAVIER GARCIA ESTRADA</option>
           <option>JAVIER KELLY GARCIA</option>
           <option>JAVIER LOPEZ GOMEZ</option>
           <option>JAVIER MELCHOR RUAN</option>
-          <option>JAZMÍN FIGUEROA BADILLO</option>
+          <option>JAZMIN FIGUEROA BADILLO</option>
+          <option>JENNIFER RAMIREZ</option>
           <option>JERONIMO RAFAEL RODRIGUEZ CID</option>
+          <option>JESSICA SALAZAR</option>
+          <option>JESUS ALBERTO LIMON RODRIGUEZ</option>
+          <option>JESUS ALICIA ACOSTA ESPINOZA</option>
+          <option>JESUS ARMANDO SANCHEZ GONZALEZ</option>
+          <option>JESUS ELVIS CABRERA LUVIANO</option>
+          <option>JESUS MIGUEL LAZARO LEON</option>
+          <option>JESUS RICO GUTIERREZ</option>
+          <option>JHONATAN BUENO</option>
+          <option>JOEL BAÑUELOS FLORES</option>
           <option>JONATHAN RUBEN CEDILLO RODRIGUEZ</option>
-          <option>JORGE ADAN ALEGRÍA BAÑOS</option>
+          <option>JORGE ADAN ALEGRIA BAÑOS</option>
+          <option>JORGE ALBERTO GUADARRAMA OROZCO</option>
+          <option>JORGE ALBERTO HERNANDEZ SALAZAR</option>
           <option>JORGE ALBERTO ROBLES AVIÑA</option>
-          <option>JORGE ALEJANDRO CASTAÑEDA ÁVILA</option>
+          <option>JORGE ALBERTO SALAZAR ANDRADE</option>
+          <option>JORGE ALEJANDRO CASTAÑEDA AVILA</option>
+          <option>JORGE ANTONIO MACIAS MILLAN</option>
+          <option>JORGE ARMANDO CASTELAN PEDRAZA</option>
+          <option>JORGE ARTURO ALATORRE ALEXANDER</option>
           <option>JORGE BERMUDEZ LUGO</option>
+          <option>JORGE EMILIO ARCH FERRER</option>
+          <option>JORGE EMILIO ARCH FERRER</option>
+          <option>JORGE ENRIQUE MONGES JONES</option>
+          <option>JORGE LUIS CORTES RUBIO</option>
+          <option>JORGE LUIS MARTINEZ RODRIGUEZ</option>
           <option>JORGE LUIS MARTINEZ TLAHUEL</option>
           <option>JORGE MARTINEZ CEDILLO</option>
+          <option>JORGE MAYORGA ACUÑA</option>
+          <option>JORGE SAID GARCIA BAUTISTA</option>
           <option>JOSE ADALBERTO TORIZ HERNANDEZ</option>
+          <option>JOSE AGUIRRE TRIGUERO</option>
           <option>JOSE ALBERTO ABREGO VASQUEZ</option>
+          <option>JOSE ANTONIO ACEVEDO DELGADO</option>
           <option>JOSE ANTONIO BAHENA GONZALEZ</option>
+          <option>JOSE ANTONIO POSADA TORRES</option>
+          <option>JOSE ANTONIO TREJO PANTOJA</option>
+          <option>JOSE DE JESUS CURIEL VALDES</option>
+          <option>JOSE EUGENIO VAZQUEZ</option>
+          <option>JOSE FABIAN MARTINEZ HERRERA</option>
+          <option>JOSE FRANCISCO ALEXANDER MEZA</option>
           <option>JOSE FRANCISCO CORONA CRUZ</option>
+          <option>JOSE FRANCISCO GALLEGOS HERNANDEZ</option>
+          <option>JOSE GABRIEL CHAVEZ SANCHEZ</option>
+          <option>JOSE GADU CAMPOS SALCEDO</option>
+          <option>JOSE GERARDO VELAZQUEZ OLGUIN</option>
+          <option>JOSE GUSTAVO NUÑEZ CARRILLO</option>
+          <option>JOSE JOB LAGUNES MUNOZ</option>
+          <option>JOSE JOB LAGUNES MUÑOZ</option>
+          <option>JOSE JUAN RAMIREZ JAIME</option>
           <option>JOSE LUIS AGUILAR PONCE</option>
+          <option>JOSE LUIS ALVAREZ VERA</option>
+          <option>JOSE LUIS GONZALEZ TRUJILLO</option>
+          <option>JOSE LUIS GONZALEZ TRUJILLO</option>
+          <option>JOSE LUIS GUZMAN MURGIA</option>
+          <option>JOSE LUIS LOPEZ LOPEZ</option>
+          <option>JOSE LUIS VELA GONZALEZ</option>
+          <option>JOSE LUIS ZARAGOZA H.</option>
+          <option>JOSE MANUEL ARTURO RUANO AGUILAR</option>
           <option>JOSE MANUEL RUIZ MORALES</option>
           <option>JOSE ROBERTO JUAREZ DIAZ</option>
+          <option>JOSE RODRIGO ESPINOSA FERNANDEZ</option>
+          <option>JOSE ROGELIO GONZALEZ RAMIREZ BENFIELD</option>
           <option>JOSEPH XAVIER LOPEZ KARKPOVITCH</option>
+          <option>JUAN ADNAN CRUZ VALENZUELA</option>
+          <option>JUAN ALBERTO SERRANO OLVERA</option>
           <option>JUAN ALBERTO TENORIO TORRES</option>
+          <option>JUAN ALEJANDRO SILVA</option>
           <option>JUAN ANTONIO MATUS SANTOS</option>
           <option>JUAN CARLOS HERNANDEZ FONSECA</option>
+          <option>JUAN CARLOS OLIVA POSADA</option>
+          <option>JUAN CARLOS VAZQUEZ LIMON</option>
+          <option>JUAN CARLOS ZAPOT MARTINEZ</option>
+          <option>JUAN DE DIOS PEREZ VILLEGAS</option>
+          <option>JUAN FERNANDO ARAGON SANCHEZ</option>
+          <option>JUAN LORENZO ESPINO VILLALOBOS</option>
+          <option>JUAN LUIS ABOITES LUCERO</option>
+          <option>JUAN MANUEL STETA OROZCO</option>
           <option>JUAN MANUEL VARELA GAYOL</option>
           <option>JUAN WOLFGANG ZINZER SIERRA</option>
+          <option>JULIO CESAR VELASCO RODRIGUEZ</option>
+          <option>JULIO EDUARDO MARTINEZ SAMANO</option>
           <option>JUSTO GONZALO MILAN REVOLLO</option>
+          <option>KARINA MURILLO MEDINA</option>
           <option>KARLA BELEN MOLINA TABAREZ</option>
-          <option>KUAUHYAMA LUNA ORTÍZ</option>
+          <option>KARLA SUSANA MARTIN TELLEZ</option>
+          <option>KATHIA SUSANA ZAMUDIO OSUNA</option>
+          <option>KATHIA SUSANA ZAMUDIO OSUNA</option>
+          <option>KELLY GARCIA JAVIER</option>
+          <option>KUAUHYAMA LUNA ORTIZ</option>
           <option>LAURA GABRIELA FLORES PEÑA</option>
+          <option>LAURA PEREZ MICHEL</option>
+          <option>LAURA TORRECILLAS TORRES</option>
           <option>LENNY NADIA GALLARDO ALVARADO</option>
+          <option>LEONORA VALDEZ ROJAS</option>
+          <option>LEOPOLDO ABRAHAM LUGO ALFEREZ</option>
+          <option>LEOPOLDO GUZMAN NAVARRO</option>
           <option>LETICIA ELIZABETH MOTA GARDUÑO</option>
+          <option>LETICIA VAZQUEZ CORTES</option>
+          <option>LIDO JOSE MANUEL GOMEZ GLEZ</option>
+          <option>LIGIA LARRALDE</option>
           <option>LIZ NAVA</option>
           <option>LUCELY DEL CARMEN CETINA PEREZ</option>
+          <option>LUIIS ANTONIO NUÑEZ TRENADO</option>
+          <option>LUIS ALBERTO GARCIA GONZALEZ</option>
           <option>LUIS ANTONIO CABRERA MIRANDA</option>
+          <option>LUIS ANTONIO CANCEL TREVIÑO</option>
+          <option>LUIS ANTONIO LARA MEJIA</option>
+          <option>LUIS ANTONIO MEILLON GARCIA</option>
+          <option>LUIS ARTURO CARDOSO APARICIO</option>
           <option>LUIS ARTURO HERNANDEZ LOPEZ</option>
           <option>LUIS CRUZ BENITEZ</option>
           <option>LUIS ENRIQUE JUAREZ VILLEGAS</option>
+          <option>LUIS ENRIQUE SOTO</option>
           <option>LUIS FERNANDO PEREZ JACOBO</option>
           <option>LUIS GERARDO MOTA CIENFUEGOS</option>
+          <option>LUIS JAVIER BARAJAS FIGUEROA</option>
+          <option>LUIS JONATHAN BUENO ROSARIO</option>
           <option>LUZ MARIA HINOJOSA GARCIA</option>
+          <option>LUZ MARIA RIVAS CORCHADO</option>
+          <option>MA DE LOURDES GUTIERREZ RIVERA</option>
           <option>MA DELIA PEREZ MONTIEL</option>
+          <option>MA ISABEL ENRIQUEZ ACEVES</option>
+          <option>MANUEL ACUÑA TOVAR</option>
           <option>MANUEL ALONSO VILLEGAS MARTINEZ</option>
           <option>MANUEL GONZALEZ REYES</option>
+          <option>MANUEL ISMAEL GONZALEZ GERONIZ</option>
+          <option>MANUEL MAGALLANES</option>
+          <option>MANUEL ROBERTO MORALES POLANCO</option>
           <option>MARA NUÑEZ TOSCANO</option>
-          <option>MARÍA DEL MAR GARCIA ORTEGA</option>
+          <option>MARCELINO MORALES RIVERA</option>
+          <option>MARCELINO RAMIREZ MARQUEZ</option>
+          <option>MARCO ANTONIO DE LA ROSA ABAROA</option>
+          <option>MARCOS FABIAN MONZALVO HERNANDEZ</option>
+          <option>MARCOS LOPEZ NAVEDA</option>
+          <option>MARGARITA CAMPUZANO BUENROSTRO</option>
+          <option>MARIA ANDREA BARBERO IBARROLA</option>
+          <option>MARIA CRISTINA AGUILAR MARTINEZ</option>
+          <option>MARIA DE LA LUZ GARCA TINOCO</option>
+          <option>MARIA DEL CONSUELO DIAZ ROMERO</option>
+          <option>MARIA DEL MAR GARCIA ORTEGA</option>
+          <option>MARIA DEL ROSARIO ESTRADA FALCON</option>
+          <option>MARIA DOLORES DE LA MATA MOYA</option>
+          <option>MARIA DOLORES SALAS AGUIRRE</option>
+          <option>MARIA ELISA OTEIRO CERDEIRA</option>
+          <option>MARIA EUGENIA SALINAS NIEVES</option>
           <option>MARIA FATIMA CHILACA ROSAS</option>
+          <option>MARIA GUADALUPE VILLA GRAJEDA</option>
           <option>MARIA GUADLUPE CERVANTES SANCHEZ</option>
-          <option>MARIA TERESA BOURLON DE LO RÍOS</option>
+          <option>MARIA HELENA VILLALOBOS GOMEZ</option>
+          <option>MARIA LUISA ROMERO LAGUNES</option>
+          <option>MARIA PAULA HERNANDEZ</option>
+          <option>MARIA PAZ COVARRUBIAS RODRIGUEZ</option>
+          <option>MARIA TERESA BOURLON DE LO RIOS</option>
+          <option>MARIA TERESA CERVANTES DIAZ</option>
+          <option>MARIANA MONSERRAT GOMEZ JARA</option>
+          <option>MARICELA GARCIA GARCES</option>
+          <option>MARINEE TORRES AGUILAR</option>
+          <option>MARIO CUELLAR HUBBE</option>
+          <option>MARIO EDUARDO ALONSO CALAMACO</option>
           <option>MARIO SANCHEZ CORZO</option>
+          <option>MARISOL RIVERA HERNANDEZ</option>
           <option>MARLID CRUZ RAMOS</option>
           <option>MARTHA GABRIELA TAVERA RODRIGUEZ</option>
+          <option>MARYTERE HERRERA MARTINEZ</option>
+          <option>MAURICIO ANTUAN CANAVATI MARCOS</option>
+          <option>MAXWELL AVILES RODRIGUEZ</option>
+          <option>MAYRA CRISTINA GALEANA HERNANDEZ</option>
+          <option>MICHEL BONIFANT</option>
           <option>MICHEL HERNANDEZ VALADEZ</option>
           <option>MIGUEL ANGEL ALVAREZ AVITIA</option>
+          <option>MIGUEL ANGEL ARAUJO MELENDEZ</option>
           <option>MIGUEL ANGEL LOPEZ VALLE</option>
+          <option>MIGUEL ANGEL MONROY RAMIREZ</option>
           <option>MIGUEL ANGEL TLETLEPANTZIN APARTADO</option>
           <option>MIGUEL ARNOLDO FARIAS ALARCON</option>
-          <option>MYRNA GLORIA CANDELARIA HERNÁNDEZ</option>
+          <option>MIGUEL CORRES MOLINA</option>
+          <option>MIGUEL NORIEGA JUAREZ</option>
+          <option>MIJAEL TOIBER LEVY</option>
+          <option>MILAGROS PEREZ QUINTANILLA</option>
+          <option>MINOR CORDERO B.</option>
+          <option>MOISES ZEFERINO TOQUERO</option>
+          <option>MONICA ISABEL MENESES MEDINA</option>
+          <option>MYRNA GLORIA CANDELARIA HERNANDEZ</option>
+          <option>NATIVIDAD NERI MUÑOZ</option>
           <option>NEREIDA ESPARZA ARIAS</option>
           <option>NICOLAS RICARDO DE JESUS SANCHEZ CASAS</option>
+          <option>NICOLE MARIE IÑIGUEZ ARIZA</option>
           <option>NIDIA  PAULINA ZAPATA CANTO</option>
+          <option>NOE FLORES</option>
+          <option>NORA HILDA CHAVEZ HERNANDEZ</option>
+          <option>NORA MARIA PEREZ HRNANDEZ</option>
           <option>NORA SOBREVILLA MORENO</option>
           <option>NORMA CANDELARIA LOPEZ SANTIAGO</option>
           <option>NOVELTHYS VELASCO CORTES</option>
           <option>ODILON FELIX QUIJANO CASTRO</option>
+          <option>OMAR ALEJANDRO ZAYAS VILLANUEVA</option>
+          <option>OMAR CHAVEZ</option>
           <option>OMAR DE LEON PACHECO</option>
           <option>OMAR FRANCISCO CORONEL AYALA</option>
           <option>OMAR MACEDO PEREZ</option>
+          <option>OMAR PEÑA CURIEL</option>
+          <option>OSCAR ALEJANDRO GOMEZ</option>
+          <option>OSCAR ARMANDO MELHADO ORELLANA</option>
+          <option>OSCAR ARMANDO MELHADO ORELLANA</option>
           <option>OSCAR GERARDO ARRIETA RODRIGUEZ</option>
+          <option>OSCAR SALVADOR SANCHEZ VELAZQUEZ</option>
+          <option>OSCAR VIDAL GUTIERREZ</option>
+          <option>OSVALDO HERNANDEZ FLORES</option>
           <option>OSVALDO QUIROZ SANDOVAL</option>
+          <option>OTONIEL LOPEZ RIVEROL</option>
+          <option>PAMELA AYALA HERNANDEZ</option>
           <option>PATRICIA CORTES ESTEBAN</option>
+          <option>PATRICIA PADILLA ARRIETA</option>
           <option>PATRICIO AZAOLA ESPINOZA</option>
+          <option>PAULA ANEL CABRERA GALEANA</option>
           <option>PEDRO DE JESUS SOBREVILLA CALVO</option>
+          <option>PEDRO LUNA MERLOS</option>
+          <option>PEDRO LUNA PEREZ</option>
+          <option>PEDRO ROBLES NOLAZCO</option>
+          <option>RAFAEL BRICEÑO HERNANDEZ</option>
           <option>RAFAEL HURTADO MONROY</option>
+          <option>RAFAEL MEDRANO GUZMAN</option>
+          <option>RAFAEL PADILLA LONGORIA</option>
           <option>RAFAEL VAZQUEZ ROMO</option>
           <option>RAMIRO GARCIA ORTIZ</option>
+          <option>RAMIRO MAGANA SERRANO</option>
+          <option>RAMON JESUS MARTELL GUERRERO</option>
+          <option>RAQUEL GERSON CWILICH</option>
           <option>RAUL ARTGUZMAN TRIGUEROS</option>
+          <option>RAUL GARZA GARZA</option>
+          <option>RAUL GERARDO RAMIREZ MEDINA</option>
+          <option>RENE GOMEZ CERDA</option>
+          <option>RICARDO CAVAZOS GARCIA</option>
+          <option>RICARDO CAVAZOS GARCIA</option>
+          <option>ROBERTO ALFARO LARA</option>
           <option>ROBERTO DE LA PENA LOPEZ</option>
+          <option>ROBERTO ENRIQUE HERNANDEZ PEÑA</option>
+          <option>ROBERTO KURI EXSOME</option>
+          <option>ROBERTO KURI EXSOME</option>
+          <option>ROBERTO RIVERA LUNA</option>
+          <option>ROBIN JENNIFER SHAW DULIN</option>
           <option>ROCIO CRYSTAL GRAJALES ALVAREZ</option>
+          <option>ROCIO DEL SOCORRO CARDENAS CARDOS</option>
+          <option>RODRIGO ARRANGOIZ MAJUL</option>
           <option>RODRIGO DIAZ MACHORRO</option>
+          <option>RODRIGO YAHEL ADAME MORENO</option>
+          <option>ROGELIO LOZANO GALVAN</option>
           <option>ROGELIO MARTINEZ MACIAS</option>
+          <option>ROLANDO MARTINEZ</option>
+          <option>ROMMEL IVAN RODRIGUEZ SIMENTAL</option>
           <option>ROSA HIMELDA ARELLANO BERNAL</option>
+          <option>ROSA LUZ LUNA PLACENCIA</option>
+          <option>ROSARIO MARISOL QUINTERO SOLIS</option>
           <option>RUBEN CORTES GONZALEZ</option>
+          <option>RUBI JANDAY NAJERA</option>
+          <option>SALIM ABRAHAM BARQUET MUÑOZ</option>
+          <option>SALVADOR MACIAS DIAZ</option>
+          <option>SALVADOR NAVARRO HERNANDEZ</option>
           <option>SAMANTHA LOPEZ RAMIREZ</option>
+          <option>SAMUEL RIVERA RIVERA</option>
           <option>SANTA MARICELA ORTIZ ZEPEDA</option>
           <option>SANTIAGO ALEJANDRO CANO CANCELA</option>
           <option>SANTOS GILBERTO SOTO GERMES</option>
           <option>SARA OLIVIA RAMOS ROMERO</option>
-          <option>SEBASTIAN GARCÍA HERRERA</option>
+          <option>SARISH DEL REAL ORDOÑEZ</option>
+          <option>SAUL CAMPOS GOMEZ</option>
+          <option>SEBASTIAN GARCIA HERRERA</option>
+          <option>SEIR ALFONSO CORTES CARDENAS</option>
           <option>SERGIO AGUILAR VILLANUEVA</option>
+          <option>SERGIO CARLOS RODRIGUEZ BAHENA</option>
           <option>SERGIO CESAR LOPEZ GARCI A</option>
+          <option>SERGIO PEDRAZA BARAJAS</option>
           <option>SERGIO RODRIGUEZ-CUEVAS</option>
+          <option>SERGIO TORRES VARGAS</option>
           <option>SERGIO YASPIK FLORES</option>
-          <option>TANIA ÁLVAREZ DOMÍNGUEZ</option>
+          <option>SERVANDO CARDONA HUERTA</option>
+          <option>SIGMUND RODRIGUEZ ROJAS</option>
+          <option>SILVIA MARGARITA ALVARFEZ MALDONADO</option>
+          <option>SILVIA NATALIA LOPEZ HERNANDEZ</option>
+          <option>SILVIA PATRICIA VILLAREAL COLIN</option>
+          <option>TALIA WEGMAN OSTROSKY</option>
+          <option>TALINA RAMIREZ CARO</option>
+          <option>TANIA ALVAREZ DOMINGUEZ</option>
+          <option>VANESSA ROSAS CAMARGO</option>
+          <option>VICTOR ALFONSO MARTINEZ DIAZ</option>
+          <option>VICTOR HUGO CARMONA ORNELA S</option>
+          <option>VICTOR MANUEL MARROQUIN TORRES</option>
+          <option>VICTOR MANUEL OYERVIDES JUAREZ</option>
+          <option>VICTOR RAMON ANDRADE SEPULVEDA</option>
           <option>WENDY ROSANGELA MARTINEZ TORRES</option>
           <option>WENDY ROSSEMARY MUÑOZ MONTAÑO</option>
+          <option>XIMENA FERNANDEZ SOTO</option>
+          <option>XINOTECATL JIMENEZ VILLANUEVA</option>
           <option>YAMILE TORRES JASSO</option>
           <option>YANIN CHAVARRI GUERRA</option>
-          <option>ZULEIMA GARCÍA NIETO</option>
-          <option>NORA HILDA CHÁVEZ HERNÁNDEZ</option>
-          <option>ALEJANDRO MARTINEZ RUEDA</option>
-          <option>CARLOS ROBERTO LUGO ESCALANTE</option>
-          <option>DIEGO ALFONSO BALLESTEROS PINO</option>
-          <option>FERNANDO JAVIER VILLALOBOS PEÑA</option>
-          <option>IVAN SALGADO</option>
-          <option>JENNIFER RAMIREZ</option>
-          <option>JESUS ALICIA ACOSTA ESPINOZA</option>
-          <option>JORGE ALBERTO GUADARRAMA OROZCO</option>
-          <option>MARCELINO MORALES RIVERA</option>
-          <option>DANIELA HERNANDEZ LARA</option>
-          <option>ENRIQUE JOSE ZAMUDIO LOZOYA</option>
-          <option>FELIPE DE JESÚS ANCHONDO ORTEGA</option>
-          <option>FLOR DE THE BUSTAMANTE VALLES</option>
-          <option>IVONNE SALAS</option>
-          <option>JESSICA SALAZAR</option>
-          <option>JORGE SAID GARCÍA BAUTISTA</option>
-          <option>JUAN ADNAN CRUZ VALENZUELA</option>
-          <option>LUIS JAVIER BARAJAS FIGUEROA</option>
-          <option>MARCELINO RAMÍREZ MARQUEZ</option>
-          <option>MARIA HELENA VILLALOBOS GOMEZ</option>
-          <option>RAMIRO MAGANA SERRANO</option>
-          <option>RAUL GERARDO RAMIREZ MEDINA</option>
-          <option>ALMA GEORGINA PALACIOS MARTINEZ</option>
-          <option>ALMA MAGDALENA ASTORGA RAMOS</option>
-          <option>ELISEO EMMANUEL JUÁREZ ZUÑIGA</option>
-          <option>HIRAM JOSUE GRIMALDO ROQUE</option>
-          <option>MICHEL BONIFANT</option>
-          <option>ALAN LEDIF REYES MONDRAGÓN</option>
-          <option>ALAN BURGUETE TORRES</option>
-          <option>ALEJANDRO DE LEON CRUZ</option>
-          <option>ALETHIA ALVAREZ CANO</option>
-          <option>ALVARO BARBOSA-QUINTANA</option>
-          <option>ANGEL AZAEL LÓPEZ GALINDO</option>
-          <option>CARLOS AUGUSTO GUTIERREZ FLORES</option>
-          <option>CARLOS EDUARDO SALAZAR MEJIA</option>
-          <option>CESAR GONZALEZ DE LEON</option>
-          <option>CESAR SALDIVAR MORENO</option>
-          <option>CINDY AIDEE NÁJERA MUÑOZ</option>
-          <option>CYNTHIA VILLARREAL</option>
-          <option>DANIEL VALENCIA MERCADO</option>
-          <option>DANIELA VAZQUEZ JUAREZ</option>
-          <option>EDIO LLERENA HERNANDEZ</option>
-          <option>EDUARDO ALBERTO GUZMAN HUERTA</option>
-          <option>GABRIELA SOFIA GOMEZ MACIAS</option>
-          <option>GERARDO CARDENAS</option>
-          <option>GERARDO DAVID AMARANTE DE LEON</option>
-          <option>HORACIO DECANINI ARCAUTE</option>
-          <option>JACKELINE GRACE LARA CAMPOS</option>
-          <option>JAIME J. TAMEZ SALAZAR</option>
-          <option>JESÚS ALBERTO LIMÓN RODRÍGUEZ</option>
-          <option>JORGE ALBERTO HERNÁNDEZ SALAZAR</option>
-          <option>JORGE LUIS MARTINEZ RODRIGUEZ</option>
-          <option>JOSE LUIS GUZMAN MURGIA</option>
-          <option>JOSÉ LUIS VELA GONZALEZ</option>
-          <option>LIGIA LARRALDE</option>
-          <option>LUIS ANTONIO CANCEL TREVIÑO</option>
-          <option>MANUEL ISMAEL GONZÁLEZ GERONIZ</option>
-          <option>MARÍA LUISA ROMERO LAGUNES</option>
-          <option>OMAR ALEJANDRO ZAYAS VILLANUEVA</option>
-          <option>OMAR PEÑA CURIEL</option>
-          <option>OSCAR VIDAL GUTIERREZ</option>
-          <option>RAUL GARZA GARZA</option>
-          <option>ROGELIO LOZANO GALVAN</option>
-          <option>ROLANDO MARTINEZ</option>
-          <option>RUBI JANDAY NAJERA</option>
-          <option>SERVANDO CARDONA HUERTA</option>
-          <option>VICTOR MANUEL OYERVIDES JUAREZ</option>
+          <option>YAZMIN CAROLINA BLANCO VAZQUEZ</option>
+          <option>YOLANDA LIZBETH BAUTISTA ARAGON</option>
           <option>YURIDIA ALVARADO BERNAL</option>
-          <option>ENRIQUE AVILA MONTEVERDE</option>
-          <option>JUAN DE DIOS PÉREZ VILLEGAS</option>
-          <option>LAURA PEREZ MICHEL</option>
-          <option>MINOR CORDERO B.</option>
-          <option>GENOVEVA OCHOA</option>
-          <option>OSCAR ALEJANDRO GOMEZ</option>
-          <option>IVÁN ROMARICO GONZÁLEZ ESPINOZA</option>
-            <option value="_nuevo">+ Registrar nuevo médico...</option>
+          <option>YVETTE NEME YUNES</option>
+          <option>ZULEIMA GARCIA NIETO</option>
+
           </select>
           <div id="nuevoMedicoWrapper" class="field-group hidden" style="margin-top:6px;">
             <label for="nombreMedicoNuevo">Nuevo médico</label>
@@ -1312,6 +1313,58 @@ function handleSubmit(ev) {
 
     form.reset();
     document.getElementById("result").classList.add("hidden");
+  }
+
+  // Mini buscador para la lista de médicos
+  let medicoOptionsOriginal = [];
+  let medicoPlaceholderOption = null;
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const select = document.getElementById("medicoSelect");
+    if (!select) return;
+    const options = Array.from(select.options);
+    if (options.length === 0) return;
+    // Guardamos la opción de placeholder (primera opción)
+    medicoPlaceholderOption = {
+      value: options[0].value,
+      text: options[0].textContent || options[0].innerText || ""
+    };
+    // Guardamos el resto de opciones originales
+    medicoOptionsOriginal = options.slice(1).map(function (opt) {
+      return {
+        value: opt.value,
+        text: opt.textContent || opt.innerText || ""
+      };
+    });
+  });
+
+  function filterMedicos() {
+    const input = document.getElementById("medicoSearch");
+    const select = document.getElementById("medicoSelect");
+    if (!input || !select || medicoOptionsOriginal.length === 0) return;
+
+    const filtro = input.value.trim().toLowerCase();
+
+    // Limpiar opciones actuales
+    select.innerHTML = "";
+
+    // Volver a agregar el placeholder
+    if (medicoPlaceholderOption) {
+      const ph = document.createElement("option");
+      ph.value = medicoPlaceholderOption.value;
+      ph.textContent = medicoPlaceholderOption.text;
+      select.appendChild(ph);
+    }
+
+    // Agregar solo las opciones que coincidan con el filtro
+    medicoOptionsOriginal.forEach(function (optData) {
+      if (filtro === "" || optData.text.toLowerCase().indexOf(filtro) !== -1) {
+        const opt = document.createElement("option");
+        opt.value = optData.value;
+        opt.textContent = optData.text;
+        select.appendChild(opt);
+      }
+    });
   }
 </script>
 
