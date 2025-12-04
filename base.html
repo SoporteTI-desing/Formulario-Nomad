@@ -174,7 +174,18 @@
       color: #b91c1c;
     }
 
-  </style>
+  
+    /* Ancho más amplio para columnas Status y Observaciones */
+    #tablaRegistros th:nth-child(14),
+    #tablaRegistros td:nth-child(14) {
+      min-width: 140px; /* Status */
+    }
+
+    #tablaRegistros th:nth-child(17),
+    #tablaRegistros td:nth-child(17) {
+      min-width: 260px; /* Observaciones */
+    }
+</style>
 </head>
 <body>
   <div id="loginWrapper" class="login-wrapper">
