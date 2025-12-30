@@ -648,7 +648,7 @@ function cargarRegistros() {
           return td;
         };
 
-        tr.appendChild(tdTexto(reg["FECHA DE CARGA"] ? reg["FECHA DE CARGA"].substring(0, 10) : ""));
+        tr.appendChild(tdTexto(_toDMY(reg["FECHA DE CARGA"] || "")));
         tr.appendChild(tdTexto(reg["KAM"]));
         tr.appendChild(tdTexto(reg["HOSPITAL"]));
         tr.appendChild(tdTexto(reg["ESTADO"]));
@@ -704,6 +704,14 @@ function cargarRegistros() {
         return "";
       }
 
+    }
+
+    function _toDMY(v) {
+      const iso = _toISODate(v);
+      if (!iso) return "";
+      const parts = iso.split("-");
+      if (parts.length === 3) return parts[2] + "/" + parts[1] + "/" + parts[0];
+      return iso;
     }
 
     // ===== Exportación Excel (compatible con acentos y columnas) =====
@@ -897,15 +905,15 @@ function cargarRegistros() {
 
       pageItems.forEach(function(reg){
         const tr = document.createElement("tr");
-        const fechaCarga = _toISODate(reg["FECHA DE CARGA"] || reg.createdAt || "");
+        const fechaCarga = _toDMY(reg["FECHA DE CARGA"] || reg.createdAt || "");
         const kam = reg["KAM"] || reg.kam || "";
         const paciente = reg["NOMBRE DEL PACIENTE"] || reg.nombrePaciente || reg.paciente || "";
         const prueba = reg["PRUEBA"] || reg.nombreEstudio || "";
         const biom = reg["Biomarcadores Tempus"] || reg.biomarcadorOpcional || "";
         const diagnostico = reg.diagnostico || "";
-        const fechaBiopsia = _toISODate(reg.fechaBiopsia || "");
-        const fechaCirugia = _toISODate(reg.fechaCirugia || "");
-        const fechaNacimiento = _toISODate(reg.fechaNacimiento || "");
+        const fechaBiopsia = _toDMY(reg.fechaBiopsia || "");
+        const fechaCirugia = _toDMY(reg.fechaCirugia || "");
+        const fechaNacimiento = _toDMY(reg.fechaNacimiento || "");
         const estadio = reg.estadio || "";
         const medico = reg["NOMBRE DEL MEDICO"] || reg.nombreMedico || "";
         const emailMedico = reg.emailMedico || "";
@@ -970,23 +978,23 @@ function cargarRegistros() {
       const dataRows = [];
       datos.forEach(function(reg){
         const row = [
-          _toISODate(reg["FECHA DE CARGA"] || reg.createdAt || ""),
+          _toDMY(reg["FECHA DE CARGA"] || reg.createdAt || ""),
           reg["KAM"] || reg.kam || "",
           reg["NOMBRE DEL PACIENTE"] || reg.nombrePaciente || "",
           reg["PRUEBA"] || reg.nombreEstudio || "",
           reg["Biomarcadores Tempus"] || reg.biomarcadorOpcional || "",
           reg.diagnostico || "",
-          _toISODate(reg.fechaBiopsia || ""),
-          _toISODate(reg.fechaCirugia || ""),
-          _toISODate(reg.fechaNacimiento || ""),
+          _toDMY(reg.fechaBiopsia || ""),
+          _toDMY(reg.fechaCirugia || ""),
+          _toDMY(reg.fechaNacimiento || ""),
           reg.estadio || "",
           reg["NOMBRE DEL MEDICO"] || reg.nombreMedico || "",
           reg.emailMedico || "",
           reg["Nombre Aseguradora"] || reg.nombreAseguradora || "",
           reg.institucion || reg["HOSPITAL"] || "",
-          reg["STATUS"] || "",
-          _toISODate(reg["FECHA DE ENVIO"] || ""),
-          _toISODate(reg["FECHA DE COMPLETADO"] || ""),
+          (reg["STATUS"] ? reg["STATUS"] : "Sin status"),
+          _toDMY(reg["FECHA DE ENVIO"] || ""),
+          _toDMY(reg["FECHA DE COMPLETADO"] || ""),
           reg["OBSERVACIONES"] || "",
           reg["OPCION LOGISTICA"] || ""
         ];
@@ -1077,6 +1085,9 @@ function cargarRegistros() {
             const valores = headers.map(function(col) {
               let v = row[col];
               if (v === null || v === undefined) v = "";
+              // Formato de fechas y status por defecto en exportaciones
+              if (col === "STATUS" && !v) v = "Sin status";
+              if (typeof v === "string" && /^\d{4}-\d{2}-\d{2}/.test(v)) v = _toDMY(v);
               return v;
             });
             dataRows.push(valores);
@@ -1121,7 +1132,7 @@ function exportarExcel() {
       const dataRows = [];
       datos.forEach((reg) => {
         const row = [
-          reg["FECHA DE CARGA"] || "",
+          _toDMY(reg["FECHA DE CARGA"] || ""),
           reg["KAM"] || "",
           reg["HOSPITAL"] || "",
           reg["ESTADO"] || "",
@@ -1134,9 +1145,9 @@ function exportarExcel() {
           reg["Monto de prueba"] || "",
           reg["NOMBRE DEL MEDICO"] || "",
           reg["Monto de prueba editable"] || "",
-          reg["STATUS"] || "",
-          reg["FECHA DE ENVIO"] || "",
-          reg["FECHA DE COMPLETADO"] || "",
+          (reg["STATUS"] ? reg["STATUS"] : "Sin status"),
+          _toDMY(reg["FECHA DE ENVIO"] || ""),
+          _toDMY(reg["FECHA DE COMPLETADO"] || ""),
           reg["OBSERVACIONES"] || "",
           reg["OPCION LOGISTICA"] || ""
         ];
@@ -1205,6 +1216,9 @@ function exportarExcel() {
             const valores = headers.map(function(col) {
               let v = row[col];
               if (v === null || v === undefined) v = "";
+              // Formato de fechas y status por defecto en exportaciones
+              if (col === "STATUS" && !v) v = "Sin status";
+              if (typeof v === "string" && /^\d{4}-\d{2}-\d{2}/.test(v)) v = _toDMY(v);
               return v;
             });
             dataRows.push(valores);
