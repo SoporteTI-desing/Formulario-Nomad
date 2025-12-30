@@ -185,7 +185,69 @@
     #tablaRegistros td:nth-child(17) {
       min-width: 260px; /* Observaciones */
     }
-</style>
+
+    /* (Solo Logística) Ancho extra para Status y Observaciones + controles más amplios */
+    #tablaRegistrosLogistica th:nth-child(15),
+    #tablaRegistrosLogistica td:nth-child(15) {
+      min-width: 170px; /* Status */
+    }
+    #tablaRegistrosLogistica td:nth-child(15) select {
+      width: 100%;
+      min-width: 160px;
+    }
+
+    #tablaRegistrosLogistica th:nth-child(18),
+    #tablaRegistrosLogistica td:nth-child(18) {
+      min-width: 380px; /* Observaciones */
+    }
+    #tablaRegistrosLogistica td:nth-child(18) textarea {
+      width: 100%;
+      min-width: 360px;
+      resize: vertical;
+    }
+
+    .view-switch{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin: 14px 0 10px;
+      align-items:center;
+    }
+    .view-btn{
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color:#0f172a;
+    }
+    .view-btn.active{
+      background:#0b5fff;
+      border-color:#0b5fff;
+      color:#ffffff;
+    }
+    .pagination{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid #e2e8f0;
+    }
+    .pagination .left{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .pagination select{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid #cbd5e1;
+      background:#fff;
+      font-size: 14px;
+      outline:none;
+    }
+  </style>
 </head>
 <body>
   <div id="loginWrapper" class="login-wrapper">
@@ -217,7 +279,14 @@
       <img src="logo-nomad.png" alt="Nomad" class="logo" />
     </header>
 
-    <div class="toolbar">
+    
+    <div class="view-switch" role="tablist" aria-label="Vistas de base de registros">
+      <button id="btnVistaBI" class="btn-small view-btn active" type="button">Base de registros BI</button>
+      <button id="btnVistaLogistica" class="btn-small view-btn" type="button">Base de registros Logistica</button>
+    </div>
+
+    <div id="vistaBI">
+<div class="toolbar">
       <div id="registrosCount">0 registros</div>
       <button class="btn-small" type="button" onclick="exportarExcel()">Descargar Excel</button>
       <button class="btn-small" type="button" onclick="exportarFormularioCompleto()">Descargar formulario completo</button>
@@ -250,6 +319,63 @@
         <tbody></tbody>
       </table>
     </div>
+    </div> <!-- /#vistaBI -->
+
+    <div id="vistaLogistica" style="display:none;">
+      <div class="toolbar">
+        <div id="registrosCountLogistica">0 registros</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <label style="font-size:14px; color:#334155;">Registros por página</label>
+          <select id="selectLogisticaPorPagina" aria-label="Registros por página">
+            <option value="10">10</option>
+            <option value="12">12</option>
+            <option value="15">15</option>
+          </select>
+        </div>
+        <button class="btn-small" type="button" onclick="exportarExcelLogistica()">Descargar Excel</button>
+        <button class="btn-small" type="button" onclick="exportarFormularioCompletoLogistica()">Descargar formulario completo</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="tablaRegistrosLogistica">
+          <thead>
+            <tr>
+              <th>Fecha de carga</th>
+              <th>KAM</th>
+              <th>Nombre del paciente</th>
+              <th>Prueba</th>
+              <th>Biomarcadores Tempus</th>
+              <th>Diagnóstico</th>
+              <th>Fecha de la última biopsia</th>
+              <th>Fecha de Cirugía</th>
+              <th>Fecha de nacimiento</th>
+              <th>Estadio</th>
+              <th>Nombre completo del Médico</th>
+              <th>Email del médico</th>
+              <th>Nombre Aseguradora</th>
+              <th>Nombre completo de la Institución / Hospital</th>
+              <th class="editable">Status</th>
+              <th class="editable">Fecha de envío</th>
+              <th class="editable">Fecha de completado</th>
+              <th class="editable">Observaciones</th>
+              <th class="editable">Opción logística</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <div class="left">
+          <button class="btn-small" type="button" id="btnLogisticaPrev">← Anterior</button>
+          <button class="btn-small" type="button" id="btnLogisticaNext">Siguiente →</button>
+          <div id="logisticaPageInfo" style="font-size:14px; color:#334155;"></div>
+        </div>
+        <div id="logisticaHint" style="font-size:13px; color:#64748b;">El registro más nuevo queda al final.</div>
+      </div>
+    </div>
+
+    </div> <!-- /.container -->
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -270,6 +396,7 @@
 </script>
 
 <script>
+
     const STATUS_OPTIONS = [
       "ENVIO",
       "VALIDACION",
@@ -287,6 +414,9 @@
       "VER_SB",
       "Azul"
     ];
+    let registrosFull = [];
+    let logisticaPagina = 1;
+    let logisticaPorPagina = 10;
 
 let registros = [];
 
@@ -300,6 +430,7 @@ function inicializarRegistrosDesdeFirebase() {
         registros = [];
       }
       cargarRegistros();
+      cargarRegistrosLogistica(true);
       return;
     }
 
@@ -308,14 +439,32 @@ function inicializarRegistrosDesdeFirebase() {
       .limit(500)
       .onSnapshot(function(snapshot) {
         try {
-          registros = snapshot.docs.map(function(doc) {
+                    registrosFull = snapshot.docs.map(function(doc) {
             const data = doc.data() || {};
             const resumen = Object.assign({}, data.registroResumen || {});
-            resumen.firebaseId = doc.id;
-            return resumen;
+            const merged = Object.assign({}, data, resumen);
+            merged.firebaseId = doc.id;
+            return merged;
           });
+
+          registros = registrosFull.map(function(row) {
+            const resumenOnly = {};
+            Object.keys(row).forEach(function(k){
+              // Solo guardamos el resumen conocido en localStorage (compatibilidad)
+              if (k === "firebaseId") return;
+            });
+            // Para mantener intacta la vista BI: usamos el mismo set de llaves que ya se dibuja
+            const keepKeys = ["FECHA DE CARGA","KAM","HOSPITAL","ESTADO","NOMBRE DEL PACIENTE","PRUEBA","Biomarcadores Tempus","Nombre Aseguradora","TIPO DE PAGO","Aplica Honorario Médico (Monto)","Monto de prueba","NOMBRE DEL MEDICO","Monto de prueba editable","STATUS","FECHA DE ENVIO","FECHA DE COMPLETADO","OBSERVACIONES","OPCION LOGISTICA"];
+            keepKeys.forEach(function(key){
+              if (row[key] !== undefined) resumenOnly[key] = row[key];
+            });
+            resumenOnly.firebaseId = row.firebaseId;
+            return resumenOnly;
+          });
+
           localStorage.setItem("nomad_registros", JSON.stringify(registros));
           cargarRegistros();
+          cargarRegistrosLogistica(true);
         } catch (e) {
           console.error("Error procesando snapshot de Firebase en base.html:", e);
         }
@@ -525,7 +674,423 @@ function cargarRegistros() {
     }
 
     
-    function exportarExcel() {
+        function mostrarVista(tipo) {
+      const vistaBI = document.getElementById("vistaBI");
+      const vistaLog = document.getElementById("vistaLogistica");
+      const b1 = document.getElementById("btnVistaBI");
+      const b2 = document.getElementById("btnVistaLogistica");
+      if (!vistaBI || !vistaLog || !b1 || !b2) return;
+
+      if (tipo === "logistica") {
+        vistaBI.style.display = "none";
+        vistaLog.style.display = "";
+        b1.classList.remove("active");
+        b2.classList.add("active");
+        cargarRegistrosLogistica(true);
+      } else {
+        vistaLog.style.display = "none";
+        vistaBI.style.display = "";
+        b2.classList.remove("active");
+        b1.classList.add("active");
+      }
+    }
+
+    function _toISODate(v) {
+      if (!v) return "";
+      try {
+        // v puede venir como ISO o YYYY-MM-DD
+        return String(v).substring(0, 10);
+      } catch (e) {
+        return "";
+      }
+
+    }
+
+    // ===== Exportación Excel (compatible con acentos y columnas) =====
+    function _escapeHtml(val) {
+      const s = (val === null || typeof val === "undefined") ? "" : String(val);
+      return s
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function _excelHTML(headers, dataRows) {
+      const thead = "<tr>" + headers.map(h => "<th>" + _escapeHtml(h) + "</th>").join("") + "</tr>";
+      const tbody = dataRows.map(function(row){
+        return "<tr>" + row.map(function(cell){
+          // Normaliza saltos de línea para que Excel no rompa el HTML
+          const safe = _escapeHtml(cell).replace(/\r?\n/g, " ");
+          return "<td>" + safe + "</td>";
+        }).join("") + "</tr>";
+      }).join("");
+      return (
+        "<html><head><meta charset=\"UTF-8\"></head><body>" +
+        "<table border=\"1\">" + thead + tbody + "</table>" +
+        "</body></html>"
+      );
+    }
+
+    function _downloadExcelFromTable(headers, dataRows, filename) {
+      const html = _excelHTML(headers, dataRows);
+      // BOM + HTML en UTF-8 => Excel abre con acentos correctos y columnas separadas
+      const blob = new Blob(["\ufeff", html], { type: "application/vnd.ms-excel;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename || "export.xls";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function _getResumenById(firebaseId) {
+      return (registros || []).find(r => r.firebaseId === firebaseId) || null;
+    }
+
+    function _buildLogisticaList() {
+      const list = (registrosFull && registrosFull.length) ? registrosFull.slice() : (registros || []).slice();
+      // Mezclar campos editables desde el resumen (si existen)
+      const merged = list.map(function(r){
+        const resumen = _getResumenById(r.firebaseId);
+        if (resumen) return Object.assign({}, r, resumen);
+        return Object.assign({}, r);
+      });
+
+      // Orden ascendente: el más nuevo queda al final
+      merged.sort(function(a,b){
+        const da = new Date(a["FECHA DE CARGA"] || a.createdAt || 0).getTime();
+        const db = new Date(b["FECHA DE CARGA"] || b.createdAt || 0).getTime();
+        return da - db;
+      });
+      return merged;
+    }
+
+    function cargarRegistrosLogistica(irUltimaPagina) {
+      const tbody = document.querySelector("#tablaRegistrosLogistica tbody");
+      const countEl = document.getElementById("registrosCountLogistica");
+      const pageInfo = document.getElementById("logisticaPageInfo");
+      if (!tbody) return;
+
+      const lista = _buildLogisticaList();
+      const total = lista.length;
+
+      if (countEl) countEl.textContent = total + " registros";
+
+      const totalPaginas = Math.max(1, Math.ceil(total / logisticaPorPagina));
+      if (irUltimaPagina) logisticaPagina = totalPaginas;
+      if (logisticaPagina > totalPaginas) logisticaPagina = totalPaginas;
+      if (logisticaPagina < 1) logisticaPagina = 1;
+
+      const start = (logisticaPagina - 1) * logisticaPorPagina;
+      const end = start + logisticaPorPagina;
+      const pageItems = lista.slice(start, end);
+
+      tbody.innerHTML = "";
+
+      const tdTexto = (v) => {
+        const td = document.createElement("td");
+        td.textContent = v || "";
+        return td;
+      };
+
+      const tdEditStatus = (firebaseId) => {
+        const td = document.createElement("td");
+        td.classList.add("editable");
+        const sel = document.createElement("select");
+        const empty = document.createElement("option");
+        empty.value = "";
+        empty.textContent = "Sin status";
+        sel.appendChild(empty);
+        STATUS_OPTIONS.forEach((c) => {
+          const o = document.createElement("option");
+          o.value = c;
+          o.textContent = c;
+          sel.appendChild(o);
+        });
+        const resumen = _getResumenById(firebaseId);
+        sel.value = (resumen && resumen["STATUS"]) ? resumen["STATUS"] : "";
+        sel.addEventListener("change", () => {
+          const r = _getResumenById(firebaseId);
+          if (!r) return;
+          r["STATUS"] = sel.value;
+          localStorage.setItem("nomad_registros", JSON.stringify(registros));
+          sincronizarFirebaseDesdePanel(r);
+          cargarRegistros();
+          cargarRegistrosLogistica(false);
+        });
+        td.appendChild(sel);
+        return td;
+      };
+
+      const tdEditDate = (firebaseId, key) => {
+        const td = document.createElement("td");
+        td.classList.add("editable");
+        const input = document.createElement("input");
+        input.type = "date";
+        const resumen = _getResumenById(firebaseId);
+        input.value = resumen ? _toISODate(resumen[key]) : "";
+        input.addEventListener("change", () => {
+          const r = _getResumenById(firebaseId);
+          if (!r) return;
+          r[key] = input.value;
+          localStorage.setItem("nomad_registros", JSON.stringify(registros));
+          sincronizarFirebaseDesdePanel(r);
+          cargarRegistros();
+          cargarRegistrosLogistica(false);
+        });
+        td.appendChild(input);
+        return td;
+      };
+
+      const tdEditArea = (firebaseId, key) => {
+        const td = document.createElement("td");
+        td.classList.add("editable");
+        const ta = document.createElement("textarea");
+        ta.rows = 2;
+        const resumen = _getResumenById(firebaseId);
+        ta.value = (resumen && resumen[key]) ? resumen[key] : "";
+        ta.addEventListener("blur", () => {
+          const r = _getResumenById(firebaseId);
+          if (!r) return;
+          r[key] = ta.value;
+          localStorage.setItem("nomad_registros", JSON.stringify(registros));
+          sincronizarFirebaseDesdePanel(r);
+          cargarRegistros();
+          cargarRegistrosLogistica(false);
+        });
+        td.appendChild(ta);
+        return td;
+      };
+
+      const tdEditLogistica = (firebaseId, key) => {
+        const td = document.createElement("td");
+        td.classList.add("editable");
+        const sel = document.createElement("select");
+        const empty = document.createElement("option");
+        empty.value = "";
+        empty.textContent = "Sin selección";
+        sel.appendChild(empty);
+        LOGISTICA_OPTIONS.forEach((c) => {
+          const o = document.createElement("option");
+          o.value = c;
+          o.textContent = c;
+          sel.appendChild(o);
+        });
+        const resumen = _getResumenById(firebaseId);
+        sel.value = (resumen && resumen[key]) ? resumen[key] : "";
+        sel.addEventListener("change", () => {
+          const r = _getResumenById(firebaseId);
+          if (!r) return;
+          r[key] = sel.value;
+          localStorage.setItem("nomad_registros", JSON.stringify(registros));
+          sincronizarFirebaseDesdePanel(r);
+          cargarRegistros();
+          cargarRegistrosLogistica(false);
+        });
+        td.appendChild(sel);
+        return td;
+      };
+
+      pageItems.forEach(function(reg){
+        const tr = document.createElement("tr");
+        const fechaCarga = _toISODate(reg["FECHA DE CARGA"] || reg.createdAt || "");
+        const kam = reg["KAM"] || reg.kam || "";
+        const paciente = reg["NOMBRE DEL PACIENTE"] || reg.nombrePaciente || reg.paciente || "";
+        const prueba = reg["PRUEBA"] || reg.nombreEstudio || "";
+        const biom = reg["Biomarcadores Tempus"] || reg.biomarcadorOpcional || "";
+        const diagnostico = reg.diagnostico || "";
+        const fechaBiopsia = _toISODate(reg.fechaBiopsia || "");
+        const fechaCirugia = _toISODate(reg.fechaCirugia || "");
+        const fechaNacimiento = _toISODate(reg.fechaNacimiento || "");
+        const estadio = reg.estadio || "";
+        const medico = reg["NOMBRE DEL MEDICO"] || reg.nombreMedico || "";
+        const emailMedico = reg.emailMedico || "";
+        const aseguradora = reg["Nombre Aseguradora"] || reg.nombreAseguradora || "";
+        const institucion = reg.institucion || reg["HOSPITAL"] || "";
+
+        tr.appendChild(tdTexto(fechaCarga));
+        tr.appendChild(tdTexto(kam));
+        tr.appendChild(tdTexto(paciente));
+        tr.appendChild(tdTexto(prueba));
+        tr.appendChild(tdTexto(biom));
+        tr.appendChild(tdTexto(diagnostico));
+        tr.appendChild(tdTexto(fechaBiopsia));
+        tr.appendChild(tdTexto(fechaCirugia));
+        tr.appendChild(tdTexto(fechaNacimiento));
+        tr.appendChild(tdTexto(estadio));
+        tr.appendChild(tdTexto(medico));
+        tr.appendChild(tdTexto(emailMedico));
+        tr.appendChild(tdTexto(aseguradora));
+        tr.appendChild(tdTexto(institucion));
+        tr.appendChild(tdEditStatus(reg.firebaseId));
+        tr.appendChild(tdEditDate(reg.firebaseId, "FECHA DE ENVIO"));
+        tr.appendChild(tdEditDate(reg.firebaseId, "FECHA DE COMPLETADO"));
+        tr.appendChild(tdEditArea(reg.firebaseId, "OBSERVACIONES"));
+        tr.appendChild(tdEditLogistica(reg.firebaseId, "OPCION LOGISTICA"));
+
+        tbody.appendChild(tr);
+      });
+
+      if (pageInfo) pageInfo.textContent = "Página " + logisticaPagina + " de " + totalPaginas;
+    }
+
+    function exportarExcelLogistica() {
+      const datos = _buildLogisticaList();
+      if (!datos.length) {
+        alert("No hay registros para exportar.");
+        return;
+      }
+
+      const headers = [
+        "Fecha de carga",
+        "KAM",
+        "Nombre del paciente",
+        "Prueba",
+        "Biomarcadores Tempus",
+        "Diagnóstico",
+        "Fecha de la última biopsia",
+        "Fecha de Cirugía",
+        "Fecha de nacimiento",
+        "Estadio",
+        "Nombre completo del Médico",
+        "Email del médico",
+        "Nombre Aseguradora",
+        "Nombre completo de la Institución / Hospital",
+        "Status",
+        "Fecha de envío",
+        "Fecha de completado",
+        "Observaciones",
+        "Opción logística"
+      ];
+
+      const dataRows = [];
+      datos.forEach(function(reg){
+        const row = [
+          _toISODate(reg["FECHA DE CARGA"] || reg.createdAt || ""),
+          reg["KAM"] || reg.kam || "",
+          reg["NOMBRE DEL PACIENTE"] || reg.nombrePaciente || "",
+          reg["PRUEBA"] || reg.nombreEstudio || "",
+          reg["Biomarcadores Tempus"] || reg.biomarcadorOpcional || "",
+          reg.diagnostico || "",
+          _toISODate(reg.fechaBiopsia || ""),
+          _toISODate(reg.fechaCirugia || ""),
+          _toISODate(reg.fechaNacimiento || ""),
+          reg.estadio || "",
+          reg["NOMBRE DEL MEDICO"] || reg.nombreMedico || "",
+          reg.emailMedico || "",
+          reg["Nombre Aseguradora"] || reg.nombreAseguradora || "",
+          reg.institucion || reg["HOSPITAL"] || "",
+          reg["STATUS"] || "",
+          _toISODate(reg["FECHA DE ENVIO"] || ""),
+          _toISODate(reg["FECHA DE COMPLETADO"] || ""),
+          reg["OBSERVACIONES"] || "",
+          reg["OPCION LOGISTICA"] || ""
+        ];
+        dataRows.push(row);
+      });
+      _downloadExcelFromTable(headers, dataRows, "nomad_base_logistica.xls");
+      }
+
+    function exportarFormularioCompletoLogistica() {
+      if (typeof firebase === "undefined" || typeof db === "undefined") {
+        alert("Firebase no está disponible para exportar.");
+        return;
+      }
+
+      db.collection("ingresosNomad")
+        .orderBy("createdAt", "desc")
+        .limit(1000)
+        .get()
+        .then(function(snapshot) {
+          const docs = snapshot.docs.map(function(doc) {
+            const data = doc.data() || {};
+            const flat = {};
+            Object.keys(data).forEach(function(key) {
+              const value = data[key];
+              if (key === "registroResumen" && value && typeof value === "object" && !Array.isArray(value)) {
+                Object.keys(value).forEach(function(subKey) {
+                  flat[subKey] = value[subKey];
+                });
+              } else if (value && typeof value.toDate === "function") {
+                flat[key] = value.toDate().toISOString();
+              } else if (Array.isArray(value)) {
+                flat[key] = value.join(", ");
+              } else {
+                flat[key] = value;
+              }
+            });
+            flat.firebaseId = doc.id;
+            // Normalizar campos para el orden Logística
+            if (!flat["NOMBRE DEL PACIENTE"] && (flat.nombrePaciente || flat.paciente || flat["Nombre del paciente"])) {
+              flat["NOMBRE DEL PACIENTE"] = flat.nombrePaciente || flat.paciente || flat["Nombre del paciente"];
+            }
+            return flat;
+          });
+
+          if (!docs.length) {
+            alert("No hay registros para exportar.");
+            return;
+          }
+
+          const preferidas = [
+            "FECHA DE CARGA",
+            "KAM",
+            "NOMBRE DEL PACIENTE",
+            "PRUEBA",
+            "Biomarcadores Tempus",
+            "diagnostico",
+            "fechaBiopsia",
+            "fechaCirugia",
+            "fechaNacimiento",
+            "estadio",
+            "NOMBRE DEL MEDICO",
+            "emailMedico",
+            "Nombre Aseguradora",
+            "institucion",
+            "STATUS",
+            "FECHA DE ENVIO",
+            "FECHA DE COMPLETADO",
+            "OBSERVACIONES",
+            "OPCION LOGISTICA"
+          ];
+
+          const columnas = [];
+          preferidas.forEach(function(k){
+            if (docs.some(function(r){ return r[k] !== undefined; }) && columnas.indexOf(k) === -1) columnas.push(k);
+          });
+
+          docs.forEach(function(row) {
+            Object.keys(row).forEach(function(key) {
+              if (columnas.indexOf(key) === -1) {
+                columnas.push(key);
+              }
+            });
+          });
+
+          const headers = columnas.slice();
+          const dataRows = [];
+          docs.forEach(function(row) {
+            const valores = headers.map(function(col) {
+              let v = row[col];
+              if (v === null || v === undefined) v = "";
+              return v;
+            });
+            dataRows.push(valores);
+          });
+
+          _downloadExcelFromTable(headers, dataRows, "nomad_formulario_completo_logistica.xls");
+          })
+        .catch(function(err) {
+          console.error("Error exportando formulario completo (Logística):", err);
+          alert("Error al exportar.");
+        });
+    }
+
+function exportarExcel() {
       const datos = (Array.isArray(registros) && registros.length)
         ? registros
         : JSON.parse(localStorage.getItem("nomad_registros") || "[]");
@@ -553,7 +1118,7 @@ function cargarRegistros() {
         "OBSERVACIONES",
         "OPCION LOGISTICA"
       ];
-      const rows = [headers.join("	")];
+      const dataRows = [];
       datos.forEach((reg) => {
         const row = [
           reg["FECHA DE CARGA"] || "",
@@ -572,22 +1137,13 @@ function cargarRegistros() {
           reg["STATUS"] || "",
           reg["FECHA DE ENVIO"] || "",
           reg["FECHA DE COMPLETADO"] || "",
-          (reg["OBSERVACIONES"] || "").replace(/\r?\n/g, " "),
+          reg["OBSERVACIONES"] || "",
           reg["OPCION LOGISTICA"] || ""
         ];
-        rows.push(row.join("	"));
+        dataRows.push(row);
       });
-      const contenido = rows.join("\n");
-const blob = new Blob([contenido], { type: "application/vnd.ms-excel" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "nomad_registros.xls";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
+      _downloadExcelFromTable(headers, dataRows, "nomad_base_bi.xls");
+      }
 
 
 
@@ -621,6 +1177,10 @@ const blob = new Blob([contenido], { type: "application/vnd.ms-excel" });
             });
             // Siempre agregamos el id de Firebase
             flat.firebaseId = doc.id;
+            // Normalizar campos para el orden Logística
+            if (!flat["NOMBRE DEL PACIENTE"] && (flat.nombrePaciente || flat.paciente || flat["Nombre del paciente"])) {
+              flat["NOMBRE DEL PACIENTE"] = flat.nombrePaciente || flat.paciente || flat["Nombre del paciente"];
+            }
             return flat;
           });
 
@@ -639,33 +1199,19 @@ const blob = new Blob([contenido], { type: "application/vnd.ms-excel" });
             });
           });
 
-          const filas = [];
-          filas.push(columnas.join("\t"));
-
+          const headers = columnas.slice();
+          const dataRows = [];
           docs.forEach(function(row) {
-            const valores = columnas.map(function(col) {
+            const valores = headers.map(function(col) {
               let v = row[col];
               if (v === null || v === undefined) v = "";
-              if (typeof v === "number") {
-                v = String(v);
-              }
-              v = String(v).replace(/"/g, '""').replace(/\r?\n/g, " ");
-              return '"' + v + '"';
+              return v;
             });
-            filas.push(valores.join("\t"));
+            dataRows.push(valores);
           });
 
-          const contenido = filas.join("\n");
-          const blob = new Blob([contenido], { type: "application/vnd.ms-excel" });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = "nomad_formulario_completo.xls";
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        })
+          _downloadExcelFromTable(headers, dataRows, "nomad_formulario_completo.xls");
+          })
         .catch(function(err) {
           console.error("Error al exportar formulario completo:", err);
           alert("Ocurrió un error al exportar el formulario completo. Revisa la consola para más detalles.");
@@ -709,8 +1255,30 @@ document.addEventListener("DOMContentLoaded", function () {
   if (typeof inicializarRegistrosDesdeFirebase === "function") {
     inicializarRegistrosDesdeFirebase();
   }
+
+  // Switch de vistas
+  const b1 = document.getElementById("btnVistaBI");
+  const b2 = document.getElementById("btnVistaLogistica");
+  if (b1) b1.addEventListener("click", () => mostrarVista("bi"));
+  if (b2) b2.addEventListener("click", () => mostrarVista("logistica"));
+
+  // Paginación logística
+  const sel = document.getElementById("selectLogisticaPorPagina");
+  if (sel) {
+    sel.value = String(logisticaPorPagina);
+    sel.addEventListener("change", () => {
+      const v = parseInt(sel.value || "10", 10);
+      logisticaPorPagina = isNaN(v) ? 10 : v;
+      cargarRegistrosLogistica(true);
+    });
+  }
+  const prev = document.getElementById("btnLogisticaPrev");
+  const next = document.getElementById("btnLogisticaNext");
+  if (prev) prev.addEventListener("click", () => { logisticaPagina = Math.max(1, logisticaPagina - 1); cargarRegistrosLogistica(false); });
+  if (next) next.addEventListener("click", () => { logisticaPagina = logisticaPagina + 1; cargarRegistrosLogistica(false); });
 });
 
+  
   </script>
   </div>
 </body>
