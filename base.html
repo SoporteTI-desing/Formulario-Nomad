@@ -418,6 +418,38 @@
     let logisticaPagina = 1;
     let logisticaPorPagina = 10;
 
+    // Mantener la página actual en Logística cuando se actualiza un registro.
+    // Solo vamos automáticamente a la última página en la primera carga
+    // (o cuando entra un nuevo registro y el usuario ya estaba en la última página).
+    let _logisticaPrimeraCarga = true;
+    let _logisticaPrevTotal = 0;
+
+    function _decidirIrUltimaPaginaLogistica(nuevoTotal) {
+      try {
+        const total = Number(nuevoTotal) || 0;
+        if (_logisticaPrimeraCarga) {
+          _logisticaPrimeraCarga = false;
+          _logisticaPrevTotal = total;
+          return true;
+        }
+
+        const prevTotal = _logisticaPrevTotal;
+        _logisticaPrevTotal = total;
+
+        // Si no hay cambio en el total, NO brincamos de página (caso: edición de status/fechas/obs).
+        if (total <= prevTotal) return false;
+
+        // Si hay nuevos registros, solo brinca a la última página si el usuario ya estaba en la última.
+        const prevLastPage = Math.max(1, Math.ceil(prevTotal / logisticaPorPagina));
+        const estabaEnUltima = logisticaPagina >= prevLastPage;
+        const vistaLog = document.getElementById("vistaLogistica");
+        const viendoLogistica = vistaLog && vistaLog.style.display !== "none";
+        return Boolean(viendoLogistica && estabaEnUltima);
+      } catch (e) {
+        return false;
+      }
+    }
+
 let registros = [];
 
 function inicializarRegistrosDesdeFirebase() {
@@ -464,7 +496,9 @@ function inicializarRegistrosDesdeFirebase() {
 
           localStorage.setItem("nomad_registros", JSON.stringify(registros));
           cargarRegistros();
-          cargarRegistrosLogistica(true);
+          // Importante: si solo se editó status/fechas/observaciones, NO debemos brincar a la última página.
+          const _irUltima = _decidirIrUltimaPaginaLogistica(registrosFull.length);
+          cargarRegistrosLogistica(_irUltima);
         } catch (e) {
           console.error("Error procesando snapshot de Firebase en base.html:", e);
         }
