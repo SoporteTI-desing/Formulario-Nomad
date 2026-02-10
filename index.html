@@ -920,8 +920,10 @@ n:0;
           <label><input type="checkbox" name="biomarcadorOpcional" value="Biomarcador HER2 + FISH"> Biomarcador HER2 + FISH</label>
           <label><input type="checkbox" name="biomarcadorOpcional" value="Biomarcador FOLR1"> Biomarcador FOLR1</label>
           <label><input type="checkbox" name="biomarcadorOpcional" value="MGMT Methylation"> MGMT Methylation</label>
-          <label><input type="checkbox" name="biomarcadorOpcional" value="Algorithmic Tumor Origin"> Algorithmic Tumor Origin</label>
-        </div>
+          <label><input type="checkbox" name="biomarcadorOpcional" value="Algorithmic Tumor Origin"> Algorithmic Tumor Origin</label>          <label><input type="checkbox" name="biomarcadorOpcional" value="CLDN18"> CLDN18</label>
+
+                  <label id="normalMatchWrap" class="hidden"><input id="normalMatchCheckbox" type="checkbox" name="biomarcadorOpcional" value="NORMAL MATCH" disabled> NORMAL MATCH</label>
+</div>
       </div>
 
 <div id="biomarcadorFoundation" class="field-group hidden">
@@ -1108,6 +1110,20 @@ n:0;
 
 function handleEstudioChange() {
       const estudio = document.getElementById("nombreEstudio").value;
+const normalWrap = document.getElementById("normalMatchWrap");
+const normalCb = document.getElementById("normalMatchCheckbox");
+const normalAllowed = (estudio === "Tempus xT + xR");
+if (normalWrap && normalCb) {
+  if (normalAllowed) {
+    normalWrap.classList.remove("hidden");
+    normalCb.disabled = false;
+  } else {
+    normalWrap.classList.add("hidden");
+    normalCb.checked = false;
+    normalCb.disabled = true;
+  }
+}
+
       const biomTempusDiv = document.getElementById("biomarcadorTempus");
       const biomTempusCheckboxes = document.querySelectorAll("#biomarcadorTempus input[name=\"biomarcadorOpcional\"]");
       const biomFoundDiv = document.getElementById("biomarcadorFoundation");
@@ -1134,6 +1150,12 @@ function handleEstudioChange() {
         if (biomFoundSel) biomFoundSel.value = "";
       }
     }
+
+    // Inicializar visibilidad de biomarcadores al cargar
+    document.addEventListener("DOMContentLoaded", () => {
+      try { handleEstudioChange(); } catch(e) {}
+    });
+
     function handleFormaPagoChange() {
       const forma = document.getElementById("formaPago").value;
       const bolsillo = document.getElementById("pagoBolsillo");
