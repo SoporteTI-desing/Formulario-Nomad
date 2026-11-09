@@ -73,8 +73,6 @@
     .biomarcador-list input[type=checkbox] {
       margin:0;
     }
-n:0;
-    }
     .required { color:#e11d48; }
     input[type=text],input[type=email],input[type=tel],input[type=date],select,textarea {
       width: 100%;
@@ -146,6 +144,18 @@ n:0;
       color:#ffffff;
     }
     .hidden { display:none; }
+    .request-link {
+      display:inline-block;
+      margin:0 0 20px;
+      padding:11px 18px;
+      border-radius:999px;
+      background:#0052a5;
+      color:#fff;
+      font-size:14px;
+      font-weight:600;
+      text-decoration:none;
+    }
+    .request-link:hover, .request-link:focus-visible { background:#003d7a; }
     .floating-panel-btn {
       position:fixed;
       right:16px;
@@ -179,6 +189,8 @@ n:0;
       </div>
       <img src="logo-nomad.png" class="logo" alt="Nomad Genetics">
     </header>
+
+    <a class="request-link" href="solicitud-prueba.html">Quiero solicitar una prueba</a>
 
     <form id="ingresoVentaForm" onsubmit="handleSubmit(event)">
       <div class="section-title">Datos de contacto</div>
